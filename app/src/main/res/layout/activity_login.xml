@@ -45,6 +45,7 @@
                 </LinearLayout>
 
            <EditText
+               android:id="@+id/edt_username"
                android:paddingLeft="20sp"
                android:textCursorDrawable="@color/place_holder"
                android:fontFamily="@font/roboto"
@@ -56,6 +57,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="30dp"/>
                 <EditText
+                    android:id="@+id/edt_password"
                     android:paddingLeft="20sp"
                     android:textCursorDrawable="@color/place_holder"
                     android:fontFamily="@font/roboto"
@@ -64,6 +66,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="55dp"/>
                 <LinearLayout
+                    android:id="@+id/btn_Login"
                     android:layout_marginTop="30dp"
                     android:background="@drawable/back_ground_button_gradient"
                     android:layout_width="match_parent"
