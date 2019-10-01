@@ -16,6 +16,7 @@ import com.example.polyfit_app.R;
 public class LoginMethod extends AppCompatActivity implements View.OnClickListener {
     LinearLayout loginWithEmail;
     TextView tv_signUp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,22 +26,23 @@ public class LoginMethod extends AppCompatActivity implements View.OnClickListen
         connectView();
 
     }
-    private void connectView(){
-        loginWithEmail=findViewById(R.id.loginWithEmail);
+
+    private void connectView() {
+        loginWithEmail = findViewById(R.id.loginWithEmail);
         loginWithEmail.setOnClickListener(this);
-        tv_signUp=findViewById(R.id.tv_signUp);
+        tv_signUp = findViewById(R.id.tv_signUp);
         tv_signUp.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.loginWithEmail:
-                Log.e("PhayTV:::","Intent");
-                startActivity(new Intent(LoginMethod.this,LoginActivity.class));
+                Log.e("PhayTV:::", "Intent");
+                startActivity(new Intent(LoginMethod.this, LoginActivity.class));
                 break;
             case R.id.tv_signUp:
-                startActivity(new Intent(LoginMethod.this,StepOneSignUpActivity.class));
+                startActivity(new Intent(LoginMethod.this, StepOneSignUpActivity.class));
                 break;
         }
     }

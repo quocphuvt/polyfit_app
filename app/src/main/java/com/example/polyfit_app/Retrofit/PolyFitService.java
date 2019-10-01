@@ -9,6 +9,8 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -17,26 +19,33 @@ import rx.Observable;
 
 public interface PolyFitService {
     @POST("user/register")
-    Observable<Response> register(@Body User user);
+    @FormUrlEncoded
+    Observable<String> registerUser(@Field("display_name") String displayName,
+                                    @Field("username") String username,
+                                    @Field("password") String password);
 
     @POST("user/login")
-    Observable<Response> login();
+    @FormUrlEncoded
+    Observable<String> loginUser(@Field("username") String username,
+                                 @Field("password") String password);
 
-    @GET("users/{email}")
-    Observable<User> getProfile(@Path("email") String email);
-
-    @PUT("users/{email}")
-    Observable<Response> changePassword(@Path("email") String email, @Body User user);
-
-    @POST("users/{email}/password")
-    Observable<Response> resetPasswordInit(@Path("email") String email);
-
-    @POST("users/{email}/password")
-    Observable<Response> resetPasswordFinish(@Path("email") String email, @Body User user);
-
-
-
-
+//    @POST("user/register")
+//    Observable<Response> register(@Body User user);
+//
+//    @POST("user/login")
+//    Observable<Response> login();
+//
+//    @GET("users/{email}")
+//    Observable<User> getProfile(@Path("email") String email);
+//
+//    @PUT("users/{email}")
+//    Observable<Response> changePassword(@Path("email") String email, @Body User user);
+//
+//    @POST("users/{email}/password")
+//    Observable<Response> resetPasswordInit(@Path("email") String email);
+//
+//    @POST("users/{email}/password")
+//    Observable<Response> resetPasswordFinish(@Path("email") String email, @Body User user);
 
 
 //
