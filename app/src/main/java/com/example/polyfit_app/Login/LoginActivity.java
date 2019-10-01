@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -36,6 +37,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     EditText edt_password;
     LinearLayout btn_Login;
     private SharedPreferences mSharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,32 +45,29 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         getSupportActionBar().hide();
         setContentView(R.layout.activity_login);
         initSharedPreferences();
-        mSubscriptions=new CompositeSubscription();
+        mSubscriptions = new CompositeSubscription();
         connectView();
     }
 
 
-    private void connectView(){
-        edt_username=findViewById(R.id.edt_username);
-        edt_password=findViewById(R.id.edt_password);
-        btn_Login=findViewById(R.id.btn_Login);
+    private void connectView() {
+        edt_username = findViewById(R.id.edt_username);
+        edt_password = findViewById(R.id.edt_password);
+        btn_Login = findViewById(R.id.btn_Login);
         btn_Login.setOnClickListener(this);
-
-
     }
 
 
     private void loginProcess(String email, String password) {
-
         mSubscriptions.add(RetrofitClient.getRetrofit(email, password).login()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(this::handleResponse,this::handleError));
+                .subscribe(this::handleResponse, this::handleError));
     }
 
     private void login() {
         setError();
-        ProgressDialog progressDialog=new ProgressDialog(LoginActivity.this);
+        ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
         progressDialog.setMessage("Processing...");
         progressDialog.setCancelable(false);
         progressDialog.setIndeterminate(false);
@@ -114,8 +113,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.btn_Login:
+                Log.e("Login","login");
                 login();
                 break;
         }
@@ -124,7 +124,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void handleResponse(Response response) {
 
 //        mProgressBar.setVisibility(View.GONE);
-
+        Log.e("PhayTran::",response.getMessage());
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putString(Constants.TOKEN, response.getToken());
         editor.putString(Constants.EMAIL, response.getMessage());
@@ -139,7 +139,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void handleError(Throwable error) {
-
+        Log.e("PhayTran:::","ERROR"+error);
         /*mProgressBar.setVisibility(View.GONE);*/
 
         if (error instanceof HttpException) {
@@ -150,6 +150,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 String errorBody = ((HttpException) error).response().errorBody().string();
                 Response response = gson.fromJson(errorBody, Response.class);
+                Log.e("PhayTRan",response.getMessage());
 //                showSnackBarMessage(response.getMessage());
 
             } catch (IOException e) {

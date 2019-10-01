@@ -19,7 +19,7 @@ public interface PolyFitService {
     @POST("user/register")
     Observable<Response> register(@Body User user);
 
-    @POST("authenticate")
+    @POST("user/login")
     Observable<Response> login();
 
     @GET("users/{email}")

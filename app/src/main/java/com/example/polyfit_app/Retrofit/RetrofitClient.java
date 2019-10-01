@@ -2,7 +2,7 @@ package com.example.polyfit_app.Retrofit;
 
 import android.util.Base64;
 
-import com.example.ordercafe.Utils.Constants;
+import com.example.polyfit_app.Utils.Constants;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -11,6 +11,7 @@ import okhttp3.Request;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 import rx.schedulers.Schedulers;
 
 public class RetrofitClient {
@@ -77,7 +78,7 @@ public class RetrofitClient {
                 .build().create(PolyFitService.class);
     }
 
-    public static PolyFitService getStarbucksService() {
+    public static PolyFitService getPolyFitService() {
         return RetrofitClient.getClient(Constants.BASE_URL).create(PolyFitService.class);
     }
 
@@ -93,5 +94,17 @@ public class RetrofitClient {
                     .build();
         }
         return retrofit;
+    }
+
+    private static Retrofit instance;
+    public static Retrofit getInstance(){
+        if(instance==null){
+            instance=new Retrofit.Builder()
+                    .baseUrl(Constants.BASE_URL)
+                    .addConverterFactory(ScalarsConverterFactory.create())
+                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                    .build();
+        }
+        return instance;
     }
 }
