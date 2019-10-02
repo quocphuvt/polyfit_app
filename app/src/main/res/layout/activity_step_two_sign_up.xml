@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Login.StepOneSignUpActivity">
+    tools:context=".Login.StepTwoSignUpActivity">
     <LinearLayout
         android:layout_margin="15sp"
         android:layout_width="wrap_content"
@@ -43,8 +43,10 @@
             android:background="@drawable/edit_text_shadow"
             android:layout_height="wrap_content">
             <EditText
+                android:inputType="numberDecimal"
+                android:id="@+id/edt_height"
                 android:background="@android:color/transparent"
-                android:hint="Display name"
+                android:hint="Height (m)"
                 android:padding="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"/>
@@ -58,28 +60,38 @@
             android:background="@drawable/edit_text_shadow"
             android:layout_height="wrap_content">
             <EditText
+                android:inputType="numberDecimal"
+                android:id="@+id/edt_weight"
                 android:background="@android:color/transparent"
-                android:hint="Email"
+                android:hint="Weight (kg)"
                 android:padding="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"/>
         </androidx.cardview.widget.CardView>
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            app:cardCornerRadius="10dp"
-
-            app:cardElevation="10dp"
-            android:layout_marginHorizontal="25dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/edit_text_shadow"
-            android:layout_height="wrap_content">
-            <EditText
-                android:background="@android:color/transparent"
-                android:hint="Password"
-                android:padding="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="55dp"/>
-        </androidx.cardview.widget.CardView>
+   <LinearLayout
+       android:layout_marginTop="30dp"
+       android:layout_marginHorizontal="20dp"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+       <RadioGroup
+           android:orientation="horizontal"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content">
+           <RadioButton
+               android:id="@+id/rb_Male"
+               android:buttonTint="@color/place_holder"
+               android:text="Male"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"/>
+           <RadioButton
+               android:id="@+id/rb_female"
+               android:buttonTint="@color/place_holder"
+               android:layout_marginLeft="30dp"
+               android:text="Female"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"/>
+       </RadioGroup>
+   </LinearLayout>
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             app:cardElevation="10dp"
@@ -88,16 +100,10 @@
             android:layout_marginHorizontal="25dp"
             android:layout_marginBottom="15dp"
             android:background="@drawable/edit_text_shadow"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:background="@android:color/transparent"
-                android:hint="Re-type password"
-                android:padding="10dp" />
-        </androidx.cardview.widget.CardView>
+            android:layout_height="wrap_content"/>
         <CheckBox
+            android:id="@+id/cb_Accept"
+            app:buttonTint="@color/place_holder"
             android:layout_marginTop="15dp"
             android:layout_marginHorizontal="30dp"
             android:textColor="#919191"
@@ -112,49 +118,14 @@
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:layout_marginHorizontal="20dp"
-        android:layout_weight="4"
-        android:layout_height="0dp">
+        android:layout_height="50dp">
         <LinearLayout
-            android:layout_weight="1"
-            android:layout_marginRight="10dp"
-            android:layout_width="0dp"
-            android:layout_height="match_parent">
-            <androidx.cardview.widget.CardView
-                app:cardCornerRadius="10dp"
-                app:cardBackgroundColor="#4285F4"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <ImageView
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_facebook"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </androidx.cardview.widget.CardView>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_marginRight="10dp"
-
-            android:layout_height="match_parent">
-            <androidx.cardview.widget.CardView
-                app:cardBackgroundColor="#F24405"
-                app:cardCornerRadius="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <ImageView
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_google"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </androidx.cardview.widget.CardView>
-        </LinearLayout>
-        <LinearLayout
+            android:id="@+id/btn_SignUpNow"
             android:background="@drawable/back_ground_card_view"
             android:layout_weight="2"
             android:layout_width="0dp"
             android:layout_marginRight="10dp"
-            android:layout_height="match_parent">
+            android:layout_height="50dp">
             <androidx.cardview.widget.CardView
                 app:cardCornerRadius="10dp"
                 android:background="@drawable/back_ground_button_gradient"
@@ -164,7 +135,7 @@
                 <TextView
                     android:textColor="#FFFFFF"
                     android:fontFamily="@font/roboto"
-                    android:text="Next"
+                    android:text="Sign up now!"
                     android:textSize="20dp"
                     android:gravity="center"
                     android:layout_gravity="center"

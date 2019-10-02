@@ -22,12 +22,28 @@ public interface PolyFitService {
     @FormUrlEncoded
     Observable<String> registerUser(@Field("display_name") String displayName,
                                     @Field("username") String username,
-                                    @Field("password") String password);
+                                    @Field("password") String password,
+                                    @Field("weight") Float weigth,
+                                    @Field("height") Float height,
+                                    @Field("bmi") Float bmi,
+                                    @Field("gender") Integer gender,
+                                    @Field("create_at") String create_at);
 
     @POST("user/login")
     @FormUrlEncoded
     Observable<String> loginUser(@Field("username") String username,
                                  @Field("password") String password);
+
+    @GET("user/getByUserName/{username}")
+    Call<String> getUserByUserName(@Path("username") String username);
+
+
+
+    @POST("history/add")
+    @FormUrlEncoded
+    Observable<String> addHistory(@Field("bmi") Float bmi,
+                                  @Field("id_user") Integer id_user);
+
 
 //    @POST("user/register")
 //    Observable<Response> register(@Body User user);

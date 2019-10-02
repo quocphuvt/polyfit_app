@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,9 +43,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     EditText edt_username;
     EditText edt_password;
+    TextView tvSignUp;
     LinearLayout btn_Login;
     PolyFitService polyFitService;
-    private SharedPreferences mSharedPreferences;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +54,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_login);
-        initSharedPreferences();
-//        mSubscriptions = new CompositeSubscription();
         connectView();
         Retrofit retrofit = RetrofitClient.getInstance();
-        PolyFitService polyFitService = retrofit.create(PolyFitService.class);
+        polyFitService = retrofit.create(PolyFitService.class);
     }
 
     @Override
@@ -76,6 +76,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         edt_password = findViewById(R.id.edt_password);
         btn_Login = findViewById(R.id.btn_Login);
         btn_Login.setOnClickListener(this);
+        tvSignUp=findViewById(R.id.tvSignUp);
+        tvSignUp.setOnClickListener(this);
     }
 
     private void loginUser(String userName, String password) {
@@ -85,71 +87,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 .subscribe(new Action1<String>() {
                     @Override
                     public void call(String s) {
-                        if (s.contains("password_salt"))
+                        if (s.contains("Login success")) {
                             Toast.makeText(LoginActivity.this, "Login success!", Toast.LENGTH_SHORT).show();
-                        else
+                            SharedPreferences.Editor editor = getSharedPreferences(Constants.LOGIN, MODE_PRIVATE).edit();
+                            editor.putString("username",userName);
+                            editor.putString("password",password);
+                            editor.apply();
+                            Log.e("PhayTran","username:"+userName+"\n"+"password"+password);
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+
+                        }else
                             Toast.makeText(LoginActivity.this, "" + s, Toast.LENGTH_SHORT).show();
                     }
                 }));
     }
 
-//    private void registerUser(String userName, String password) {
-//        compositeDisposable.add(polyFitService.registerUser("", userName, password))
-//    }
-
-
-//    private void loginProcess(String email, String password) {
-//        mSubscriptions.add(RetrofitClient.getRetrofit(email, password).login()
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribeOn(Schedulers.io())
-//                .subscribe(this::handleResponse, this::handleError));
-//    }
-//
-//    private void login() {
-//        setError();
-//        ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
-//        progressDialog.setMessage("Processing...");
-//        progressDialog.setCancelable(false);
-//        progressDialog.setIndeterminate(false);
-//        progressDialog.show();
-//        String email = edt_username.getText().toString();
-//        String password = edt_password.getText().toString();
-//
-//        int err = 0;
-//
-//        if (!validateEmail(email)) {
-//
-//            err++;
-//            edt_username.setError("Email should be valid !");
-//            progressDialog.dismiss();
-//
-//        }
-//
-//        if (!validateFields(password)) {
-//
-//            err++;
-//            edt_password.setError("Password should not be empty !");
-//            progressDialog.dismiss();
-//
-//        }
-//
-//        if (err == 0) {
-//
-//            loginProcess(email, password);
-////            mProgressBar.setVisibility(View.VISIBLE);
-//            progressDialog.dismiss();
-//
-//        } else {
-//
-////            showSnackBarMessage(view,"Enter Valid Details !");
-//        }
-//    }
-//
-//    private void setError() {
-//
-//        edt_username.setError(null);
-//        edt_password.setError(null);
-//    }
 
     @Override
     public void onClick(View view) {
@@ -158,53 +110,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Log.e("Login", "login");
                 loginUser(edt_username.getText().toString(), edt_password.getText().toString());
                 break;
+            case R.id.tvSignUp:
+                startActivity(new Intent(LoginActivity.this,StepOneSignUpActivity.class));
+                break;
         }
     }
 
-    private void handleResponse(Response response) {
-
-//        mProgressBar.setVisibility(View.GONE);
-        Log.e("PhayTran::", response.getMessage());
-        SharedPreferences.Editor editor = mSharedPreferences.edit();
-        editor.putString(Constants.TOKEN, response.getToken());
-        editor.putString(Constants.EMAIL, response.getMessage());
-        editor.apply();
-
-        edt_username.setText(null);
-        edt_password.setText(null);
-
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        startActivity(intent);
-
-    }
-
-    private void handleError(Throwable error) {
-        Log.e("PhayTran:::", "ERROR" + error);
-        /*mProgressBar.setVisibility(View.GONE);*/
-
-        if (error instanceof HttpException) {
-
-            Gson gson = new GsonBuilder().create();
-
-            try {
-
-                String errorBody = ((HttpException) error).response().errorBody().string();
-                Response response = gson.fromJson(errorBody, Response.class);
-                Log.e("PhayTRan", response.getMessage());
-//                showSnackBarMessage(response.getMessage());
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-
-            /*showSnackBarMessage(view,"Network Error !");*/
-        }
-    }
-
-
-    private void initSharedPreferences() {
-
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
-    }
 }
