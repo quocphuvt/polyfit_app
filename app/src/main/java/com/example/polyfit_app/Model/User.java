@@ -8,6 +8,7 @@ public class User {
     private Float weight;
     private Float height;
     private Float bmi;
+    private String create_at;
 
     public User(String username, String password, String display_name) {
         this.username = username;
@@ -91,5 +92,13 @@ public class User {
 
     public void setBmi(Float bmi) {
         this.bmi = bmi;
+    }
+
+    public String getCreate_at() {
+        return create_at;
+    }
+
+    public void setCreate_at(String create_at) {
+        this.create_at = create_at;
     }
 }

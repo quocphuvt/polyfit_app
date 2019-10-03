@@ -95,7 +95,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             editor.apply();
                             Log.e("PhayTran","username:"+userName+"\n"+"password"+password);
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
-
+                            finish();
                         }else
                             Toast.makeText(LoginActivity.this, "" + s, Toast.LENGTH_SHORT).show();
                     }

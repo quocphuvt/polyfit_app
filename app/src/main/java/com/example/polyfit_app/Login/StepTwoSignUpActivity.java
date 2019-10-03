@@ -117,6 +117,7 @@ public class StepTwoSignUpActivity extends AppCompatActivity implements View.OnC
                         if (s.contains("Register Success!")) {
                             getUserByUserName(userName);
                             startActivity(new Intent(StepTwoSignUpActivity.this, LoginActivity.class));
+
                         }else
                             Toast.makeText(StepTwoSignUpActivity.this, "" + s, Toast.LENGTH_SHORT).show();
                     }

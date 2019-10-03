@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 29
@@ -42,6 +43,8 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-scalars:2.3.0'
     //material Dialog
 
+    implementation 'com.google.firebase:firebase-storage:16.0.4'
+    implementation 'com.google.firebase:firebase-auth:16.0.5'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     //cropimv
@@ -64,5 +67,8 @@ dependencies {
 // explicitly depend on RxJava's latest version for bug fixes and new features.
 // (see https://github.com/ReactiveX/RxJava/releases for latest 2.x.x version)
     implementation 'io.reactivex.rxjava2:rxjava:2.x.x'
+    implementation 'de.hdodenhof:circleimageview:3.0.1'
+    implementation 'com.github.chrisbanes:PhotoView:2.3.0'
+
 
 }
