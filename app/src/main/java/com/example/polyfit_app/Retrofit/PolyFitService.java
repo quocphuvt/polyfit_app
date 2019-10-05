@@ -12,6 +12,8 @@ import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -34,7 +36,7 @@ public interface PolyFitService {
     Observable<String> loginUser(@Field("username") String username,
                                  @Field("password") String password);
 
-    @GET("user/getByUserName/{username}")
+    @GET("user/{username}")
     Call<String> getUserByUserName(@Path("username") String username);
 
 
@@ -43,6 +45,9 @@ public interface PolyFitService {
     @FormUrlEncoded
     Observable<String> addHistory(@Field("bmi") Float bmi,
                                   @Field("id_user") Integer id_user);
+
+    @GET("user/profile")
+    Call<String> getUser(@Header("Authorization") String token);
 
 
 //    @POST("user/register")

@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.JsonToken;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -24,9 +25,13 @@ import com.example.polyfit_app.Retrofit.RetrofitClient;
 import com.example.polyfit_app.Utils.Constants;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.google.gson.Gson;
+
 import com.google.gson.reflect.TypeToken;
 import com.soundcloud.android.crop.Crop;
-import com.squareup.picasso.Picasso;
+
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.lang.reflect.Type;
@@ -64,11 +69,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Retrofit retrofit = RetrofitClient.getInstance();
         polyFitService = retrofit.create(PolyFitService.class);
         SharedPreferences sharedPreferences=getSharedPreferences(Constants.LOGIN,MODE_PRIVATE);
+        Log.e("PhayTRan",sharedPreferences.getString("token",""));
+        JSONObject tokenObject = null;
+        String token = null;
+        try {
+            tokenObject = new JSONObject(sharedPreferences.getString("token",""));
+            token = tokenObject.getString("token");
+            Log.e("phayTran",token);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         getUserByUserName(sharedPreferences.getString("username",""));
         connectView();
     }
-    private void getUserByUserName(String userName) {
-        polyFitService.getUserByUserName(userName).enqueue(new Callback<String>() {
+    private void getUserByUserName(String username) {
+        polyFitService.getUserByUserName(username).enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if(response.isSuccessful()){
@@ -77,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Type listType = new TypeToken<List<User>>(){}.getType();
                     List<User> users = gson.fromJson(jsonOutput, listType);
                     Log.e("Phaytv","Success::"+response.body());
-                    Log.e("PhayTv",users.get(0).getId()+"\n"+"username"+users.get(0).getUsername()+"\n"+"date"+users.get(0).getCreate_at()+"\n"+"height"+users.get(0).getHeight()+"\n"+"weight"+users.get(0).getWeight()+"\n"+"BMI"+users.get(0).getBmi());
+//                    Log.e("PhayTv",users.get(0).getId()+"\n"+"username"+users.get(0).getUsername()+"\n"+"date"+users.get(0).getCreate_at()+"\n"+"height"+users.get(0).getHeight()+"\n"+"weight"+users.get(0).getWeight()+"\n"+"BMI"+users.get(0).getBmi());
                     setData(users.get(0).getDisplay_name(),users.get(0).getCreate_at(),users.get(0).getHeight(),users.get(0).getWeight(),users.get(0).getBmi());
                 }
 

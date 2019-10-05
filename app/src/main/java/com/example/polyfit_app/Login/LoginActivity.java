@@ -81,23 +81,35 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void loginUser(String userName, String password) {
+        ProgressDialog progressDialog=new ProgressDialog(LoginActivity.this);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Processing...");
+        progressDialog.setIndeterminate(false);
+        progressDialog.show();
+
         mSubscriptions.add(polyFitService.loginUser(userName, password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<String>() {
                     @Override
                     public void call(String s) {
-                        if (s.contains("Login success")) {
+                        if (s.contains("User does not exist")) {
+                            Toast.makeText(LoginActivity.this, "" + s, Toast.LENGTH_SHORT).show();
+                            Log.e("PhayTV::",s);
+                            progressDialog.dismiss();
+                        }else{
                             Toast.makeText(LoginActivity.this, "Login success!", Toast.LENGTH_SHORT).show();
                             SharedPreferences.Editor editor = getSharedPreferences(Constants.LOGIN, MODE_PRIVATE).edit();
                             editor.putString("username",userName);
                             editor.putString("password",password);
+                            editor.putString("token",s);
                             editor.apply();
+                            progressDialog.dismiss();
                             Log.e("PhayTran","username:"+userName+"\n"+"password"+password);
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             finish();
-                        }else
-                            Toast.makeText(LoginActivity.this, "" + s, Toast.LENGTH_SHORT).show();
+                        }
+
                     }
                 }));
     }

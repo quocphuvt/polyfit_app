@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-  >
-    <!--<RelativeLayout
+    >
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <androidx.cardview.widget.CardView
@@ -172,14 +172,24 @@
                                     android:layout_height="wrap_content"/>
                             </LinearLayout>
 
+
                         </androidx.cardview.widget.CardView>
                     </LinearLayout>
                 </LinearLayout>
+                <TextView
+                    android:textSize="30dp"
+                    android:text="steps"
+                    android:textColor="#FFFFFF"
+                    android:id="@+id/stepCount"
+                    android:textAlignment="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
     </RelativeLayout>
--->
+
+
 
 
 

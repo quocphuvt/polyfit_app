@@ -114,12 +114,13 @@ public class StepTwoSignUpActivity extends AppCompatActivity implements View.OnC
                 .subscribe(new Action1<String>() {
                     @Override
                     public void call(String s) {
-                        if (s.contains("Register Success!")) {
+                        if (s.contains("User already exists")) {
+                            Toast.makeText(StepTwoSignUpActivity.this, "" + s, Toast.LENGTH_SHORT).show();
+                        }else{
                             getUserByUserName(userName);
                             startActivity(new Intent(StepTwoSignUpActivity.this, LoginActivity.class));
 
-                        }else
-                            Toast.makeText(StepTwoSignUpActivity.this, "" + s, Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }));
     }
