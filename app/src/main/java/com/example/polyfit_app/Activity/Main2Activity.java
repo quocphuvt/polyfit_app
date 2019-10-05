@@ -1,35 +1,42 @@
-package com.example.walkalarm;
+package com.example.polyfit_app.Activity;
 
 import android.net.Uri;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.WindowManager;
 
-import com.example.walkalarm.Classes.PagerAdapter;
-import com.example.walkalarm.Fragments.AchievementsFragment;
-import com.example.walkalarm.Fragments.AlarmFragment;
-import com.example.walkalarm.Fragments.SettingsFragment;
-import com.example.walkalarm.Fragments.StepsFragment;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
-public class MainActivity extends AppCompatActivity implements AlarmFragment.OnFragmentInteractionListener, StepsFragment.OnFragmentInteractionListener,
-        AchievementsFragment.OnFragmentInteractionListener, SettingsFragment.OnFragmentInteractionListener {
+import com.example.polyfit_app.Adapter.PagerAdapter;
+import com.example.polyfit_app.Fragments.HistoriesFragment;
+import com.example.polyfit_app.Fragments.HomeFragment;
+import com.example.polyfit_app.Fragments.ProfileFragment;
+import com.example.polyfit_app.Fragments.DietsFragment;
+import com.example.polyfit_app.R;
+import com.google.android.material.tabs.TabLayout;
+
+import java.util.Objects;
+
+
+public class Main2Activity extends AppCompatActivity implements HomeFragment.OnFragmentInteractionListener, DietsFragment.OnFragmentInteractionListener,
+        HistoriesFragment.OnFragmentInteractionListener, ProfileFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        TabLayout tabLayout=findViewById(R.id.tabLayout);
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_alarm));
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_steps));
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_achievements));
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_settings));
+        setContentView(R.layout.activity_main2);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        Objects.requireNonNull(getSupportActionBar()).hide();
+        TabLayout tabLayout = findViewById(R.id.tabLayout);
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_home));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_diet));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_history));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_user));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
 
-        final ViewPager viewPager=findViewById(R.id.pager);
-        final PagerAdapter adapter=new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        final ViewPager viewPager = findViewById(R.id.pager);
+        final PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
         viewPager.setOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 

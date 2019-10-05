@@ -50,7 +50,7 @@ import rx.subscriptions.CompositeSubscription;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private CompositeSubscription mSubscriptions = new CompositeSubscription();
     PolyFitService polyFitService;
-    TextView tv_UserName,tv_startDate,tv_height,tv_weight,tv_bmi;
+    TextView tv_UserName, tv_startDate, tv_height, tv_weight, tv_bmi;
     ImageView imv_avatar;
     PhotoView viewAvatar;
     LinearLayout changeAvatar;
@@ -63,38 +63,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         Objects.requireNonNull(getSupportActionBar()).hide();
         setContentView(R.layout.activity_main);
+
         Retrofit retrofit = RetrofitClient.getInstance();
         polyFitService = retrofit.create(PolyFitService.class);
-        SharedPreferences sharedPreferences=getSharedPreferences(Constants.LOGIN,MODE_PRIVATE);
-        Log.e("PhayTRan",sharedPreferences.getString("token",""));
+        SharedPreferences sharedPreferences = getSharedPreferences(Constants.LOGIN, MODE_PRIVATE);
+        Log.e("PhayTRan", sharedPreferences.getString("token", ""));
         JSONObject tokenObject = null;
         String token = null;
         try {
-            tokenObject = new JSONObject(sharedPreferences.getString("token",""));
+            tokenObject = new JSONObject(sharedPreferences.getString("token", ""));
             token = tokenObject.getString("token");
-            Log.e("phayTran",token);
+            Log.e("phayTran", token);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        getUserByUserName(sharedPreferences.getString("username",""));
+        getUserByUserName(sharedPreferences.getString("username", ""));
         connectView();
     }
+
     private void getUserByUserName(String username) {
         polyFitService.getUserByUserName(username).enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     Gson gson = new Gson();
                     String jsonOutput = response.body();
-                    Type listType = new TypeToken<List<User>>(){}.getType();
+                    Type listType = new TypeToken<List<User>>() {
+                    }.getType();
                     List<User> users = gson.fromJson(jsonOutput, listType);
-                    Log.e("Phaytv","Success::"+response.body());
+                    Log.e("Phaytv", "Success::" + response.body());
 //                    Log.e("PhayTv",users.get(0).getId()+"\n"+"username"+users.get(0).getUsername()+"\n"+"date"+users.get(0).getCreate_at()+"\n"+"height"+users.get(0).getHeight()+"\n"+"weight"+users.get(0).getWeight()+"\n"+"BMI"+users.get(0).getBmi());
-                    setData(users.get(0).getDisplay_name(),users.get(0).getCreate_at(),users.get(0).getHeight(),users.get(0).getWeight(),users.get(0).getBmi());
+                    setData(users.get(0).getDisplay_name(), users.get(0).getCreate_at(), users.get(0).getHeight(), users.get(0).getWeight(), users.get(0).getBmi());
                 }
 
             }
@@ -105,17 +107,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
     }
+
     @SuppressLint("InflateParams")
-    private void connectView(){
-        tv_UserName=findViewById(R.id.tv_UserName);
-        tv_startDate=findViewById(R.id.tv_startDate);
-        tv_height=findViewById(R.id.tv_height);
-        tv_weight=findViewById(R.id.tv_weight);
-        tv_bmi=findViewById(R.id.tv_BMI);
-        imv_avatar=findViewById(R.id.imv_avatar);
+    private void connectView() {
+        tv_UserName = findViewById(R.id.tv_UserName);
+        tv_startDate = findViewById(R.id.tv_startDate);
+        tv_height = findViewById(R.id.tv_height);
+        tv_weight = findViewById(R.id.tv_weight);
+        tv_bmi = findViewById(R.id.tv_BMI);
+        imv_avatar = findViewById(R.id.imv_avatar);
         imv_avatar.setOnClickListener(this);
     }
-    private void setData(String userName,String startDate,Float height,Float weight,Float bmi){
+
+    private void setData(String userName, String startDate, Float height, Float weight, Float bmi) {
         tv_UserName.setText(userName);
         tv_startDate.setText(startDate);
         tv_height.setText(String.valueOf(height));
@@ -127,15 +131,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.imv_avatar:
                 Toast.makeText(this, "Click on avatar!!!", Toast.LENGTH_SHORT).show();
 //        Picasso.get().load(linkAvatar).into(photoView);
                 mBuilder = new AlertDialog.Builder(MainActivity.this);
-                mView = getLayoutInflater().inflate(R.layout.dialog_view_avatar, null,false);
+                mView = getLayoutInflater().inflate(R.layout.dialog_view_avatar, null, false);
                 viewAvatar = mView.findViewById(R.id.avatarView);
-                changeAvatar=mView.findViewById(R.id.changeAvatar);
-                tv_ChangeAvatar=mView.findViewById(R.id.tv_ChangeAvatar);
+                changeAvatar = mView.findViewById(R.id.changeAvatar);
+                tv_ChangeAvatar = mView.findViewById(R.id.tv_ChangeAvatar);
                 mBuilder.setView(mView);
                 mDialog = mBuilder.create();
                 mDialog.show();
@@ -153,13 +157,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onActivityResult(int requestCode, int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK){
-            if(requestCode == Crop.REQUEST_PICK){
-                Uri source_uri=data.getData();
-                Uri destination_uri=Uri.fromFile(new File(getCacheDir(),"cropped"));
-                Crop.of(source_uri,destination_uri).asSquare().start(MainActivity.this);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == Crop.REQUEST_PICK) {
+                Uri source_uri = data.getData();
+                Uri destination_uri = Uri.fromFile(new File(getCacheDir(), "cropped"));
+                Crop.of(source_uri, destination_uri).asSquare().start(MainActivity.this);
                 viewAvatar.setImageURI(Crop.getOutput(data));
-                Log.e("aaa","abc");
+                Log.e("aaa", "abc");
                 tv_ChangeAvatar.setText("Apply");
                 changeAvatar.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -170,16 +174,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 });
 
-            }
-            else  if(requestCode == Crop.REQUEST_CROP){
-                handle_crop(resultCode,data);
+            } else if (requestCode == Crop.REQUEST_CROP) {
+                handle_crop(resultCode, data);
             }
         }
 
     }
+
     private void handle_crop(int resultCode, Intent data) {
-        if(resultCode==RESULT_OK)
-        {
+        if (resultCode == RESULT_OK) {
             viewAvatar.setImageURI(Crop.getOutput(data));
         }
     }

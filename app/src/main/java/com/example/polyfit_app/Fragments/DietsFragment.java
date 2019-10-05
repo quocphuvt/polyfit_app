@@ -12,18 +12,19 @@ import androidx.fragment.app.Fragment;
 
 import com.example.polyfit_app.R;
 
-public class StepsFragment extends Fragment {
+public class DietsFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private String mParam1;
     private String mParam2;
     private OnFragmentInteractionListener mListener;
-    public StepsFragment() {
+
+    public DietsFragment() {
     }
 
 
-    public static StepsFragment newInstance(String param1, String param2) {
-        StepsFragment fragment = new StepsFragment();
+    public static DietsFragment newInstance(String param1, String param2) {
+        DietsFragment fragment = new DietsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -43,7 +44,7 @@ public class StepsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_steps, container, false);
+        return inflater.inflate(R.layout.fragment_diets, container, false);
     }
 
     public void onButtonPressed(Uri uri) {

@@ -1,13 +1,14 @@
-package com.example.walkalarm.Classes;
+package com.example.polyfit_app.Adapter;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.example.walkalarm.Fragments.AchievementsFragment;
-import com.example.walkalarm.Fragments.AlarmFragment;
-import com.example.walkalarm.Fragments.SettingsFragment;
-import com.example.walkalarm.Fragments.StepsFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+
+import com.example.polyfit_app.Fragments.HistoriesFragment;
+import com.example.polyfit_app.Fragments.HomeFragment;
+import com.example.polyfit_app.Fragments.ProfileFragment;
+import com.example.polyfit_app.Fragments.DietsFragment;
 
 public class PagerAdapter extends FragmentStatePagerAdapter {
 
@@ -16,26 +17,25 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
 
     public PagerAdapter(FragmentManager fm, int numberOfTabs) {
         super(fm);
-        this.numberOfTabs=numberOfTabs;
+        this.numberOfTabs = numberOfTabs;
     }
 
     @Override
     public Fragment getItem(int i) {
 
-        switch(i)
-        {
+        switch (i) {
             case 0:
-                AlarmFragment alarmFragment=new AlarmFragment();
-                return alarmFragment;
+                HomeFragment homeFragment = new HomeFragment();
+                return homeFragment;
             case 1:
-                StepsFragment stepsFragment=new StepsFragment();
-                return stepsFragment;
+                DietsFragment dietsFragment = new DietsFragment();
+                return dietsFragment;
             case 2:
-                AchievementsFragment achievementsFragment=new AchievementsFragment();
-                return achievementsFragment;
+                HistoriesFragment historiesFragment = new HistoriesFragment();
+                return historiesFragment;
             case 3:
-                SettingsFragment settingsFragment=new SettingsFragment();
-                return settingsFragment;
+                ProfileFragment profileFragment = new ProfileFragment();
+                return profileFragment;
             default:
                 return null;
 

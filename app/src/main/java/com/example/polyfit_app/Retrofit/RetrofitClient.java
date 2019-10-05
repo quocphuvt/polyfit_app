@@ -97,9 +97,10 @@ public class RetrofitClient {
     }
 
     private static Retrofit instance;
-    public static Retrofit getInstance(){
-        if(instance==null){
-            instance=new Retrofit.Builder()
+
+    public static Retrofit getInstance() {
+        if (instance == null) {
+            instance = new Retrofit.Builder()
                     .baseUrl(Constants.BASE_URL)
                     .addConverterFactory(ScalarsConverterFactory.create())
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create())

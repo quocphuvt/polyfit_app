@@ -12,6 +12,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
+import com.example.polyfit_app.Activity.Main2Activity;
 import com.example.polyfit_app.Login.LoginMethod;
 import com.example.polyfit_app.Utils.Constants;
 
@@ -28,7 +29,7 @@ public class SplashScreen extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Objects.requireNonNull(getSupportActionBar()).hide();
         setContentView(R.layout.activity_splash_screen);
-        logo=findViewById(R.id.logo);
+        logo = findViewById(R.id.logo);
         animation = AnimationUtils.loadAnimation(getApplicationContext(),
                 R.anim.fade_out);
         logo.startAnimation(animation);
@@ -38,7 +39,7 @@ public class SplashScreen extends AppCompatActivity {
                 SharedPreferences sharedPreferences = getSharedPreferences(Constants.LOGIN, MODE_PRIVATE);
                 String username = sharedPreferences.getString("username", "");
                 if (!username.isEmpty()) {
-                    Intent intentToMain = new Intent(SplashScreen.this, MainActivity.class);
+                    Intent intentToMain = new Intent(SplashScreen.this, Main2Activity.class);
                     startActivity(intentToMain);
                     finish();
                 } else {

@@ -16,6 +16,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.Consumer;
 
+import com.example.polyfit_app.Activity.Main2Activity;
 import com.example.polyfit_app.MainActivity;
 import com.example.polyfit_app.Model.Response;
 import com.example.polyfit_app.R;
@@ -39,7 +40,7 @@ import static com.example.polyfit_app.Utils.Validation.validateEmail;
 import static com.example.polyfit_app.Utils.Validation.validateFields;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
-        private CompositeSubscription mSubscriptions = new CompositeSubscription();
+    private CompositeSubscription mSubscriptions = new CompositeSubscription();
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     EditText edt_username;
     EditText edt_password;
@@ -76,12 +77,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         edt_password = findViewById(R.id.edt_password);
         btn_Login = findViewById(R.id.btn_Login);
         btn_Login.setOnClickListener(this);
-        tvSignUp=findViewById(R.id.tvSignUp);
+        tvSignUp = findViewById(R.id.tvSignUp);
         tvSignUp.setOnClickListener(this);
     }
 
     private void loginUser(String userName, String password) {
-        ProgressDialog progressDialog=new ProgressDialog(LoginActivity.this);
+        ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Processing...");
         progressDialog.setIndeterminate(false);
@@ -95,18 +96,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     public void call(String s) {
                         if (s.contains("User does not exist")) {
                             Toast.makeText(LoginActivity.this, "" + s, Toast.LENGTH_SHORT).show();
-                            Log.e("PhayTV::",s);
+                            Log.e("PhayTV::", s);
                             progressDialog.dismiss();
-                        }else{
+                        } else {
                             Toast.makeText(LoginActivity.this, "Login success!", Toast.LENGTH_SHORT).show();
                             SharedPreferences.Editor editor = getSharedPreferences(Constants.LOGIN, MODE_PRIVATE).edit();
-                            editor.putString("username",userName);
-                            editor.putString("password",password);
-                            editor.putString("token",s);
+                            editor.putString("username", userName);
+                            editor.putString("password", password);
+                            editor.putString("token", s);
                             editor.apply();
                             progressDialog.dismiss();
-                            Log.e("PhayTran","username:"+userName+"\n"+"password"+password);
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            Log.e("PhayTran", "username:" + userName + "\n" + "password" + password);
+                            startActivity(new Intent(LoginActivity.this, Main2Activity.class));
                             finish();
                         }
 
@@ -123,7 +124,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 loginUser(edt_username.getText().toString(), edt_password.getText().toString());
                 break;
             case R.id.tvSignUp:
-                startActivity(new Intent(LoginActivity.this,StepOneSignUpActivity.class));
+                startActivity(new Intent(LoginActivity.this, StepOneSignUpActivity.class));
                 break;
         }
     }

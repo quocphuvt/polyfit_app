@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.polyfit_app.R;
 
-public class AchievementsFragment extends Fragment {
+public class HistoriesFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -22,11 +22,11 @@ public class AchievementsFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public AchievementsFragment() {
+    public HistoriesFragment() {
     }
 
-    public static AchievementsFragment newInstance(String param1, String param2) {
-        AchievementsFragment fragment = new AchievementsFragment();
+    public static HistoriesFragment newInstance(String param1, String param2) {
+        HistoriesFragment fragment = new HistoriesFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -46,7 +46,7 @@ public class AchievementsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_achievements, container, false);
+        return inflater.inflate(R.layout.fragment_histories, container, false);
     }
 
     public void onButtonPressed(Uri uri) {

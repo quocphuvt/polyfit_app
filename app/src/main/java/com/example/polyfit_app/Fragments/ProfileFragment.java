@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.polyfit_app.R;
 
-public class SettingsFragment extends Fragment {
+public class ProfileFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -22,12 +22,12 @@ public class SettingsFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public SettingsFragment() {
+    public ProfileFragment() {
     }
 
 
-    public static SettingsFragment newInstance(String param1, String param2) {
-        SettingsFragment fragment = new SettingsFragment();
+    public static ProfileFragment newInstance(String param1, String param2) {
+        ProfileFragment fragment = new ProfileFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -48,10 +48,9 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_settings, container, false);
+        return inflater.inflate(R.layout.fragment_user, container, false);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
