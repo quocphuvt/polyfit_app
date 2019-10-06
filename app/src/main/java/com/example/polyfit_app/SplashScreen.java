@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.service.autofill.UserData;
 import android.util.Log;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -13,7 +15,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.example.polyfit_app.Activity.Main2Activity;
+import com.example.polyfit_app.Helpers.FullScreen;
 import com.example.polyfit_app.Login.LoginMethod;
+import com.example.polyfit_app.Model.User;
+import com.example.polyfit_app.Service.local.PolyfitDatabase;
+import com.example.polyfit_app.Service.local.UserDAO;
 import com.example.polyfit_app.Utils.Constants;
 
 import java.util.Objects;
@@ -27,8 +33,18 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        Objects.requireNonNull(getSupportActionBar()).hide();
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_splash_screen);
+
+//        AsyncTask.execute(new Runnable() { // Insert new User in AsyncTask
+//            @Override
+//            public void run() {
+//                PolyfitDatabase polyfitDatabase = PolyfitDatabase.getInstance(SplashScreen.this);
+//                User user = new User("quocphuvt", "123", "quoc phu", 75f, 175f, 1, true, "0987274110");
+//                polyfitDatabase.userDAO().registerUser(user);
+//                Log.d("iconne", "run: RUN NE");
+//            }
+//        });
         logo = findViewById(R.id.logo);
         animation = AnimationUtils.loadAnimation(getApplicationContext(),
                 R.anim.fade_out);
