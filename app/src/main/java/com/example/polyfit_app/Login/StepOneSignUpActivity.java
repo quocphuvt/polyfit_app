@@ -12,16 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.example.polyfit_app.MainActivity;
 import com.example.polyfit_app.R;
-import com.example.polyfit_app.Retrofit.PolyFitService;
-import com.example.polyfit_app.Retrofit.RetrofitClient;
-
-import retrofit2.Retrofit;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
-import rx.subscriptions.CompositeSubscription;
 
 public class StepOneSignUpActivity extends AppCompatActivity implements View.OnClickListener {
     ImageView ic_closeSignUpStepOne;

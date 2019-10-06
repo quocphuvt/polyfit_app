@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -14,30 +13,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.util.Consumer;
 
 import com.example.polyfit_app.Activity.Main2Activity;
-import com.example.polyfit_app.MainActivity;
-import com.example.polyfit_app.Model.Response;
 import com.example.polyfit_app.R;
 import com.example.polyfit_app.Retrofit.PolyFitService;
 import com.example.polyfit_app.Retrofit.RetrofitClient;
 import com.example.polyfit_app.Utils.Constants;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import java.io.IOException;
 
 import io.reactivex.disposables.CompositeDisposable;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.HttpException;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
-
-import static com.example.polyfit_app.Utils.Validation.validateEmail;
-import static com.example.polyfit_app.Utils.Validation.validateFields;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     private CompositeSubscription mSubscriptions = new CompositeSubscription();
