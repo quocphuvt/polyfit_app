@@ -1,4 +1,4 @@
-package com.example.polyfit_app.Retrofit;
+package com.example.polyfit_app.Service.remote;
 
 
 import com.example.polyfit_app.Model.Response;
@@ -25,9 +25,8 @@ public interface PolyFitService {
     Observable<String> registerUser(@Field("display_name") String displayName,
                                     @Field("username") String username,
                                     @Field("password") String password,
-                                    @Field("weight") Float weigth,
+                                    @Field("weight") Float weight,
                                     @Field("height") Float height,
-                                    @Field("bmi") Float bmi,
                                     @Field("gender") Integer gender,
                                     @Field("create_at") String create_at);
 

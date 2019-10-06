@@ -1,24 +1,44 @@
 package com.example.polyfit_app.Model;
 
-public class User {
-    private int id;
-    private String username;
-    private String password;
-    private String display_name;
-    private Float weight;
-    private Float height;
-    private Float bmi;
-    private String create_at;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
-    public User(String username, String password, String display_name) {
+@Entity(tableName = "polyfit_users")
+public class User {
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+    @ColumnInfo(name = "username")
+    private String username;
+    @ColumnInfo(name = "passwork")
+    private String password;
+    @ColumnInfo(name = "display_name")
+    private String display_name;
+    @ColumnInfo(name = "weight")
+    private Float weight;
+    @ColumnInfo(name = "height")
+    private Float height;
+    @ColumnInfo(name = "bmi")
+    private Float bmi;
+    @ColumnInfo(name = "created_at")
+    private String create_at;
+    @ColumnInfo(name = "gender")
+    private int gender;
+    @ColumnInfo(name = "is_verified")
+    private Boolean isVerified;
+    @ColumnInfo(name = "phone_number")
+    private String phoneNumber;
+
+    public User(String username, String password, String display_name, Float weight, Float height, int gender, Boolean isVerified, String phoneNumber) {
         this.username = username;
         this.password = password;
         this.display_name = display_name;
-    }
-
-    public User(String username, String password) {
-        this.username = username;
-        this.password = password;
+        this.weight = weight;
+        this.height = height;
+        this.bmi = weight / ( height * 2 );
+        this.gender = gender;
+        this.isVerified = isVerified;
+        this.phoneNumber = phoneNumber;
     }
 
     public String getUsername() {
@@ -45,29 +65,12 @@ public class User {
         this.display_name = display_name;
     }
 
-    public User(int id, String username, String password, String display_name) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.display_name = display_name;
-    }
-
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public User(int id, String username, String password, String display_name, Float weight, Float height, Float bmi) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.display_name = display_name;
-        this.weight = weight;
-        this.height = height;
-        this.bmi = bmi;
     }
 
     public Float getWeight() {
@@ -100,5 +103,29 @@ public class User {
 
     public void setCreate_at(String create_at) {
         this.create_at = create_at;
+    }
+
+    public int getGender() {
+        return gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
+    }
+
+    public Boolean getVerified() {
+        return isVerified;
+    }
+
+    public void setVerified(Boolean verified) {
+        isVerified = verified;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }

@@ -1,4 +1,4 @@
-package com.example.polyfit_app.Retrofit;
+package com.example.polyfit_app.Service.remote;
 
 import android.util.Base64;
 

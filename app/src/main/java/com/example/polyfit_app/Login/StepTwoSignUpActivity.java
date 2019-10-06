@@ -16,8 +16,8 @@ import android.widget.Toast;
 
 import com.example.polyfit_app.Model.User;
 import com.example.polyfit_app.R;
-import com.example.polyfit_app.Retrofit.PolyFitService;
-import com.example.polyfit_app.Retrofit.RetrofitClient;
+import com.example.polyfit_app.Service.remote.PolyFitService;
+import com.example.polyfit_app.Service.remote.RetrofitClient;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -112,7 +112,7 @@ public class StepTwoSignUpActivity extends AppCompatActivity implements View.OnC
     }
 
     private void registerUser(String displayName, String userName, String password, Float weight, Float height, Float bmi, int gender, String createAt) {
-        mSubscriptions.add(polyFitService.registerUser(displayName, userName, password, weight, height, bmi, gender, createAt)
+        mSubscriptions.add(polyFitService.registerUser(displayName, userName, password, weight, height, gender, createAt)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<String>() {
