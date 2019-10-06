@@ -7,19 +7,20 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.polyfit_app.R;
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements View.OnClickListener{
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
     private String mParam1;
     private String mParam2;
-
     private OnFragmentInteractionListener mListener;
 
     public ProfileFragment() {
@@ -47,8 +48,9 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user, container, false);
+        View view=inflater.inflate(R.layout.fragment_user, container, false);
+        connectView(view);
+        return view;
     }
 
     public void onButtonPressed(Uri uri) {
@@ -74,7 +76,22 @@ public class ProfileFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.ic_Setting:
+                Toast.makeText(getActivity(), "Setting will show", Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
+
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
+    }
+
+    private void connectView(View view){
+        ImageView icSetting=view.findViewById(R.id.ic_Setting);
+        icSetting.setOnClickListener(this);
+
     }
 }
