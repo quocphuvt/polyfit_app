@@ -33,8 +33,6 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnF
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_history));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_user));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
-
         final ViewPager viewPager = findViewById(R.id.pager);
         final PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
