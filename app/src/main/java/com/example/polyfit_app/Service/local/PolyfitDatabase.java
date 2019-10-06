@@ -27,4 +27,5 @@ public abstract class PolyfitDatabase extends RoomDatabase {
     }
 
     public abstract UserDAO  userDAO();
+    public abstract ReminderDAO reminderDAO();
 }
