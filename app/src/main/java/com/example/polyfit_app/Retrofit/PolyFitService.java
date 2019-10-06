@@ -40,7 +40,6 @@ public interface PolyFitService {
     Call<String> getUserByUserName(@Path("username") String username);
 
 
-
     @POST("history/add")
     @FormUrlEncoded
     Observable<String> addHistory(@Field("bmi") Float bmi,

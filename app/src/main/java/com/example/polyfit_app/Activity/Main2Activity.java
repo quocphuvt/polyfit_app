@@ -1,74 +1,63 @@
 package com.example.polyfit_app.Activity;
 
+import android.net.Uri;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
 
-import com.example.polyfit_app.Fragment.FindFriendFragment;
-import com.example.polyfit_app.Fragment.FriendListFragment;
-import com.example.polyfit_app.Fragment.HomeFragment;
-import com.example.polyfit_app.Fragment.ProfileFragment;
+import com.example.polyfit_app.Adapter.PagerAdapter;
+import com.example.polyfit_app.Fragments.HistoriesFragment;
+import com.example.polyfit_app.Fragments.HomeFragment;
+import com.example.polyfit_app.Fragments.ProfileFragment;
+import com.example.polyfit_app.Fragments.DietsFragment;
 import com.example.polyfit_app.R;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.Objects;
 
 
-public class Main2Activity extends AppCompatActivity {
-    private BottomNavigationView mBottomNav;
-    private FrameLayout mMainFrame;
+public class Main2Activity extends AppCompatActivity implements HomeFragment.OnFragmentInteractionListener, DietsFragment.OnFragmentInteractionListener,
+        HistoriesFragment.OnFragmentInteractionListener, ProfileFragment.OnFragmentInteractionListener {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main2);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Objects.requireNonNull(getSupportActionBar()).hide();
-        setContentView(R.layout.main2_activity);
-        mBottomNav = findViewById(R.id.bottom_nav);
-        mMainFrame = findViewById(R.id.main_frame);
-        Fragment messageFragment = new HomeFragment();
-        setFragment(messageFragment);
-        mBottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        TabLayout tabLayout = findViewById(R.id.tabLayout);
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_home));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_diet));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_history));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_user));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        final ViewPager viewPager = findViewById(R.id.pager);
+        final PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(adapter);
+        viewPager.setOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
-                switch (menuItem.getItemId()) {
-                    case R.id.nav_home:
-                        Fragment messageFragment = new HomeFragment();
-                        setFragment(messageFragment);
-                        return true;
-                    case R.id.friendFragment:
-                        Fragment friendFragment = new FriendListFragment();
-                        setFragment(friendFragment);
-                        return true;
-                    case R.id.findFriendFragment:
-                        Fragment findFriend = new FindFriendFragment();
-                        setFragment(findFriend);
-                        return true;
-                    case R.id.nav_profile:
-                        Fragment profileFragment = new ProfileFragment();
-                        setFragment(profileFragment);
-                        return true;
-                    default:
-                        return false;
-                }
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
 
             }
         });
-
-
     }
 
-    public void setFragment(Fragment mFragment) {
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.main_frame, mFragment);
-        fragmentTransaction.commit();
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
-
-
 }
