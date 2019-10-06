@@ -33,6 +33,7 @@ import com.soundcloud.android.crop.Crop;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Objects;
@@ -42,6 +43,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
@@ -133,8 +135,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.imv_avatar:
-                Toast.makeText(getActivity(), "Click on avatar!!!", Toast.LENGTH_SHORT).show();
-//        Picasso.get().load(linkAvatar).into(photoView);
                 mBuilder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()));
                 mView = getLayoutInflater().inflate(R.layout.dialog_view_avatar, null, false);
                 viewAvatar = mView.findViewById(R.id.avatarView);
@@ -146,7 +146,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 changeAvatar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Crop.pickImage(getActivity());
+                        Crop.pickImage(getActivity(),HomeFragment.this);
                     }
                 });
                 break;
@@ -172,7 +172,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     }.getType();
                     List<User> users = gson.fromJson(jsonOutput, listType);
                     Log.e("Phaytv", "Success::" + response.body());
-//                    Log.e("PhayTv",users.get(0).getId()+"\n"+"username"+users.get(0).getUsername()+"\n"+"date"+users.get(0).getCreate_at()+"\n"+"height"+users.get(0).getHeight()+"\n"+"weight"+users.get(0).getWeight()+"\n"+"BMI"+users.get(0).getBmi());
                     assert users != null;
                     setData(users.get(0).getDisplay_name(), users.get(0).getCreate_at(), users.get(0).getHeight(), users.get(0).getWeight(), users.get(0).getBmi());
                 }
@@ -206,4 +205,39 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         tv_weight.setText(String.valueOf(weight));
         tv_bmi.setText(String.valueOf(bmi));
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK){
+            if(requestCode == Crop.REQUEST_PICK){
+                Uri source_uri=data.getData();
+                Uri destination_uri=Uri.fromFile(new File(Objects.requireNonNull(getActivity()).getCacheDir(),"cropped"));
+                Crop.of(source_uri,destination_uri).asSquare().start(getActivity(), HomeFragment.this);
+                viewAvatar.setImageURI(Crop.getOutput(data));
+                Log.e("aaa","abc");
+                tv_ChangeAvatar.setText("Apply");
+                changeAvatar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+//                        updateAvtar();
+//                        imv_avatar.setImageURI(Crop.getOutput(data));
+
+                    }
+                });
+
+            }
+            else  if(requestCode == Crop.REQUEST_CROP){
+                handle_crop(resultCode,data);
+            }
+        }
+
+    }
+    private void handle_crop(int resultCode, Intent data) {
+        if(resultCode==RESULT_OK)
+        {
+            viewAvatar.setImageURI(Crop.getOutput(data));
+        }
+    }
+
 }
