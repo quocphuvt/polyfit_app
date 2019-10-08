@@ -16,8 +16,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.polyfit_app.Activity.Main2Activity;
 import com.example.polyfit_app.R;
-import com.example.polyfit_app.Retrofit.PolyFitService;
-import com.example.polyfit_app.Retrofit.RetrofitClient;
+import com.example.polyfit_app.Service.remote.PolyFitService;
+import com.example.polyfit_app.Service.remote.RetrofitClient;
 import com.example.polyfit_app.Utils.Constants;
 
 import io.reactivex.disposables.CompositeDisposable;

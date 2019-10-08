@@ -3,6 +3,7 @@ package com.example.polyfit_app.Fragments;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,8 +23,8 @@ import com.example.polyfit_app.Activity.Main2Activity;
 import com.example.polyfit_app.Activity.ReminderActivity;
 import com.example.polyfit_app.Model.User;
 import com.example.polyfit_app.R;
-import com.example.polyfit_app.Retrofit.PolyFitService;
-import com.example.polyfit_app.Retrofit.RetrofitClient;
+import com.example.polyfit_app.Service.remote.PolyFitService;
+import com.example.polyfit_app.Service.remote.RetrofitClient;
 import com.example.polyfit_app.Utils.Constants;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.google.gson.Gson;
@@ -156,7 +157,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
     }
@@ -175,7 +175,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     assert users != null;
                     setData(users.get(0).getDisplay_name(), users.get(0).getCreate_at(), users.get(0).getHeight(), users.get(0).getWeight(), users.get(0).getBmi());
                 }
-
             }
 
             @Override

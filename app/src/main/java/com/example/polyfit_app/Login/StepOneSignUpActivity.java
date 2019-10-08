@@ -39,7 +39,6 @@ public class StepOneSignUpActivity extends AppCompatActivity implements View.OnC
         edtUsername = findViewById(R.id.edt_Username);
         edtPassword = findViewById(R.id.edt_Password);
         edtRetypePassword = findViewById(R.id.edt_ReTypePassword);
-
     }
 
     @Override
