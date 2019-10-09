@@ -9,6 +9,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 
 import com.example.polyfit_app.Fragment.TutorialCardFragment;
@@ -17,6 +18,7 @@ import com.example.polyfit_app.R;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class TutorialActivity extends AppCompatActivity implements View.OnClickListener {
     private ViewPager vpager_tutorial;
@@ -33,6 +35,8 @@ public class TutorialActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutorial);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        Objects.requireNonNull(getSupportActionBar()).hide();
         initView();
         sampleTutorials = new ArrayList<>();
         sampleTutorials.add(new Tutorial("Chế độ ăn phù hợp", "Lên danh sách các bữa ăn cùng chế độ dinh dưỡng phù hợp"));
@@ -43,6 +47,8 @@ public class TutorialActivity extends AppCompatActivity implements View.OnClickL
 
         prevTutorial.setOnClickListener(this);
         nextTutorial.setOnClickListener(this);
+
+        vpager_tutorial.setPadding(60, 0 , 60 , 0);
 
         vpager_tutorial.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
