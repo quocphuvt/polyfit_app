@@ -1,38 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="#EAF5FF"
     tools:context=".Activity.TutorialActivity">
-    <RelativeLayout
-        android:layout_alignParentTop="true"
-        android:layout_alignTop="@+id/tutorial_bottom"
-        android:layout_width="match_parent"
+    <LinearLayout
         android:layout_marginTop="50dp"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:orientation="vertical"
+        android:layout_marginBottom="50dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:text="Các chức năng chính của ứng dụng"
+            android:textColor="#2699FB"
+            android:textStyle="bold"
+            android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-            <TextView
-                android:text="Các chức năng chính của ứng dụng"
-                android:textColor="#2699FB"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/vpager_tutorial"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            android:layout_height="wrap_content" />
 
-            </androidx.viewpager.widget.ViewPager>
-        </LinearLayout>
-    </RelativeLayout>
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/vpager_tutorial"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </androidx.viewpager.widget.ViewPager>
+    </LinearLayout>
     <RelativeLayout
-        android:id="@+id/tutorial_bottom"
+        android:layout_weight="0"
+        android:layout_marginBottom="20dp"
         android:padding="10dp"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
@@ -45,7 +44,7 @@
             android:background="@drawable/tutorial_progress_button_boder"
             android:drawableLeft="@drawable/ic_arrow_left_blue"
             android:layout_width="100dp"
-            android:layout_height="50dp" />
+            android:layout_height="40dp" />
         <Button
             android:id="@+id/btn_next_tutorial"
             android:layout_alignParentRight="true"
@@ -54,6 +53,6 @@
             android:background="@drawable/tutorial_progress_button_boder"
             android:drawableRight="@drawable/ic_arrow_right_blue"
             android:layout_width="100dp"
-            android:layout_height="50dp" />
+            android:layout_height="40dp" />
     </RelativeLayout>
-</RelativeLayout>
+</LinearLayout>
