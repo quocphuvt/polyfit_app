@@ -70,6 +70,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void loginUser(String userName, String password) {
+        if(userName.equals("dev")) { //For dev testing
+            startActivity(new Intent(LoginActivity.this, Main2Activity.class));
+            finish();
+            return;
+        }
+
         ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Processing...");
