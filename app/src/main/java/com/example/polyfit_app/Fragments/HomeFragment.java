@@ -2,6 +2,7 @@ package com.example.polyfit_app.Fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.example.polyfit_app.Activity.ExerciseActivity;
 import com.example.polyfit_app.Model.User;
 import com.example.polyfit_app.R;
 import com.example.polyfit_app.Retrofit.PolyFitService;
@@ -49,6 +51,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private OnFragmentInteractionListener mListener;
     PolyFitService polyFitService;
     TextView tv_UserName, tv_startDate, tv_height, tv_weight, tv_bmi;
+    ImageView btn;
     ImageView imv_avatar;
     PhotoView viewAvatar;
     LinearLayout changeAvatar;
@@ -147,6 +150,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     }
                 });
                 break;
+            case R.id.btn:
+                startActivity(new Intent(getActivity(), ExerciseActivity.class));
+                break;
         }
     }
 
@@ -189,6 +195,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         tv_bmi = view.findViewById(R.id.tv_BMI);
         imv_avatar = view.findViewById(R.id.imv_avatar);
         imv_avatar.setOnClickListener(this);
+        btn = view.findViewById(R.id.btn);
+        btn.setOnClickListener(this);
+
     }
 
     private void setData(String userName, String startDate, Float height, Float weight, Float bmi) {
