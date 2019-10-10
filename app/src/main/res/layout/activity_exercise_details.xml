@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/exercise_layout"
+    android:layout_height="match_parent"
+    tools:context=".Activity.ExerciseDetailsActivity">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <include layout="@layout/toolbar" />
+            <LinearLayout
+                android:background="#BCE0FD"
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/tv_sets_detail"
+                        android:gravity="center"
+                        android:textSize="20sp"
+                        android:text="3"
+                        android:fontFamily="@font/roboto"
+                        android:textColor="#2699FB"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:gravity="center"
+                        android:textSize="15sp"
+                        android:text="Sets"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/roboto"
+                        android:textColor="#2699FB"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_weight="0"
+                    android:background="#BCE0FD"
+                    android:layout_width="3dp"
+                    android:layout_height="match_parent"/>
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/tv_reps_detail"
+                        android:gravity="center"
+                        android:textSize="20sp"
+                        android:text="10"
+                        android:fontFamily="@font/roboto"
+                        android:textColor="#2699FB"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:gravity="center"
+                        android:textSize="15sp"
+                        android:text="Reps"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/roboto"
+                        android:textColor="#2699FB"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_weight="0"
+                    android:background="#BCE0FD"
+                    android:layout_width="3dp"
+                    android:layout_height="match_parent"/>
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/tv_rest_time_detail"
+                        android:gravity="center"
+                        android:textSize="20sp"
+                        android:text="15s"
+                        android:fontFamily="@font/roboto"
+                        android:textColor="#2699FB"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:gravity="center"
+                        android:textSize="15sp"
+                        android:text="Rest time"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/roboto"
+                        android:textColor="#2699FB"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+            <!--        Content-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_title_ex_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:gravity="left"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp"
+                    android:text="Dumpbel press"
+                    android:textColor="#2699FB"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_intro_ex_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/roboto"
+                    android:gravity="left"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp"
+                    android:text="Bài tập cơ ngực phổ biến với mọi người có thể tập bất cứ đâu"
+                    android:textColor="#2699FB"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/tv_content_ex_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/roboto"
+                    android:gravity="left"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp"
+                    android:text="Bài tập cơ ngực phổ biến với mọi người có thể tập bất cứ đâu. Bài tập cơ ngực phổ biến với mọi người có thể tập bất cứ đâu. Bài tập cơ ngực phổ biến với mọi người có thể tập bất cứ đâu. Bài tập cơ ngực phổ biến với mọi người có thể tập bất cứ đâu. Bài tập cơ ngực phổ biến với mọi người có thể tập bất cứ đâu"
+                    android:textColor="#2699FB"
+                    android:textSize="15sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_tips"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_diet"
+        app:fabCustomSize="50dp"
+        android:backgroundTint="#03A9F4"
+        android:layout_margin="30dp"
+        android:layout_gravity="bottom|right" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
