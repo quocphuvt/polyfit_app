@@ -18,7 +18,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
-import com.example.polyfit_app.Activity.ExerciseActivity;
+import com.example.polyfit_app.Activity.ExercisesActivity;
+import com.example.polyfit_app.Model.Excercise;
 import com.example.polyfit_app.Model.User;
 import com.example.polyfit_app.R;
 import com.example.polyfit_app.Service.remote.PolyFitService;
@@ -151,7 +152,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 });
                 break;
             case R.id.btn:
-                startActivity(new Intent(getActivity(), ExerciseActivity.class));
+                startActivity(new Intent(getActivity(), ExercisesActivity.class));
                 break;
         }
     }

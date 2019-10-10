@@ -23,7 +23,7 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:background="#2699FB"
+                    android:background="#1791F8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"

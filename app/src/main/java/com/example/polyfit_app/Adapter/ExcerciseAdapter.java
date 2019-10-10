@@ -36,22 +36,11 @@ public class ExcerciseAdapter extends RecyclerView.Adapter<ExerciseViewHolder> {
     public void onBindViewHolder(@NonNull ExerciseViewHolder holder, int position) {
         Excercise excercise = excercises.get(position);
         holder.tv_title.setText(excercise.getTitle());
-        //TODO: holder.iv_image use for set image;
+        //TODO: holder.iv_image use for set image for lat
     }
 
     @Override
     public int getItemCount() {
         return excercises.size();
-    }
-}
-
-class ExerciseViewHolder extends RecyclerView.ViewHolder {
-    protected TextView tv_title;
-    protected ImageView iv_image;
-
-    public ExerciseViewHolder(@NonNull View itemView) {
-        super(itemView);
-        tv_title = itemView.findViewById(R.id.tv_item_title_ex);
-        iv_image = itemView.findViewById(R.id.iv_item_image_ex);
     }
 }
