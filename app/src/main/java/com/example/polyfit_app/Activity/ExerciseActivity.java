@@ -4,36 +4,46 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.WindowManager;
 
-import com.example.polyfit_app.Adapter.ContactAdapter;
+import com.example.polyfit_app.Adapter.ExcerciseAdapter;
+import com.example.polyfit_app.Model.Excercise;
 import com.example.polyfit_app.R;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 
 public class ExerciseActivity extends AppCompatActivity {
-    List<String> listName;
-    RecyclerView cardList;
+    private ArrayList<Excercise> excercises;
+    private RecyclerView rv_exercises;
+
+    private void initView() {
+        rv_exercises=findViewById(R.id.rv_exercises);
+    }
+
+    private void setSampleExercises() {
+        excercises = new ArrayList<>();
+        for(int i = 0; i < 7; i++ ){
+            excercises.add(new Excercise("Fit Arms "+i, ""));
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise);
-        cardList=findViewById(R.id.cardList);
-        listName=new ArrayList<>();
-        listName.add("sup1");
-        listName.add("sup2");
-        listName.add("sup3");
-        @SuppressLint("CutPasteId") RecyclerView recyclerView = (RecyclerView) findViewById(R.id.cardList);
-        recyclerView.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        ContactAdapter contactAdapter=new ContactAdapter(listName);
-        cardList.setAdapter(contactAdapter);
-
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        Objects.requireNonNull(getSupportActionBar()).hide();
+        initView();
+        setSampleExercises();
+        rv_exercises.setHasFixedSize(true);
+        rv_exercises.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+        setDataForExcerciseList(excercises);
     }
 
-
+    private void setDataForExcerciseList(ArrayList<Excercise> excercises) {
+        ExcerciseAdapter excerciseAdapter = new ExcerciseAdapter(excercises, this);
+        rv_exercises.setAdapter(excerciseAdapter);
+    }
 }
