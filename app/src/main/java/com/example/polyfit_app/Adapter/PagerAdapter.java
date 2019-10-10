@@ -11,8 +11,6 @@ import com.example.polyfit_app.Fragments.ProfileFragment;
 import com.example.polyfit_app.Fragments.DietsFragment;
 
 public class PagerAdapter extends FragmentStatePagerAdapter {
-
-
     int numberOfTabs;
 
     public PagerAdapter(FragmentManager fm, int numberOfTabs) {
