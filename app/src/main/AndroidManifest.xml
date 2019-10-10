@@ -14,21 +14,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".SplashScreen" />
-        <activity android:name=".Activity.Main2Activity" />
-        <activity
-            android:name=".Activity.ExercisesActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".Activity.Main2Activity"/>
+        <activity android:name=".Activity.TutorialActivity" />
+        <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activity.ExerciseDetailsActivity"/>
         <activity android:name=".Login.StepTwoSignUpActivity" />
         <activity android:name=".Login.StepOneSignUpActivity" />
         <activity android:name=".Login.LoginActivity" />
-        <activity android:name=".Login.LoginMethod" />
+        <activity android:name=".Login.LoginMethod"></activity>
         <activity android:name="com.soundcloud.android.crop.CropImageActivity" />
     </application>
 

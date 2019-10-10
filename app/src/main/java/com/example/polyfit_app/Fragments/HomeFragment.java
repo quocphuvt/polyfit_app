@@ -2,7 +2,6 @@ package com.example.polyfit_app.Fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,8 +17,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
-import com.example.polyfit_app.Activity.ExercisesActivity;
-import com.example.polyfit_app.Model.Excercise;
 import com.example.polyfit_app.Model.User;
 import com.example.polyfit_app.R;
 import com.example.polyfit_app.Service.remote.PolyFitService;
@@ -52,8 +49,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private OnFragmentInteractionListener mListener;
     PolyFitService polyFitService;
     TextView tv_UserName, tv_startDate, tv_height, tv_weight, tv_bmi;
-    ImageView btn;
-    ImageView imv_avatar;
+    ImageView iv_avatar;
     PhotoView viewAvatar;
     LinearLayout changeAvatar;
     TextView tv_ChangeAvatar;
@@ -129,11 +125,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         mListener = null;
     }
 
-    @SuppressLint("InflateParams")
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.imv_avatar:
+            case R.id.iv_avatar:
                 Toast.makeText(getActivity(), "Click on avatar!!!", Toast.LENGTH_SHORT).show();
 //        Picasso.get().load(linkAvatar).into(photoView);
                 mBuilder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()));
@@ -150,9 +145,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                         Crop.pickImage(getActivity());
                     }
                 });
-                break;
-            case R.id.btn:
-                startActivity(new Intent(getActivity(), ExercisesActivity.class));
                 break;
         }
     }
@@ -192,11 +184,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         tv_height = view.findViewById(R.id.tv_height);
         tv_weight = view.findViewById(R.id.tv_weight);
         tv_bmi = view.findViewById(R.id.tv_BMI);
-        imv_avatar = view.findViewById(R.id.imv_avatar);
-        imv_avatar.setOnClickListener(this);
-        btn = view.findViewById(R.id.btn);
-        btn.setOnClickListener(this);
-
+        iv_avatar = view.findViewById(R.id.iv_avatar);
+        iv_avatar.setOnClickListener(this);
     }
 
     private void setData(String userName, String startDate, Float height, Float weight, Float bmi) {

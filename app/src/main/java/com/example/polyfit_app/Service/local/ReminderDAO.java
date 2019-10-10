@@ -5,6 +5,6 @@ import androidx.room.Query;
 
 @Dao
 public interface ReminderDAO {
-    @Query("SELECT * FROM polyfit_reminder")
-    void getAllReminders();
+//    @Query("SELECT * FROM polyfit_reminder")
+//    void getAllReminders();
 }
