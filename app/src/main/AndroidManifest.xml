@@ -15,13 +15,16 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".SplashScreen">
+
+        </activity>
+        <activity android:name=".Activity.Main2Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.Main2Activity"/>
+
         <activity android:name=".Activity.TutorialActivity" />
         <activity android:name=".Activity.ExerciseDetailsActivity" android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".Activity.ExercisesActivity" android:theme="@style/AppTheme.NoActionBar" />
