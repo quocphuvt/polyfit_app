@@ -5,6 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,9 +20,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.agik.AGIKSwipeButton.Controller.OnSwipeCompleteListener;
+import com.agik.AGIKSwipeButton.View.Swipe_Button_View;
 import com.example.polyfit_app.Activity.Main2Activity;
 import com.example.polyfit_app.Activity.ReminderActivity;
 import com.example.polyfit_app.Model.User;
@@ -30,15 +38,12 @@ import com.github.chrisbanes.photoview.PhotoView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.soundcloud.android.crop.Crop;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.File;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Objects;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -47,25 +52,28 @@ import retrofit2.Retrofit;
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 
-public class HomeFragment extends Fragment implements View.OnClickListener {
+public class HomeFragment extends Fragment implements View.OnClickListener/*, SensorEventListener*/ {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private String mParam1;
     private String mParam2;
     private OnFragmentInteractionListener mListener;
-    PolyFitService polyFitService;
-    TextView tv_UserName, tv_startDate, tv_height, tv_weight, tv_bmi;
-    ImageView imv_avatar,ic_reminder;
-    PhotoView viewAvatar;
-    LinearLayout changeAvatar;
-    TextView tv_ChangeAvatar;
-    AlertDialog mDialog;
-    View mView;
-    AlertDialog.Builder mBuilder;
-
+    private PolyFitService polyFitService;
+    private TextView tv_UserName, tv_startDate, tv_height, tv_weight, tv_bmi;
+    private ImageView imv_avatar,ic_reminder;
+    private PhotoView viewAvatar;
+    private LinearLayout changeAvatar;
+    private TextView tv_ChangeAvatar;
+    private AlertDialog mDialog;
+    private View mView;
+    private AlertDialog.Builder mBuilder;
+    private SensorManager sensorManager;
+    private TextView stepCount;
+    private boolean isRunning=false;
+    private int step=0;
+    private double MagnitudePrevious=0;
     public HomeFragment() {
     }
-
     public static HomeFragment newInstance(String param1, String param2) {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
@@ -105,6 +113,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
         getUserByUserName(sharedPreferences.getString("username", ""));
         connectView(view);
+        sensorManager=(SensorManager)getActivity().getSystemService(Context.SENSOR_SERVICE);
+        SharedPreferences sharedPreferences1=getActivity().getSharedPreferences("StepCount",MODE_PRIVATE);
+        stepCount.setText( sharedPreferences1.getString("Step",""));
+
         return view;
     }
 
@@ -157,6 +169,38 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+    /*    isRunning=true;
+        Sensor countSensor=sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        if(countSensor!=null){
+            sensorManager.registerListener(this,countSensor,SensorManager.SENSOR_DELAY_NORMAL);
+        }else {
+            Log.e("PhayTran","not found sensor!!!");
+        }*/
+    }
+
+//    @Override
+//    public void onSensorChanged(SensorEvent sensorEvent) {
+//            if(isRunning){
+//                float x=sensorEvent.values[0];
+//                float y=sensorEvent.values[1];
+//                float z=sensorEvent.values[2];
+//                double Magnitude=Math.sqrt(x*x+y*y+z*z);
+//                double MagnitudeDenta=Magnitude - MagnitudePrevious;
+//                if(MagnitudeDenta>20){
+//                    step++;
+//                }
+//                stepCount.setText(String.valueOf(step));
+//            }
+//    }
+//
+//    @Override
+//    public void onAccuracyChanged(Sensor sensor, int i) {
+//
+//    }
+
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
     }
@@ -195,6 +239,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         imv_avatar.setOnClickListener(this);
         ic_reminder=view.findViewById(R.id.ic_reminder);
         ic_reminder.setOnClickListener(this);
+        stepCount=view.findViewById(R.id.stepCount);
+
     }
 
     private void setData(String userName, String startDate, Float height, Float weight, Float bmi) {

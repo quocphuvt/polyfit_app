@@ -227,12 +227,15 @@
                        android:layout_width="match_parent"
                        android:layout_height="wrap_content">
                        <TextView
-                           android:text="Tap tay"
+                           android:textSize="30dp"
+                           android:id="@+id/stepCount"
+                           android:text="Step count"
                            android:layout_width="match_parent"
                            android:layout_height="wrap_content"/>
                    </com.google.android.material.card.MaterialCardView>
                </LinearLayout>
            </LinearLayout>
+
 
        </LinearLayout>
 

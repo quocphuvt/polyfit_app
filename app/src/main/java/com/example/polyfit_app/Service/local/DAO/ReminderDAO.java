@@ -21,5 +21,7 @@ public interface ReminderDAO  {
     void update(Reminder ... reminders);
     @Delete
     void delete(Reminder reminders);
+    @Query("UPDATE polyfit_reminder SET turnOn=:turnOn WHERE id = :id")
+    void switchState(int turnOn, int id);
 
 }

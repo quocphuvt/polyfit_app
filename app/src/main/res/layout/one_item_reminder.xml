@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_margin="15dp"
+
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -30,6 +31,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content">
                 <TextView
+                    android:textColor="@color/blue"
                     android:fontFamily="@font/digital"
                     android:id="@+id/tv_hours"
                     android:textAlignment="viewEnd"
@@ -40,12 +42,14 @@
                     android:layout_height="wrap_content"
                     android:gravity="end" />
                 <TextView
+                    android:textColor="@color/blue"
                     android:fontFamily="@font/digital"
                     android:text=" : "
                     android:textSize="50dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <TextView
+                    android:textColor="@color/blue"
                     android:fontFamily="@font/digital"
                     android:id="@+id/tv_minutes"
                     android:textSize="50dp"
@@ -73,6 +77,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                   <com.suke.widget.SwitchButton
+                      app:sb_checked_color="@color/blue"
+                      android:id="@+id/switchReminder"
                       android:layout_alignParentRight="true"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"/>

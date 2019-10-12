@@ -1,11 +1,13 @@
 package com.example.polyfit_app.Activity;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.polyfit_app.Adapter.PagerAdapter;
@@ -17,6 +19,7 @@ import com.example.polyfit_app.Model.Reminder;
 import com.example.polyfit_app.R;
 
 import com.example.polyfit_app.Service.local.PolyfitDatabase;
+import com.example.polyfit_app.Service.local.StepCountServices;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.List;
@@ -32,6 +35,7 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnF
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Objects.requireNonNull(getSupportActionBar()).hide();
 //        getReminder();
+        runServices();
         TabLayout tabLayout = findViewById(R.id.tabLayout);
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_home));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_diet));
@@ -71,6 +75,11 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnF
         for(int i=0;i<reminders.size();i++){
             Log.e("PHAYTV",reminders.get(i).getHour()+"");
         }
+    }
+
+    private void runServices() {
+        Intent serviceIntent = new Intent(this, StepCountServices.class);
+        ContextCompat.startForegroundService(this, serviceIntent);
     }
 
 

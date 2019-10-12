@@ -2,6 +2,7 @@ package com.example.polyfit_app.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import com.example.polyfit_app.Activity.ReminderActivity;
 import com.example.polyfit_app.Model.Reminder;
 import com.example.polyfit_app.R;
 import com.example.polyfit_app.Service.local.PolyfitDatabase;
+import com.suke.widget.SwitchButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -120,8 +122,11 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
             holder.sunday.setImageResource(R.drawable.sunday_blue);
         } else {
             holder.sunday.setImageResource(R.drawable.sunday_white);
+        }if(listReminder.get(position).getTurnOn()==1){
+            holder.switchReminder.setChecked(true);
+        }else {
+            holder.switchReminder.setChecked(false);
         }
-
         holder.btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -151,6 +156,36 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
 
             }
         });
+        holder.switchReminder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int id=listReminder.get(position).getId();
+                Log.e("PhayTran","switch");
+                if(holder.switchReminder.isChecked()){
+                    holder.switchReminder.setChecked(false);
+                    PolyfitDatabase.getInstance(context).reminderDAO().switchState(0,id);
+                    Log.e("PhayTran","Un register");
+                }else {
+                    holder.switchReminder.setChecked(true);
+                    PolyfitDatabase.getInstance(context).reminderDAO().switchState(1,id);
+                    Log.e("PhayTran","register");
+                }
+            }
+        });
+        holder.switchReminder.setOnCheckedChangeListener(new SwitchButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(SwitchButton view, boolean isChecked) {
+                int id=listReminder.get(position).getId();
+                Log.e("PhayTran","switch");
+                if(holder.switchReminder.isChecked()){
+                    PolyfitDatabase.getInstance(context).reminderDAO().switchState(1,id);
+                    Log.e("PhayTran","register");
+                }else {
+                    PolyfitDatabase.getInstance(context).reminderDAO().switchState(0,id);
+                    Log.e("PhayTran","Un register");
+                }
+            }
+        });
 
         changeImage(holder);
 
@@ -171,6 +206,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
         private ItemClickListener itemClickListener;
         LinearLayout layoutButton,layoutDelete;
         CardView btnCancel, btnUpdateAlarm;
+        com.suke.widget.SwitchButton switchReminder;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -191,6 +227,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
             btnCancel = (CardView) itemView.findViewById(R.id.btnCancel);
             btnUpdateAlarm = (CardView) itemView.findViewById(R.id.btnUpdateAlarm);
             layoutDelete=(LinearLayout) itemView.findViewById(R.id.layoutDelete);
+            switchReminder=(com.suke.widget.SwitchButton) itemView.findViewById(R.id.switchReminder);
 
         }
 
