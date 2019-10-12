@@ -9,6 +9,7 @@ import com.example.polyfit_app.Fragments.HistoriesFragment;
 import com.example.polyfit_app.Fragments.HomeFragment;
 import com.example.polyfit_app.Fragments.ProfileFragment;
 import com.example.polyfit_app.Fragments.DietsFragment;
+import com.example.polyfit_app.Fragments.QuotesFragment;
 
 public class PagerAdapter extends FragmentStatePagerAdapter {
     int numberOfTabs;
@@ -26,7 +27,7 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
                 HomeFragment homeFragment = new HomeFragment();
                 return homeFragment;
             case 1:
-                DietsFragment dietsFragment = new DietsFragment();
+                QuotesFragment dietsFragment = new QuotesFragment();
                 return dietsFragment;
             case 2:
                 HistoriesFragment historiesFragment = new HistoriesFragment();
