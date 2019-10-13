@@ -32,6 +32,7 @@ import com.soundcloud.android.crop.Crop;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Objects;
@@ -41,6 +42,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
@@ -204,7 +206,40 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         tv_height.setText(String.valueOf(height));
         tv_weight.setText(String.valueOf(weight));
         tv_bmi.setText(String.valueOf(bmi));
+    }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK){
+            if(requestCode == Crop.REQUEST_PICK){
+                Uri source_uri=data.getData();
+                Uri destination_uri=Uri.fromFile(new File(Objects.requireNonNull(getActivity()).getCacheDir(),"cropped"));
+                Crop.of(source_uri,destination_uri).asSquare().start(getActivity(), HomeFragment.this);
+                viewAvatar.setImageURI(Crop.getOutput(data));
+                Log.e("aaa","abc");
+                tv_ChangeAvatar.setText("Apply");
+                changeAvatar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+//                        updateAvtar();
+//                        imv_avatar.setImageURI(Crop.getOutput(data));
+
+                    }
+                });
+
+            }
+            else  if(requestCode == Crop.REQUEST_CROP){
+                handle_crop(resultCode,data);
+            }
+        }
 
     }
+    private void handle_crop(int resultCode, Intent data) {
+        if(resultCode==RESULT_OK)
+        {
+            viewAvatar.setImageURI(Crop.getOutput(data));
+        }
+    }
+
 }
