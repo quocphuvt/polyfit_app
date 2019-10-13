@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.polyfit_app.Interface.ItemClickListener;
 import com.example.polyfit_app.Model.Excercise;
 import com.example.polyfit_app.R;
 
@@ -19,10 +20,12 @@ import java.util.List;
 public class ExcerciseAdapter extends RecyclerView.Adapter<ExerciseViewHolder> {
     private ArrayList<Excercise> excercises;
     private Context context;
+    private ItemClickListener itemClickListener;
 
-    public ExcerciseAdapter(ArrayList<Excercise> excercises, Context context) {
+    public ExcerciseAdapter(ArrayList<Excercise> excercises, Context context, ItemClickListener itemClickListener) {
         this.excercises = excercises;
         this.context = context;
+        this.itemClickListener = itemClickListener;
     }
 
     @NonNull
@@ -37,6 +40,12 @@ public class ExcerciseAdapter extends RecyclerView.Adapter<ExerciseViewHolder> {
         Excercise excercise = excercises.get(position);
         holder.tv_title.setText(excercise.getTitle());
         //TODO: holder.iv_image use for set image for lat
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                itemClickListener.onClickItem(1);
+            }
+        });
     }
 
     @Override

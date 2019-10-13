@@ -79,6 +79,10 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.x.x'
     implementation 'de.hdodenhof:circleimageview:3.0.1'
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
+    //Bottom sheet
+    implementation 'com.flipboard:bottomsheet-core:1.5.3'
+    implementation 'com.flipboard:bottomsheet-commons:1.5.3'
+
     //Deck (Custom viewpager);
     implementation 'com.github.bloderxd:deck:0.1'
     //Room DB
