@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         setContentView(R.layout.activity_main2);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Objects.requireNonNull(getSupportActionBar()).hide();
-//        getReminder();
         TabLayout tabLayout = findViewById(R.id.tabLayout);
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_home));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_diet));
@@ -66,41 +65,4 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
     public void onFragmentInteraction(Uri uri) {
 
     }
-    //getAlarm
-    private void getReminder(){
-        List<Reminder> reminders= PolyfitDatabase.getInstance(Main2Activity.this).reminderDAO().getReminder();
-        for(int i=0;i<reminders.size();i++){
-            Log.e("PHAYTV",reminders.get(i).getHour()+"");
-        }
-    }
-
-
-//    //Register alarm
-//    if (chk_monday.isChecked()) {
-//        forday(2);
-//    } else if (chk_tuesday.isChecked()) {
-//        forday(3);
-//    } else if (chk_wednesday.isChecked()) {
-//        forday(4);
-//    } else if (chk_thursday.isChecked()) {
-//        forday(5);
-//    } else if (chk_friday.isChecked()) {
-//        forday(6);
-//    } else if (chk_sat.isChecked()) {
-//        forday(7);
-//    } else if (chk_sunday.isChecked()) {
-//        forday(1);
-//    }
-//
-//    public void forday(int week) {
-//
-//        calSet.set(Calendar.DAY_OF_WEEK, week);
-//        calSet.set(Calendar.HOUR_OF_DAY, hour);
-//        calSet.set(Calendar.MINUTE, minuts);
-//        calSet.set(Calendar.SECOND, 0);
-//        calSet.set(Calendar.MILLISECOND, 0);
-//
-//        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
-//                calSet.getTimeInMillis(), 1 * 60 * 60 * 1000, pendingIntent);
-//    }
 }
