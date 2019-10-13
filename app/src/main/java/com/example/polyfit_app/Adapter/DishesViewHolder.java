@@ -11,11 +11,11 @@ import com.example.polyfit_app.R;
 
 public class DishesViewHolder extends RecyclerView.ViewHolder {
     public TextView title;
-    public TextView location;
+//    public TextView  ;
 
     public DishesViewHolder(@NonNull View itemView) {
         super(itemView);
         title = itemView.findViewById(R.id.titleDishes);
-        location = itemView.findViewById(R.id.locationDishes);
+//        location = itemView.findViewById(R.id.locationDishes);
     }
 }

@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -80,6 +81,10 @@ public class TutorialActivity extends AppCompatActivity implements View.OnClickL
                 if(currentIndex < sampleTutorials.size()) {
                     vpager_tutorial.setCurrentItem(currentIndex + 1);
                 }
+
+                if(currentIndex == sampleTutorials.size() - 1) {
+                    startActivity(new Intent(this, MainActivity.class));
+                }
                 break;
         }
     }
@@ -93,7 +98,7 @@ public class TutorialActivity extends AppCompatActivity implements View.OnClickL
         }
 
         if(currentIndex == sampleTutorials.size() - 1) {
-            nextTutorial.setVisibility(View.INVISIBLE);
+            nextTutorial.setText("Tôi đã hiểu");
         } else {
             nextTutorial.setVisibility(View.VISIBLE);
         }

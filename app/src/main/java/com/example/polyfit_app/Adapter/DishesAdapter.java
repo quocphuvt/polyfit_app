@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.polyfit_app.Interface.ItemClickListener;
 import com.example.polyfit_app.Model.Dishes;
 import com.example.polyfit_app.R;
 
@@ -16,10 +17,12 @@ import java.util.ArrayList;
 public class DishesAdapter  extends RecyclerView.Adapter<DishesViewHolder> {
     private ArrayList<Dishes> dishesArrayList;
     private Context context;
+    private ItemClickListener itemClickListener;
 
-    public DishesAdapter(ArrayList<Dishes> dishesArrayList, Context context) {
+    public DishesAdapter(ArrayList<Dishes> dishesArrayList, Context context, ItemClickListener itemClickListener) {
         this.dishesArrayList = dishesArrayList;
         this.context = context;
+        this.itemClickListener = itemClickListener;
     }
 
     @NonNull
@@ -33,7 +36,13 @@ public class DishesAdapter  extends RecyclerView.Adapter<DishesViewHolder> {
     public void onBindViewHolder(@NonNull DishesViewHolder holder, int position) {
         Dishes dishes = dishesArrayList.get(position);
         holder.title.setText(dishesArrayList.get(position).getTitle());
-        holder.location.setText(dishesArrayList.get(position).getLocation());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                itemClickListener.onClickItem(1);
+            }
+        });
+
         //TODO: holder.iv_image use for set image for lat
     }
 

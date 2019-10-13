@@ -40,7 +40,7 @@ public class ExcercisesAdapter extends RecyclerView.Adapter<ExercisesViewHolder>
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                itemClickListener.onClickItem(1);
+//                itemClickListener.onClickItem(1); //TODO: PASS ITEMID FOR CONTEXT
             }
         });
     }

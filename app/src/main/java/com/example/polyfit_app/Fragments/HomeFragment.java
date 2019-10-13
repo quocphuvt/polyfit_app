@@ -19,6 +19,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.polyfit_app.Activity.ExercisesActivity;
 import com.example.polyfit_app.Adapter.ChallengeAdapter;
 import com.example.polyfit_app.Model.Challenge;
 import com.example.polyfit_app.Activity.ReminderActivity;
@@ -57,6 +59,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private OnFragmentInteractionListener mListener;
     private RecyclerView rv_challenges;
     private ArrayList<Challenge> sampleChanlleges;
+    private LinearLayout abs_exercise_layout;
     PolyFitService polyFitService;
     TextView tv_UserName, tv_startDate, tv_height, tv_weight, tv_bmi;
     ImageView iv_avatar, ic_reminder;
@@ -171,6 +174,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             case R.id.ic_reminder:
                 startActivity(new Intent(getActivity(), ReminderActivity.class));
                 break;
+            case R.id.abs_exercise_layout:
+                startActivity(new Intent(getActivity(), ExercisesActivity.class));
         }
     }
 
@@ -212,9 +217,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         tv_bmi = view.findViewById(R.id.tv_BMI);
         iv_avatar = view.findViewById(R.id.iv_avatar);
         rv_challenges = view.findViewById(R.id.rv_challenges);
+        abs_exercise_layout = view.findViewById(R.id.abs_exercise_layout);
         iv_avatar.setOnClickListener(this);
         ic_reminder=view.findViewById(R.id.ic_reminder);
         ic_reminder.setOnClickListener(this);
+        abs_exercise_layout.setOnClickListener(this);
     }
 
     private void setData(String userName, String startDate, Float height, Float weight, Float bmi) {
