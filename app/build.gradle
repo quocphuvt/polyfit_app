@@ -11,17 +11,17 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-  /*      javaCompileOptions {
+        javaCompileOptions {
             annotationProcessorOptions {
                 arguments = ["room.schemaLocation":
                                      "$projectDir/schemas".toString()]
             }
-        }*/
+        }
     }
- /*   sourceSets {
+    sourceSets {
         androidTest.assets.srcDirs +=
                 files("$projectDir/schemas".toString())
-    }*/
+    }
 
     buildTypes {
         release {
@@ -79,13 +79,12 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.x.x'
     implementation 'de.hdodenhof:circleimageview:3.0.1'
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
+    //Deck (Custom viewpager);
+    implementation 'com.github.bloderxd:deck:0.1'
     //Room DB
     implementation 'android.arch.persistence.room:runtime:2.1.0'
     annotationProcessor 'android.arch.persistence.room:compiler:2.1.0'
     androidTestImplementation 'android.arch.persistence.room:testing:2.1.0'
-    implementation 'androidx.room:room-runtime:2.1.0'
-    annotationProcessor 'androidx.room:room-compiler:2.1.0'
-
 
     //PhayTRan
 
@@ -108,11 +107,7 @@ dependencies {
     // Test helpers for LiveData
     testImplementation "android.arch.core:core-testing:1.1.0"
 
-    // Test helpers for Room
-    testImplementation "android.arch.persistence.room:testing:1.0.0"
     //Swith button
     implementation 'com.github.zcweng:switch-button:0.0.3@aar'
-
-
 
 }
