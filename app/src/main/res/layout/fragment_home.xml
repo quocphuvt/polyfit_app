@@ -294,6 +294,7 @@
                             app:cardBackgroundColor="#F1F9FF">
 
                             <LinearLayout
+                                android:id="@+id/abs_exercise_layout"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical"

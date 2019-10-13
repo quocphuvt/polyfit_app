@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.polyfit_app.Adapter.PagerAdapter;
+import com.example.polyfit_app.Fragments.DishesFragment;
 import com.example.polyfit_app.Fragments.HistoriesFragment;
 import com.example.polyfit_app.Fragments.HomeFragment;
 import com.example.polyfit_app.Fragments.ProfileFragment;
@@ -23,7 +24,7 @@ import java.util.List;
 import java.util.Objects;
 
 
-public class MainActivity extends AppCompatActivity implements HomeFragment.OnFragmentInteractionListener, DietsFragment.OnFragmentInteractionListener,
+public class MainActivity extends AppCompatActivity implements HomeFragment.OnFragmentInteractionListener, DishesFragment.OnFragmentInteractionListener,
         HistoriesFragment.OnFragmentInteractionListener, ProfileFragment.OnFragmentInteractionListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
