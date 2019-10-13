@@ -12,11 +12,10 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 
-import com.example.polyfit_app.Fragment.TutorialCardFragment;
+import com.example.polyfit_app.Fragments.TutorialCardFragment;
 import com.example.polyfit_app.Model.Tutorial;
 import com.example.polyfit_app.R;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Objects;
 

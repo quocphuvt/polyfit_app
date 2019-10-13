@@ -17,7 +17,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import com.example.polyfit_app.Adapter.ChallengeAdapter;
+import com.example.polyfit_app.Model.Challenge;
 import com.example.polyfit_app.Activity.ReminderActivity;
 import com.example.polyfit_app.Model.User;
 import com.example.polyfit_app.R;
@@ -34,6 +37,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -51,6 +55,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private String mParam1;
     private String mParam2;
     private OnFragmentInteractionListener mListener;
+    private RecyclerView rv_challenges;
+    private ArrayList<Challenge> sampleChanlleges;
     PolyFitService polyFitService;
     TextView tv_UserName, tv_startDate, tv_height, tv_weight, tv_bmi;
     ImageView iv_avatar, ic_reminder;
@@ -103,7 +109,19 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
         getUserByUserName(sharedPreferences.getString("username", ""));
         connectView(view);
+        sampleChanlleges = new ArrayList<>();
+        sampleChanlleges.add(new Challenge("30 ngày thanh lọc", "Thử thách 30 ngày thanh lọc cơ thể", ""));
+        sampleChanlleges.add(new Challenge("16 ngày giảm cân", "Thử thách 16 ngảy giảm cân", ""));
+        sampleChanlleges.add(new Challenge("1 ngày ăn kiêng", "Thử thách 1 ngày thanh lọc cơ thể", ""));
+        renderChallenges(sampleChanlleges);
         return view;
+    }
+
+    private void renderChallenges (ArrayList<Challenge> challenges) {
+        ChallengeAdapter challengeAdapter = new ChallengeAdapter(challenges, getContext());
+        rv_challenges.setHasFixedSize(true);
+        rv_challenges.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+        rv_challenges.setAdapter(challengeAdapter);
     }
 
     public void onButtonPressed(Uri uri) {
@@ -129,7 +147,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         mListener = null;
     }
 
-    @SuppressLint("InflateParams")
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -177,7 +194,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     assert users != null;
                     setData(users.get(0).getDisplay_name(), users.get(0).getCreate_at(), users.get(0).getHeight(), users.get(0).getWeight(), users.get(0).getBmi());
                 }
-
             }
 
             @Override
@@ -195,6 +211,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         tv_weight = view.findViewById(R.id.tv_weight);
         tv_bmi = view.findViewById(R.id.tv_BMI);
         iv_avatar = view.findViewById(R.id.iv_avatar);
+        rv_challenges = view.findViewById(R.id.rv_challenges);
         iv_avatar.setOnClickListener(this);
         ic_reminder=view.findViewById(R.id.ic_reminder);
         ic_reminder.setOnClickListener(this);

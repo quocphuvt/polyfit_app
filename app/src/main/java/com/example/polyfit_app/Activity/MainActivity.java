@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Objects;
 
 
-public class Main2Activity extends AppCompatActivity implements HomeFragment.OnFragmentInteractionListener, DietsFragment.OnFragmentInteractionListener,
+public class MainActivity extends AppCompatActivity implements HomeFragment.OnFragmentInteractionListener, DietsFragment.OnFragmentInteractionListener,
         HistoriesFragment.OnFragmentInteractionListener, ProfileFragment.OnFragmentInteractionListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

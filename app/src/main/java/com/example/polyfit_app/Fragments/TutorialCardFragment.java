@@ -1,4 +1,4 @@
-package com.example.polyfit_app.Fragment;
+package com.example.polyfit_app.Fragments;
 
 
 import android.os.Bundle;
