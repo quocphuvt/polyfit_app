@@ -2,6 +2,7 @@ package com.example.polyfit_app.Fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.example.polyfit_app.Activity.ReminderActivity;
 import com.example.polyfit_app.Model.User;
 import com.example.polyfit_app.R;
 import com.example.polyfit_app.Service.remote.PolyFitService;
@@ -30,6 +32,7 @@ import com.soundcloud.android.crop.Crop;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Objects;
@@ -39,6 +42,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
@@ -49,7 +53,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private OnFragmentInteractionListener mListener;
     PolyFitService polyFitService;
     TextView tv_UserName, tv_startDate, tv_height, tv_weight, tv_bmi;
-    ImageView iv_avatar;
+    ImageView iv_avatar, ic_reminder;
     PhotoView viewAvatar;
     LinearLayout changeAvatar;
     TextView tv_ChangeAvatar;
@@ -125,6 +129,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         mListener = null;
     }
 
+    @SuppressLint("InflateParams")
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -146,8 +151,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     }
                 });
                 break;
+            case R.id.ic_reminder:
+                startActivity(new Intent(getActivity(), ReminderActivity.class));
+                break;
         }
     }
+
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
@@ -168,6 +177,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     assert users != null;
                     setData(users.get(0).getDisplay_name(), users.get(0).getCreate_at(), users.get(0).getHeight(), users.get(0).getWeight(), users.get(0).getBmi());
                 }
+
             }
 
             @Override
@@ -186,6 +196,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         tv_bmi = view.findViewById(R.id.tv_BMI);
         iv_avatar = view.findViewById(R.id.iv_avatar);
         iv_avatar.setOnClickListener(this);
+        ic_reminder=view.findViewById(R.id.ic_reminder);
+        ic_reminder.setOnClickListener(this);
     }
 
     private void setData(String userName, String startDate, Float height, Float weight, Float bmi) {
@@ -195,4 +207,39 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         tv_weight.setText(String.valueOf(weight));
         tv_bmi.setText(String.valueOf(bmi));
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK){
+            if(requestCode == Crop.REQUEST_PICK){
+                Uri source_uri=data.getData();
+                Uri destination_uri=Uri.fromFile(new File(Objects.requireNonNull(getActivity()).getCacheDir(),"cropped"));
+                Crop.of(source_uri,destination_uri).asSquare().start(getActivity(), HomeFragment.this);
+                viewAvatar.setImageURI(Crop.getOutput(data));
+                Log.e("aaa","abc");
+                tv_ChangeAvatar.setText("Apply");
+                changeAvatar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+//                        updateAvtar();
+//                        imv_avatar.setImageURI(Crop.getOutput(data));
+
+                    }
+                });
+
+            }
+            else  if(requestCode == Crop.REQUEST_CROP){
+                handle_crop(resultCode,data);
+            }
+        }
+
+    }
+    private void handle_crop(int resultCode, Intent data) {
+        if(resultCode==RESULT_OK)
+        {
+            viewAvatar.setImageURI(Crop.getOutput(data));
+        }
+    }
+
 }

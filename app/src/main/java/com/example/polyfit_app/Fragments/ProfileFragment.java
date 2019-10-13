@@ -2,6 +2,8 @@ package com.example.polyfit_app.Fragments;
 
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,7 +14,9 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.polyfit_app.Login.LoginMethod;
 import com.example.polyfit_app.R;
+import com.example.polyfit_app.Utils.Constants;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener{
 
@@ -79,8 +83,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.ic_Setting:
-                Toast.makeText(getActivity(), "Setting will show", Toast.LENGTH_SHORT).show();
+            case R.id.icLogout:
+                SharedPreferences.Editor sharedPreferences=getActivity().getSharedPreferences(Constants.LOGIN,Context.MODE_PRIVATE).edit();
+                sharedPreferences.putString("username","");
+                sharedPreferences.putString("password","");
+                sharedPreferences.apply();
+                startActivity(new Intent(getActivity(), LoginMethod.class));
+                getActivity().finish();
                 break;
         }
     }
@@ -90,7 +99,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     }
 
     private void connectView(View view){
-        ImageView icSetting=view.findViewById(R.id.ic_Setting);
+        ImageView icSetting=view.findViewById(R.id.icLogout);
         icSetting.setOnClickListener(this);
 
     }

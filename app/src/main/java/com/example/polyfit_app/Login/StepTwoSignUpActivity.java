@@ -121,7 +121,7 @@ public class StepTwoSignUpActivity extends AppCompatActivity implements View.OnC
                         if (s.contains("User already exists")) {
                             Toast.makeText(StepTwoSignUpActivity.this, "" + s, Toast.LENGTH_SHORT).show();
                         } else {
-                            getUserByUserName(userName);
+//                            getUserByUserName(userName);
                             startActivity(new Intent(StepTwoSignUpActivity.this, LoginActivity.class));
 
                         }
@@ -130,43 +130,43 @@ public class StepTwoSignUpActivity extends AppCompatActivity implements View.OnC
     }
 
 
-    private void addHistory(float user_bmi, int user_id) {
-        mSubscriptions.add(polyFitService.addHistory(user_bmi, user_id)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<String>() {
-                    @Override
-                    public void call(String s) {
-                        if (s.contains("Add Success!")) {
-                            startActivity(new Intent(StepTwoSignUpActivity.this, LoginActivity.class));
-                        } else
-                            Toast.makeText(StepTwoSignUpActivity.this, "" + s, Toast.LENGTH_SHORT).show();
-                    }
-                }));
-    }
+//    private void addHistory(float user_bmi, int user_id) {
+//        mSubscriptions.add(polyFitService.addHistory(user_bmi, user_id)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Action1<String>() {
+//                    @Override
+//                    public void call(String s) {
+//                        if (s.contains("Add Success!")) {
+//                            startActivity(new Intent(StepTwoSignUpActivity.this, LoginActivity.class));
+//                        } else
+//                            Toast.makeText(StepTwoSignUpActivity.this, "" + s, Toast.LENGTH_SHORT).show();
+//                    }
+//                }));
+//    }
 
-    private void getUserByUserName(String userName) {
-        polyFitService.getUserByUserName(userName).enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                if (response.isSuccessful()) {
-                    Gson gson = new Gson();
-                    String jsonOutput = response.body();
-                    Type listType = new TypeToken<List<User>>() {
-                    }.getType();
-                    List<User> users = gson.fromJson(jsonOutput, listType);
-                    Log.e("Phaytv", "Success::" + response.body());
-                    Log.e("PhayTv", users.get(0).getId() + "");
-                    addHistory(users.get(0).getBmi(), users.get(0).getId());
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-
-            }
-        });
-    }
+//    private void getUserByUserName(String userName) {
+//        polyFitService.getUserByUserName(userName).enqueue(new Callback<String>() {
+//            @Override
+//            public void onResponse(Call<String> call, Response<String> response) {
+//                if (response.isSuccessful()) {
+//                    Gson gson = new Gson();
+//                    String jsonOutput = response.body();
+//                    Type listType = new TypeToken<List<User>>() {
+//                    }.getType();
+//                    List<User> users = gson.fromJson(jsonOutput, listType);
+//                    Log.e("Phaytv", "Success::" + response.body());
+//                    Log.e("PhayTv", users.get(0).getId() + "");
+//                    addHistory(users.get(0).getBmi(), users.get(0).getId());
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<String> call, Throwable t) {
+//
+//            }
+//        });
+//    }
 
 }

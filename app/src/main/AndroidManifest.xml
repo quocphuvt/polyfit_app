@@ -10,7 +10,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
@@ -21,6 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activity.ReminderActivity"></activity>
         <activity android:name=".Activity.Main2Activity"/>
         <activity android:name=".Activity.TutorialActivity" />
         <activity android:name=".Activity.ExerciseDetailsActivity" android:theme="@style/AppTheme.NoActionBar"/>
@@ -28,7 +29,7 @@
         <activity android:name=".Login.StepTwoSignUpActivity" />
         <activity android:name=".Login.StepOneSignUpActivity" />
         <activity android:name=".Login.LoginActivity" />
-        <activity android:name=".Login.LoginMethod"/>
+        <activity android:name=".Login.LoginMethod" />
         <activity android:name="com.soundcloud.android.crop.CropImageActivity" />
     </application>
 
