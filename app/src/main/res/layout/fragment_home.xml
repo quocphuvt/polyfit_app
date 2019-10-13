@@ -23,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <ImageView
-                android:id="@+id/ic_reminder"
+                android:id="@+id/btn"
                 android:layout_margin="20dp"
                 android:layout_gravity="end"
                 android:src="@drawable/ic_bell"
@@ -32,7 +32,6 @@
         </androidx.cardview.widget.CardView>
     </RelativeLayout>
     <RelativeLayout
-        android:id="@+id/labelProfile"
         android:layout_marginHorizontal="50dp"
         android:layout_marginTop="50dp"
         android:layout_width="match_parent"
@@ -181,62 +180,6 @@
         </androidx.cardview.widget.CardView>
 
     </RelativeLayout>
-   <androidx.core.widget.NestedScrollView
-       android:layout_margin="10dp"
-       android:layout_below="@+id/labelProfile"
-       android:layout_width="match_parent"
-       android:layout_height="match_parent">
-       <LinearLayout
-           android:layout_marginTop="20dp"
-           android:layout_marginHorizontal="10dp"
-           android:layout_below="@+id/labelProfile"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content">
-           <LinearLayout
-               android:layout_weight="2"
-               android:orientation="horizontal"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content">
-               <LinearLayout
-                   android:orientation="vertical"
-                   android:layout_margin="5dp"
-                   android:layout_weight="1"
-                   android:background="#FFFFFF"
-                   android:layout_width="0dp"
-                   android:layout_height="wrap_content">
-                   <TextView
-                       android:layout_gravity="center"
-                       android:gravity="center"
-                       android:text="Body parts"
-                       android:layout_width="match_parent"
-                       android:layout_height="wrap_content"/>
-                   <TextView
-                       android:layout_gravity="center"
-                       android:gravity="center"
-                        android:text="Lorem ipslum"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-               </LinearLayout>
-               <LinearLayout
-                   android:layout_margin="5dp"
-                   android:layout_weight="1"
-                   android:layout_width="0dp"
-                   android:layout_height="wrap_content">
-                   <com.google.android.material.card.MaterialCardView
-                       app:cardCornerRadius="10dp"
-                       android:layout_width="match_parent"
-                       android:layout_height="wrap_content">
-                       <TextView
-                           android:text="Tap tay"
-                           android:layout_width="match_parent"
-                           android:layout_height="wrap_content"/>
-                   </com.google.android.material.card.MaterialCardView>
-               </LinearLayout>
-           </LinearLayout>
-
-       </LinearLayout>
-
-   </androidx.core.widget.NestedScrollView>
 
 
 
