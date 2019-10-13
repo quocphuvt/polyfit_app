@@ -2,6 +2,7 @@ package com.example.polyfit_app.Fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.example.polyfit_app.Activity.ReminderActivity;
 import com.example.polyfit_app.Model.User;
 import com.example.polyfit_app.R;
 import com.example.polyfit_app.Service.remote.PolyFitService;
@@ -49,7 +51,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private OnFragmentInteractionListener mListener;
     PolyFitService polyFitService;
     TextView tv_UserName, tv_startDate, tv_height, tv_weight, tv_bmi;
-    ImageView iv_avatar;
+    ImageView iv_avatar, ic_reminder;
     PhotoView viewAvatar;
     LinearLayout changeAvatar;
     TextView tv_ChangeAvatar;
@@ -125,6 +127,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         mListener = null;
     }
 
+    @SuppressLint("InflateParams")
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -146,8 +149,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     }
                 });
                 break;
+            case R.id.ic_reminder:
+                startActivity(new Intent(getActivity(), ReminderActivity.class));
+                break;
         }
     }
+
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
@@ -168,6 +175,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     assert users != null;
                     setData(users.get(0).getDisplay_name(), users.get(0).getCreate_at(), users.get(0).getHeight(), users.get(0).getWeight(), users.get(0).getBmi());
                 }
+
             }
 
             @Override
@@ -186,6 +194,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         tv_bmi = view.findViewById(R.id.tv_BMI);
         iv_avatar = view.findViewById(R.id.iv_avatar);
         iv_avatar.setOnClickListener(this);
+        ic_reminder=view.findViewById(R.id.ic_reminder);
+        ic_reminder.setOnClickListener(this);
     }
 
     private void setData(String userName, String startDate, Float height, Float weight, Float bmi) {
@@ -194,5 +204,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         tv_height.setText(String.valueOf(height));
         tv_weight.setText(String.valueOf(weight));
         tv_bmi.setText(String.valueOf(bmi));
+
+
     }
 }
