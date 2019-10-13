@@ -1,6 +1,5 @@
 package com.example.polyfit_app.Fragments;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,9 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.polyfit_app.Adapter.DishesAdapter;
-import com.example.polyfit_app.Adapter.ExcerciseAdapter;
 import com.example.polyfit_app.Model.Dishes;
-import com.example.polyfit_app.Model.Excercise;
 import com.example.polyfit_app.R;
 
 import java.util.ArrayList;

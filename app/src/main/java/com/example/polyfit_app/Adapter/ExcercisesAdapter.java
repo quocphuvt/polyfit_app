@@ -4,8 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,14 +13,13 @@ import com.example.polyfit_app.Model.Excercise;
 import com.example.polyfit_app.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class ExcerciseAdapter extends RecyclerView.Adapter<ExerciseViewHolder> {
+public class ExcercisesAdapter extends RecyclerView.Adapter<ExercisesViewHolder> {
     private ArrayList<Excercise> excercises;
     private Context context;
     private ItemClickListener itemClickListener;
 
-    public ExcerciseAdapter(ArrayList<Excercise> excercises, Context context, ItemClickListener itemClickListener) {
+    public ExcercisesAdapter(ArrayList<Excercise> excercises, Context context, ItemClickListener itemClickListener) {
         this.excercises = excercises;
         this.context = context;
         this.itemClickListener = itemClickListener;
@@ -30,13 +27,13 @@ public class ExcerciseAdapter extends RecyclerView.Adapter<ExerciseViewHolder> {
 
     @NonNull
     @Override
-    public ExerciseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ExercisesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.one_item_exercise, parent, false);
-        return new ExerciseViewHolder(view);
+        return new ExercisesViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ExerciseViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ExercisesViewHolder holder, int position) {
         Excercise excercise = excercises.get(position);
         holder.tv_title.setText(excercise.getTitle());
         //TODO: holder.iv_image use for set image for lat
