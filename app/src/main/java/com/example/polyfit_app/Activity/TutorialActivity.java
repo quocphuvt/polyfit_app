@@ -7,16 +7,16 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 
-import com.example.polyfit_app.Fragment.TutorialCardFragment;
+import com.example.polyfit_app.Fragments.TutorialCardFragment;
 import com.example.polyfit_app.Model.Tutorial;
 import com.example.polyfit_app.R;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -81,6 +81,10 @@ public class TutorialActivity extends AppCompatActivity implements View.OnClickL
                 if(currentIndex < sampleTutorials.size()) {
                     vpager_tutorial.setCurrentItem(currentIndex + 1);
                 }
+
+                if(currentIndex == sampleTutorials.size() - 1) {
+                    startActivity(new Intent(this, MainActivity.class));
+                }
                 break;
         }
     }
@@ -94,7 +98,7 @@ public class TutorialActivity extends AppCompatActivity implements View.OnClickL
         }
 
         if(currentIndex == sampleTutorials.size() - 1) {
-            nextTutorial.setVisibility(View.INVISIBLE);
+            nextTutorial.setText("Tôi đã hiểu");
         } else {
             nextTutorial.setVisibility(View.VISIBLE);
         }

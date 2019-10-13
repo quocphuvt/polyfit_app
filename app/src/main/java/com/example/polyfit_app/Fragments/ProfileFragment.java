@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.polyfit_app.Login.LoginMethod;
+import com.example.polyfit_app.Activity.Login.LoginMethod;
 import com.example.polyfit_app.R;
 import com.example.polyfit_app.Utils.Constants;
 

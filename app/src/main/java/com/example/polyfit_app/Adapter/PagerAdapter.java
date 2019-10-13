@@ -5,11 +5,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
+import com.example.polyfit_app.Fragments.DishesFragment;
 import com.example.polyfit_app.Fragments.HistoriesFragment;
 import com.example.polyfit_app.Fragments.HomeFragment;
 import com.example.polyfit_app.Fragments.ProfileFragment;
 import com.example.polyfit_app.Fragments.DietsFragment;
 import com.example.polyfit_app.Fragments.QuotesFragment;
+import com.example.polyfit_app.Fragments.TutorialCardFragment;
+import com.example.polyfit_app.Model.Tutorial;
 
 public class PagerAdapter extends FragmentStatePagerAdapter {
     int numberOfTabs;
@@ -27,11 +30,11 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
                 HomeFragment homeFragment = new HomeFragment();
                 return homeFragment;
             case 1:
-                QuotesFragment dietsFragment = new QuotesFragment();
+                DishesFragment dietsFragment = new DishesFragment();
                 return dietsFragment;
             case 2:
-                HistoriesFragment historiesFragment = new HistoriesFragment();
-                return historiesFragment;
+                QuotesFragment quotesFragment = new QuotesFragment();
+                return quotesFragment;
             case 3:
                 ProfileFragment profileFragment = new ProfileFragment();
                 return profileFragment;

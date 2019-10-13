@@ -1,4 +1,4 @@
-package com.example.polyfit_app.Login;
+package com.example.polyfit_app.Activity.Login;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -14,7 +14,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.polyfit_app.Activity.Main2Activity;
+import com.example.polyfit_app.Activity.MainActivity;
+import com.example.polyfit_app.Activity.TutorialActivity;
 import com.example.polyfit_app.R;
 import com.example.polyfit_app.Service.remote.PolyFitService;
 import com.example.polyfit_app.Service.remote.RetrofitClient;
@@ -71,7 +72,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void loginUser(String userName, String password) {
         if(userName.equals("dev")) { //For dev testing
-            startActivity(new Intent(LoginActivity.this, Main2Activity.class));
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
             return;
         }
@@ -101,7 +102,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             editor.apply();
                             progressDialog.dismiss();
                             Log.e("PhayTran", "username:" + userName + "\n" + "password" + password);
-                            startActivity(new Intent(LoginActivity.this, Main2Activity.class));
+                            startActivity(new Intent(LoginActivity.this, TutorialActivity.class));
                             finish();
                         }
 
