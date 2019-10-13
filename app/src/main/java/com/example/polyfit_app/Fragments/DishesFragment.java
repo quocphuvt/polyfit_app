@@ -56,15 +56,15 @@ public class DishesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_dishes_fragment, container, false);
-//        recyclerView = view.findViewById(R.id.viewDishes);
-//        dishesArrayList = new ArrayList<>();
-//        for (int i = 0; i < 10; i++) {
-//            Dishes dishes = new Dishes("abc", "hcm");
-//            dishesArrayList.add(dishes);
-//        }
-//        recyclerView.setHasFixedSize(true);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
-//        setDataForDishesList(dishesArrayList);
+        recyclerView = view.findViewById(R.id.viewDishes);
+        dishesArrayList = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            Dishes dishes = new Dishes("abc", "hcm");
+            dishesArrayList.add(dishes);
+        }
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
+        setDataForDishesList(dishesArrayList);
         return view;
     }
 
