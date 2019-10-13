@@ -8,9 +8,10 @@ import androidx.room.RoomDatabase;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.example.polyfit_app.Model.Reminder;
 import com.example.polyfit_app.Model.User;
 
-@Database(entities = {User.class}, version = 1)
+@Database(entities = {User.class, Reminder.class}, version = 2)
 
 public abstract class PolyfitDatabase extends RoomDatabase {
     private static final String DB_NAME = "polyfit_db";
@@ -20,6 +21,7 @@ public abstract class PolyfitDatabase extends RoomDatabase {
         if(instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(), PolyfitDatabase.class, DB_NAME)
             .fallbackToDestructiveMigration()
+            .allowMainThreadQueries()
             .build();
         }
 

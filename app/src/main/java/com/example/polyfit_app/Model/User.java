@@ -10,7 +10,7 @@ public class User {
     private int id;
     @ColumnInfo(name = "username")
     private String username;
-    @ColumnInfo(name = "passwork")
+    @ColumnInfo(name = "password")
     private String password;
     @ColumnInfo(name = "display_name")
     private String display_name;

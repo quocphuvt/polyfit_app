@@ -112,6 +112,11 @@ public class DishesFragment extends Fragment implements ItemClickListener {
         showDishBottomSheet();
     }
 
+    @Override
+    public void onClick(View view, int posittion) {
+
+    }
+
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);

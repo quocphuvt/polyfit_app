@@ -61,12 +61,14 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
         }else{
             holder.minutes.setText(String.valueOf(listReminder.get(position).getMinute()));
         }
-        holder.setItemClickListener(new ItemClickListener() {
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view, int posittion) {
-//                Toast.makeText(context, "Click on", Toast.LENGTH_SHORT).show();
+            public void onClick(View view) {
+
             }
         });
+
         holder.dropdown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -201,8 +203,8 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
 
         @Override
         public void onClick(View v) {
+            Toast.makeText(context, ""+getAdapterPosition(), Toast.LENGTH_SHORT);
             itemClickListener.onClick(v, getAdapterPosition());
-
         }
     }
 

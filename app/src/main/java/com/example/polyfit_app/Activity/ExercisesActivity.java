@@ -1,6 +1,7 @@
 package com.example.polyfit_app.Activity;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.polyfit_app.Adapter.ExcercisesAdapter;
 import com.example.polyfit_app.Interface.ItemClickListener;
@@ -53,5 +54,10 @@ public class ExercisesActivity extends AppCompatActivity implements ItemClickLis
     @Override
     public void onClickItem(int id) {
 //        showDishBottomSheet();
+    }
+
+    @Override
+    public void onClick(View view, int posittion) {
+
     }
 }
