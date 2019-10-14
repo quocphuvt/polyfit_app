@@ -46,6 +46,7 @@ dependencies {
 
     implementation 'com.squareup.okhttp3:logging-interceptor:3.3.1'
     implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
+    implementation 'com.github.gratusik:AGIKSwipeButton:1.0.1'
 
     //RxJava
     implementation 'com.squareup.retrofit2:adapter-rxjava:2.1.0'

@@ -1,4 +1,4 @@
-package com.example.polyfit_app.Service.local;
+package com.example.polyfit_app.Service.local.DAO;
 
 import androidx.room.Dao;
 import androidx.room.Insert;

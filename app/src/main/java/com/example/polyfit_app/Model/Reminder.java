@@ -27,8 +27,11 @@ public class Reminder {
     private int saturday;
     @ColumnInfo(name = "sunday")
     private int sunday;
+    @ColumnInfo(name = "turnOn")
+    private int turnOn;
     @ColumnInfo(name = "note")
     private String note;
+
 
     public Reminder() {
     }
@@ -49,7 +52,7 @@ public class Reminder {
     }
 
     @Ignore
-    public Reminder(int id, int hour, int minute, int monday, int tuesday, int wednesday, int thursday, int friday, int saturday, int sunday, String note) {
+    public Reminder(int id, int hour, int minute, int monday, int tuesday, int wednesday, int thursday, int friday, int saturday, int sunday, String note,int turnOn) {
         this.id = id;
         this.hour = hour;
         this.minute = minute;
@@ -61,10 +64,11 @@ public class Reminder {
         this.saturday = saturday;
         this.sunday = sunday;
         this.note = note;
+        this.turnOn=turnOn;
     }
 
     @Ignore
-    public Reminder(int hour, int minute, int monday, int tuesday, int wednesday, int thursday, int friday, int saturday, int sunday, String note) {
+    public Reminder(int hour, int minute, int monday, int tuesday, int wednesday, int thursday, int friday, int saturday, int sunday, String note,int turnOn) {
         this.hour = hour;
         this.minute = minute;
         this.monday = monday;
@@ -75,7 +79,9 @@ public class Reminder {
         this.saturday = saturday;
         this.sunday = sunday;
         this.note = note;
+        this.turnOn=turnOn;
     }
+
 
     public int getMonday() {
         return monday;
@@ -163,5 +169,13 @@ public class Reminder {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public int getTurnOn() {
+        return turnOn;
+    }
+
+    public void setTurnOn(int turnOn) {
+        this.turnOn = turnOn;
     }
 }

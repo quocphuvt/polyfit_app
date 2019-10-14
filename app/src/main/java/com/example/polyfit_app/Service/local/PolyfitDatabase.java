@@ -10,8 +10,10 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.polyfit_app.Model.Reminder;
 import com.example.polyfit_app.Model.User;
+import com.example.polyfit_app.Service.local.DAO.ReminderDAO;
+import com.example.polyfit_app.Service.local.DAO.UserDAO;
 
-@Database(entities = {User.class, Reminder.class}, version = 2)
+@Database(entities = {User.class, Reminder.class}, version = 4)
 
 public abstract class PolyfitDatabase extends RoomDatabase {
     private static final String DB_NAME = "polyfit_db";
@@ -28,6 +30,6 @@ public abstract class PolyfitDatabase extends RoomDatabase {
         return instance;
     }
 
-    public abstract UserDAO  userDAO();
+    public abstract UserDAO userDAO();
     public abstract ReminderDAO reminderDAO();
 }
