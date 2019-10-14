@@ -56,6 +56,7 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-storage:16.0.4'
     implementation 'com.google.firebase:firebase-auth:16.0.5'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     //cropimv
@@ -116,9 +117,6 @@ dependencies {
 //Swipe button
 //    implementation 'com.ebanx:swipe-button:0.8.3'
     implementation 'com.github.gratusik:AGIKSwipeButton:1.0.1'
-
-
-
 
 
 }

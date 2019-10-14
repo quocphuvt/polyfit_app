@@ -51,7 +51,7 @@ public class StepCountServices extends Service implements SensorEventListener {
                 0, notificationIntent, 0);
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentTitle("PolyFit")
+                .setContentTitle("PhayTran")
                 .setContentText("Your step today " + step)
                 .setSmallIcon(R.drawable.logo)
                 .setContentIntent(pendingIntent);

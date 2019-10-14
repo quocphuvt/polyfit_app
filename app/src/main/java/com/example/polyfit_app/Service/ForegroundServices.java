@@ -6,7 +6,7 @@ import android.app.NotificationManager;
 import android.os.Build;
 
 public class ForegroundServices extends Application {
-    public static final String CHANNEL_ID = "PolyFit";
+    public static final String CHANNEL_ID = "PhayTran";
 
     @Override
     public void onCreate() {
