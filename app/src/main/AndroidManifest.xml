@@ -25,7 +25,7 @@
         <activity android:name=".Activity.ReminderActivity"></activity>
         <activity android:name=".Activity.MainActivity"/>
         <activity android:name=".Activity.TutorialActivity" />
-        <activity android:name=".Activity.ExerciseDetailsActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".Activity.ExerciseDetailsActivity"/>
         <activity android:name=".Activity.ExercisesActivity" android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activity.Login.StepTwoSignUpActivity" />
         <activity android:name=".Activity.Login.StepOneSignUpActivity" />

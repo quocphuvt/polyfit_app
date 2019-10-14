@@ -1,6 +1,7 @@
 package com.example.polyfit_app.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.polyfit_app.Activity.ExerciseDetailsActivity;
 import com.example.polyfit_app.Interface.ItemClickListener;
 import com.example.polyfit_app.Model.Excercise;
 import com.example.polyfit_app.R;
@@ -41,6 +43,7 @@ public class ExcercisesAdapter extends RecyclerView.Adapter<ExercisesViewHolder>
             @Override
             public void onClick(View view) {
 //                itemClickListener.onClickItem(1); //TODO: PASS ITEMID FOR CONTEXT
+                context.startActivity(new Intent(context, ExerciseDetailsActivity.class));
             }
         });
     }
