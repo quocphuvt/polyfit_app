@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -20,6 +21,7 @@ import com.example.polyfit_app.R;
 import com.example.polyfit_app.Service.remote.PolyFitService;
 import com.example.polyfit_app.Service.remote.RetrofitClient;
 import com.example.polyfit_app.Utils.Constants;
+import com.google.android.material.snackbar.Snackbar;
 
 import io.reactivex.disposables.CompositeDisposable;
 import retrofit2.Retrofit;
@@ -115,8 +117,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_Login:
-                Log.e("Login", "login");
-                loginUser(edt_username.getText().toString(), edt_password.getText().toString());
+                String userName = edt_username.getText().toString();
+                String password = edt_password.getText().toString();
+                if(TextUtils.isEmpty(userName) || TextUtils.isEmpty(password)) {
+                    Snackbar.make(view, "User name / password can not be null", Snackbar.LENGTH_SHORT).show();
+                } else {
+                    loginUser(userName, password);
+                }
                 break;
             case R.id.tvSignUp:
                 startActivity(new Intent(LoginActivity.this, StepOneSignUpActivity.class));
