@@ -38,7 +38,7 @@
                         android:textSize="20sp"
                         android:text="3"
                         android:fontFamily="@font/roboto"
-                        android:textColor="#2699FB"
+                        android:textColor="@color/primary"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                     <TextView
@@ -47,7 +47,7 @@
                         android:text="Sets"
                         android:textStyle="bold"
                         android:fontFamily="@font/roboto"
-                        android:textColor="#2699FB"
+                        android:textColor="@color/title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
@@ -67,7 +67,7 @@
                         android:textSize="20sp"
                         android:text="10"
                         android:fontFamily="@font/roboto"
-                        android:textColor="#2699FB"
+                        android:textColor="@color/primary"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                     <TextView
@@ -76,7 +76,7 @@
                         android:text="Reps"
                         android:textStyle="bold"
                         android:fontFamily="@font/roboto"
-                        android:textColor="#2699FB"
+                        android:textColor="@color/title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
@@ -96,7 +96,7 @@
                         android:textSize="20sp"
                         android:text="15s"
                         android:fontFamily="@font/roboto"
-                        android:textColor="#2699FB"
+                        android:textColor="@color/primary"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                     <TextView
@@ -105,7 +105,7 @@
                         android:text="Rest time"
                         android:textStyle="bold"
                         android:fontFamily="@font/roboto"
-                        android:textColor="#2699FB"
+                        android:textColor="@color/title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
@@ -126,7 +126,7 @@
                     android:paddingLeft="30dp"
                     android:paddingRight="30dp"
                     android:text="Dumpbel press"
-                    android:textColor="#2699FB"
+                    android:textColor="@color/title"
                     android:textSize="22sp"
                     android:textStyle="bold" />
 
@@ -140,7 +140,7 @@
                     android:paddingLeft="30dp"
                     android:paddingRight="30dp"
                     android:text="Bài tập cơ ngực phổ biến với mọi người có thể tập bất cứ đâu"
-                    android:textColor="#2699FB"
+                    android:textColor="@color/primary"
                     android:textSize="18sp" />
 
                 <TextView
@@ -153,7 +153,7 @@
                     android:paddingLeft="30dp"
                     android:paddingRight="30dp"
                     android:text="Bài tập cơ ngực phổ biến với mọi người có thể tập bất cứ đâu. Bài tập cơ ngực phổ biến với mọi người có thể tập bất cứ đâu. Bài tập cơ ngực phổ biến với mọi người có thể tập bất cứ đâu. Bài tập cơ ngực phổ biến với mọi người có thể tập bất cứ đâu. Bài tập cơ ngực phổ biến với mọi người có thể tập bất cứ đâu"
-                    android:textColor="#2699FB"
+                    android:textColor="@color/content"
                     android:textSize="15sp" />
             </LinearLayout>
         </LinearLayout>
@@ -165,7 +165,7 @@
         android:layout_height="50dp"
         android:src="@drawable/ic_diet"
         app:fabCustomSize="50dp"
-        android:backgroundTint="#03A9F4"
+        android:backgroundTint="@color/primary"
         android:layout_margin="30dp"
         android:layout_gravity="bottom|right" />
 
