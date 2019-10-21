@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@drawable/background_bottom_nav"
-        android:backgroundTint="#2699FB"
+        android:backgroundTint="@color/primary"
         app:labelVisibilityMode="labeled"
         app:menu="@menu/menu_bottom_nav">
 

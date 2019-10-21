@@ -15,7 +15,7 @@ public class DishesViewHolder extends RecyclerView.ViewHolder {
 
     public DishesViewHolder(@NonNull View itemView) {
         super(itemView);
-        title = itemView.findViewById(R.id.titleDishes);
+        title = itemView.findViewById(R.id.tV_title_dishes);
 //        location = itemView.findViewById(R.id.locationDishes);
     }
 }

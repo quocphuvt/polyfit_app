@@ -18,9 +18,9 @@
             android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#2699FB"
+            android:background="@color/primary"
             android:fitsSystemWindows="true"
-            app:contentScrim="#2699FB"
+            app:contentScrim="@color/primary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:toolbarId="@+id/toolbar">
 
@@ -28,7 +28,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="#2699FB"
+                android:background="@color/primary"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
 
@@ -48,7 +48,7 @@
                     android:singleLine="false"
                     android:text="Các bài tập tay cơ bản tới nâng cao dành cho các bạn nè"
                     android:textAlignment="center"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/title"
                     android:textSize="16sp" />
 
                 <TextView
@@ -58,7 +58,7 @@
                     android:layout_marginBottom="20dp"
                     android:text="21 workouts"
                     android:textAlignment="center"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/title"
                     android:textSize="17sp" />
             </LinearLayout>
 

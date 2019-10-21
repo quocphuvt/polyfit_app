@@ -19,10 +19,10 @@
         <TextView
             android:id="@+id/tv_item_challenge_title"
             android:text="Thanh lọc cơ thể 30 ngày"
-            android:textColor="#2699FB"
+            android:textColor="@color/title"
             android:textStyle="bold"
             android:gravity="center"
-            android:textSize="15sp"
+            android:textSize="@dimen/text_md"
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -32,7 +32,7 @@
             android:textColor="#2699FB"
             android:gravity="center"
             android:padding="5dp"
-            android:textSize="12sp"
+            android:textSize="@dimen/text_sm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>

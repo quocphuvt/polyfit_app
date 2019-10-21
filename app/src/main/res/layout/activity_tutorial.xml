@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#EAF5FF"
+    android:background="@color/white"
     tools:context=".Activity.TutorialActivity">
     <LinearLayout
         android:layout_marginTop="50dp"
@@ -16,7 +16,7 @@
         android:layout_height="match_parent">
         <TextView
             android:text="Các chức năng chính của ứng dụng"
-            android:textColor="#2699FB"
+            android:textColor="@color/title"
             android:textStyle="bold"
             android:gravity="center"
             android:layout_width="match_parent"
@@ -41,7 +41,7 @@
             android:id="@+id/btn_prev_tutorial"
             android:layout_alignParentLeft="true"
             android:text="Prev"
-            android:textColor="#2699FB"
+            android:textColor="@color/title"
             android:background="@android:color/transparent"
             android:drawableLeft="@drawable/ic_arrow_left_blue"
             android:layout_width="100dp"
@@ -52,7 +52,7 @@
             android:layout_alignParentRight="true"
             android:text="Next"
             android:background="@android:color/transparent"
-            android:textColor="#2699FB"
+            android:textColor="@color/title"
             style="?android:attr/borderlessButtonStyle"
             android:drawableRight="@drawable/ic_arrow_right_blue"
             android:layout_width="100dp"
