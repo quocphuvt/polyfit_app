@@ -84,6 +84,7 @@ public class TutorialActivity extends AppCompatActivity implements View.OnClickL
 
                 if(currentIndex == sampleTutorials.size() - 1) {
                     startActivity(new Intent(this, MainActivity.class));
+                    finish();
                 }
                 break;
         }

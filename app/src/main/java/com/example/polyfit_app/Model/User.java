@@ -2,6 +2,7 @@ package com.example.polyfit_app.Model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "polyfit_users")
@@ -39,6 +40,22 @@ public class User {
         this.gender = gender;
         this.isVerified = isVerified;
         this.phoneNumber = phoneNumber;
+    }
+
+    @Ignore()
+    public User(String username, String password) { //This use for logining
+        this.username = username;
+        this.password = password;
+    }
+
+    @Ignore()
+    public User(String username, String password, String display_name, Float weight, Float height, int gender) { //This use for registering
+        this.username = username;
+        this.password = password;
+        this.display_name = display_name;
+        this.weight = weight;
+        this.height = height;
+        this.gender = gender;
     }
 
     public String getUsername() {

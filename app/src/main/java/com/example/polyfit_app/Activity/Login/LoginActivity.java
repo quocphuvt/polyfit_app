@@ -1,6 +1,7 @@
 package com.example.polyfit_app.Activity.Login;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -17,6 +18,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.polyfit_app.Activity.MainActivity;
 import com.example.polyfit_app.Activity.TutorialActivity;
+import com.example.polyfit_app.Model.Responses.UserResponse;
+import com.example.polyfit_app.Model.User;
 import com.example.polyfit_app.R;
 import com.example.polyfit_app.Service.remote.PolyFitService;
 import com.example.polyfit_app.Service.remote.RetrofitClient;
@@ -24,6 +27,9 @@ import com.example.polyfit_app.Utils.Constants;
 import com.google.android.material.snackbar.Snackbar;
 
 import io.reactivex.disposables.CompositeDisposable;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -33,12 +39,22 @@ import rx.subscriptions.CompositeSubscription;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     private CompositeSubscription mSubscriptions = new CompositeSubscription();
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
-    EditText edt_username;
-    EditText edt_password;
-    TextView tvSignUp;
-    LinearLayout btn_Login;
-    PolyFitService polyFitService;
+    private EditText edt_username;
+    private EditText edt_password;
+    private TextView tvSignUp;
+    private LinearLayout btn_Login;
+    private PolyFitService polyFitService;
+    private ProgressDialog progressDialog;
 
+    private void connectView() {
+        edt_username = findViewById(R.id.edt_username);
+        edt_password = findViewById(R.id.edt_password);
+        btn_Login = findViewById(R.id.btn_Login);
+        tvSignUp = findViewById(R.id.tvSignUp);
+        btn_Login.setOnClickListener(this);
+        tvSignUp.setOnClickListener(this);
+        progressDialog = new ProgressDialog(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,55 +79,42 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onDestroy();
     }
 
-    private void connectView() {
-        edt_username = findViewById(R.id.edt_username);
-        edt_password = findViewById(R.id.edt_password);
-        btn_Login = findViewById(R.id.btn_Login);
-        btn_Login.setOnClickListener(this);
-        tvSignUp = findViewById(R.id.tvSignUp);
-        tvSignUp.setOnClickListener(this);
-    }
 
     private void loginUser(String userName, String password) {
-        if(userName.equals("dev")) { //For dev testing
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            finish();
-            return;
-        }
-
-        ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
-        progressDialog.setCancelable(false);
-        progressDialog.setMessage("Processing...");
-        progressDialog.setIndeterminate(false);
-        progressDialog.show();
-
-        mSubscriptions.add(polyFitService.loginUser(userName, password)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<String>() {
-                    @Override
-                    public void call(String s) {
-                        if (s.contains("User does not exist")) {
-                            Toast.makeText(LoginActivity.this, "" + s, Toast.LENGTH_SHORT).show();
-                            Log.e("PhayTV::", s);
-                            progressDialog.dismiss();
-                        } else {
-                            Toast.makeText(LoginActivity.this, "Login success!", Toast.LENGTH_SHORT).show();
-                            SharedPreferences.Editor editor = getSharedPreferences(Constants.LOGIN, MODE_PRIVATE).edit();
-                            editor.putString("username", userName);
-                            editor.putString("password", password);
-                            editor.putString("token", s);
-                            editor.apply();
-                            progressDialog.dismiss();
-                            Log.e("PhayTran", "username:" + userName + "\n" + "password" + password);
-                            startActivity(new Intent(LoginActivity.this, TutorialActivity.class));
-                            finish();
-                        }
-
+        showProgressDialog();
+        User user = new User(userName, password);
+        Call<UserResponse> calledLogin = polyFitService.loginUser(user);
+        calledLogin.enqueue(new Callback<UserResponse>() {
+            @Override
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                UserResponse userResponse = response.body();
+                if (userResponse.getStatus() == 0) {
+                    SharedPreferences sharedPreferences = getSharedPreferences("user", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = getSharedPreferences(Constants.LOGIN, MODE_PRIVATE).edit();
+                    if (sharedPreferences.getBoolean("isFirstTime", false)) {
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    } else {
+                        editor.putBoolean("isFirstTime", true);
+                        startActivity(new Intent(LoginActivity.this, TutorialActivity.class));
                     }
-                }));
-    }
+                    editor.putString("username", userName);
+                    editor.putString("password", password);
+                    editor.putString("token", userResponse.getResponse());
+                    dismissProgressDialog();
+                    editor.apply();
+                    Toast.makeText(LoginActivity.this, userResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                    finish();
+                } else {
+                    Toast.makeText(LoginActivity.this, userResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
 
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+
+            }
+        });
+    }
 
     @Override
     public void onClick(View view) {
@@ -119,8 +122,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.btn_Login:
                 String userName = edt_username.getText().toString();
                 String password = edt_password.getText().toString();
-                if(TextUtils.isEmpty(userName) || TextUtils.isEmpty(password)) {
-                    Snackbar.make(view, "User name / password can not be null", Snackbar.LENGTH_SHORT).show();
+                if (TextUtils.isEmpty(userName) || TextUtils.isEmpty(password)) {
+                    Snackbar.make(view, "Tài khoản và mật khẩu không được rỗng", Snackbar.LENGTH_SHORT).show();
                 } else {
                     loginUser(userName, password);
                 }
@@ -129,6 +132,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 startActivity(new Intent(LoginActivity.this, StepOneSignUpActivity.class));
                 break;
         }
+    }
+
+    private void showProgressDialog() {
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Processing...");
+        progressDialog.setIndeterminate(false);
+        progressDialog.show();
+    }
+
+    private void dismissProgressDialog() {
+        progressDialog.dismiss();
     }
 
 }
