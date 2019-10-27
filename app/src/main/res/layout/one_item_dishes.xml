@@ -21,7 +21,7 @@
                 android:id="@+id/tV_title_dishes"
                 android:textSize="@dimen/text_xl"
                 android:layout_width="match_parent"
-                android:text="Bun bo hue"
+                android:text="Bò hầm cải chua"
                 android:fontFamily="@font/roboto"
                 android:textColor="@color/title"
                 android:layout_height="wrap_content"/>
@@ -29,9 +29,9 @@
                 android:id="@+id/tv_description_dishes"
                 android:textSize="@dimen/text_md"
                 android:layout_width="match_parent"
+                android:text="Ngon từ nước , ngọt từ xương"
                 android:textColor="@color/content"
                 android:layout_marginTop="5dp"
-                android:text="Món ăn đậm đà hương vị Huế"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
 

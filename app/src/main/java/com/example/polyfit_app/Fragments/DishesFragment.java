@@ -74,7 +74,7 @@ public class DishesFragment extends Fragment implements ItemClickListener {
         initView(view);
         dishesArrayList = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            Dishes dishes = new Dishes("Bo ham cai chua" + i, "", 20, 20, 20, 100, 1);
+            Dishes dishes = new Dishes("Bò hầm cải chua" + i, "", 20, 20, 20, 100, 1);
             dishesArrayList.add(dishes);
         }
         recyclerView.setHasFixedSize(true);
