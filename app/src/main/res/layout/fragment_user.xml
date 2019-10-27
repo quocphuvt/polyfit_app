@@ -1,16 +1,196 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F1F9FF "
+    android:orientation="vertical"
     tools:context=".Fragments.ProfileFragment">
-    <ImageView
-        android:id="@+id/icLogout"
-        android:layout_margin="10dp"
-        android:layout_alignParentRight="true"
-        android:src="@drawable/ic_logout"
-        android:layout_width="30dp"
-        android:layout_height="30dp"/>
 
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-</RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:textSize="15sp"
+                android:text="Lời khuyên"
+                android:textColor="#75C1FF"></TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.7">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:text="Current BMI"
+                android:textColor="#75C1FF"></TextView>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
+                android:text="Cập nhập thông tin của bạn thường xuyên để chúng tôi gợi ý nhiều bài tập và chế độ ăn hơn"
+                android:textColor="#2699FB"
+                android:textStyle="bold">
+
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.7">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="24.5"
+                android:textColor="#2699FB"
+                android:textSize="40sp"></TextView>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/logo"></ImageView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:textColor="#BCE0FD"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:text="Chiều cao (cm)"
+                        android:textAlignment="center"></TextView>
+                </LinearLayout>
+                <EditText
+                    android:layout_width="150dp"
+                    android:textAlignment="center"
+                    android:hint="170"
+                    android:textColor="#f00"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content">
+                </EditText>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/logo"></ImageView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#BCE0FD"
+                    android:textSize="15sp"
+                    android:text="Cân nặng (kg)"></TextView>
+                </LinearLayout>
+                <EditText
+                    android:layout_width="150dp"
+                    android:hint="170"
+                    android:layout_gravity="center"
+                    android:textAlignment="center"
+                    android:layout_height="wrap_content">
+                </EditText>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="15dp"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:textSize="25sp"
+                android:textColor="#2699FB"
+                android:layout_height="wrap_content"
+                android:text="Biểu đồ">
+            </TextView>
+            <ImageView
+                android:layout_width="match_parent"
+                android:src="@drawable/backgroundlogin"
+                android:layout_height="300dp">
+            </ImageView>
+            <ImageView
+                android:id="@+id/icLogout"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="right"
+                android:background="#000000"
+                android:src="@drawable/ic_logout"></ImageView>
+            <Button
+                android:layout_width="350dp"
+                android:layout_marginTop="15sp"
+                android:padding="20sp"
+                android:layout_gravity="center"
+                android:textColor="#ffff"
+                android:background="#2699FB"
+                android:text="Cập nhập"
+                android:layout_height="wrap_content">
+
+            </Button>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
