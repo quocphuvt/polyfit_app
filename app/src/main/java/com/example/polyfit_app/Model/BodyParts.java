@@ -5,6 +5,10 @@ public class BodyParts {
     private String title;
     private String image_url;
 
+    public BodyParts(int id) {
+        this.id = id;
+    }
+
     public BodyParts(int id, String title, String image_url) {
         this.id = id;
         this.title = title;

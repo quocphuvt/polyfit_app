@@ -15,26 +15,26 @@ import com.example.polyfit_app.R;
 
 import java.util.ArrayList;
 
-public class ChallengeAdapter extends RecyclerView.Adapter<ChallengeViewHolder> {
+public class DietsHomeAdapter extends RecyclerView.Adapter<DietsHomeViewHolder> {
     private ArrayList<Challenge> challenges;
     private Context context;
 
-    public ChallengeAdapter(ArrayList<Challenge> challenges, Context context) {
+    public DietsHomeAdapter(ArrayList<Challenge> challenges, Context context) {
         this.challenges = challenges;
         this.context = context;
     }
 
     @NonNull
     @Override
-    public ChallengeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public DietsHomeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.one_item_challenge, parent, false);
-        return new ChallengeViewHolder(view);
+        return new DietsHomeViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ChallengeViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull DietsHomeViewHolder holder, int position) {
         Challenge challenge = challenges.get(position);
-        holder.iv_challenge.setImageResource(R.drawable.ic_abs);
+        holder.iv_img.setImageResource(R.drawable.ic_abs);
         holder.tv_title.setText(challenge.getTitle());
         holder.tv_content.setText(challenge.getContent());
     }
@@ -45,12 +45,12 @@ public class ChallengeAdapter extends RecyclerView.Adapter<ChallengeViewHolder> 
     }
 }
 
-class ChallengeViewHolder extends RecyclerView.ViewHolder {
-    protected ImageView iv_challenge;
+class DietsHomeViewHolder extends RecyclerView.ViewHolder {
+    protected ImageView iv_img;
     protected TextView tv_title, tv_content;
-    public ChallengeViewHolder(@NonNull View itemView) {
+    public DietsHomeViewHolder(@NonNull View itemView) {
         super(itemView);
-        iv_challenge = itemView.findViewById(R.id.iv_item_challenge);
+        iv_img = itemView.findViewById(R.id.iv_item_challenge);
         tv_title = itemView.findViewById(R.id.tv_item_challenge_title);
         tv_content = itemView.findViewById(R.id.tv_item_challenge_content);
     }
