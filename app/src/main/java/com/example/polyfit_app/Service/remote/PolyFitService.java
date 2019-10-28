@@ -20,7 +20,10 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import rx.Observable;
 
-public interface    PolyFitService {
+public interface  PolyFitService {
+    @GET("user/getCurrentUser/{id}")
+    Call<UserResponse> getCurrentUser(@Path("id") int userId);
+
     @POST("user/register")
     Call<UserResponse> registerUser(@Body() User user);
 

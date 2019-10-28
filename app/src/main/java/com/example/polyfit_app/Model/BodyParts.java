@@ -1,19 +1,14 @@
 package com.example.polyfit_app.Model;
 
-import java.util.ArrayList;
-
-public class Ingredient {
+public class BodyParts {
     private int id;
     private String title;
     private String image_url;
-    private ArrayList<Dishes> dishes;
 
-    public ArrayList<Dishes> getDishes() {
-        return dishes;
-    }
-
-    public void setDishes(ArrayList<Dishes> dishes) {
-        this.dishes = dishes;
+    public BodyParts(int id, String title, String image_url) {
+        this.id = id;
+        this.title = title;
+        this.image_url = image_url;
     }
 
     public int getId() {

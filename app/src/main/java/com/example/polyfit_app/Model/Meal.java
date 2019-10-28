@@ -2,19 +2,11 @@ package com.example.polyfit_app.Model;
 
 import java.util.ArrayList;
 
-public class Ingredient {
+public class Meal {
     private int id;
     private String title;
     private String image_url;
     private ArrayList<Dishes> dishes;
-
-    public ArrayList<Dishes> getDishes() {
-        return dishes;
-    }
-
-    public void setDishes(ArrayList<Dishes> dishes) {
-        this.dishes = dishes;
-    }
 
     public int getId() {
         return id;
@@ -38,5 +30,13 @@ public class Ingredient {
 
     public void setImage_url(String image_url) {
         this.image_url = image_url;
+    }
+
+    public ArrayList<Dishes> getDishes() {
+        return dishes;
+    }
+
+    public void setDishes(ArrayList<Dishes> dishes) {
+        this.dishes = dishes;
     }
 }

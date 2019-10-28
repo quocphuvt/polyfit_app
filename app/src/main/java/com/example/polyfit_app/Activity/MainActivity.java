@@ -17,18 +17,27 @@ import com.example.polyfit_app.Fragments.HomeFragment;
 import com.example.polyfit_app.Fragments.ProfileFragment;
 import com.example.polyfit_app.Fragments.DietsFragment;
 import com.example.polyfit_app.Model.Reminder;
+import com.example.polyfit_app.Model.Responses.BodypartResponse;
 import com.example.polyfit_app.R;
 
 import com.example.polyfit_app.Service.local.PolyfitDatabase;
 import com.example.polyfit_app.Service.local.StepCountServices;
+import com.example.polyfit_app.Service.remote.BodypartsAPI;
+import com.example.polyfit_app.Service.remote.RetrofitClient;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.List;
 import java.util.Objects;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
 
 public class MainActivity extends AppCompatActivity implements HomeFragment.OnFragmentInteractionListener, DishesFragment.OnFragmentInteractionListener,
         HistoriesFragment.OnFragmentInteractionListener, ProfileFragment.OnFragmentInteractionListener {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
     public void onFragmentInteraction(Uri uri) {
 
     }
+
     //getAlarm
     private void getReminder(){
         List<Reminder> reminders= PolyfitDatabase.getInstance(MainActivity.this).reminderDAO().getReminder();

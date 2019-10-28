@@ -22,7 +22,7 @@ public class User {
     @ColumnInfo(name = "bmi")
     private Float bmi;
     @ColumnInfo(name = "created_at")
-    private String create_at;
+    private String createdAt;
     @ColumnInfo(name = "gender")
     private int gender;
     @ColumnInfo(name = "is_verified")
@@ -114,12 +114,12 @@ public class User {
         this.bmi = bmi;
     }
 
-    public String getCreate_at() {
-        return create_at;
+    public String getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreate_at(String create_at) {
-        this.create_at = create_at;
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 
     public int getGender() {

@@ -6,41 +6,26 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class UserResponse extends BaseResponse {
-    private User user;
-    private ArrayList<User> users;
-    private String Response;
+    private User Object;
+    private ArrayList<User> Response;
 
     public UserResponse(int status, String message) {
         super(status, message);
     }
 
-    public UserResponse(int status, String message, User user, ArrayList<User> users) {
-        super(status, message);
-        this.user = user;
-        this.users = users;
+    public User getObject() {
+        return Object;
     }
 
-    public User getUser() {
-        return user;
+    public void setObject(User object) {
+        Object = object;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public ArrayList<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(ArrayList<User> users) {
-        this.users = users;
-    }
-
-    public String getResponse() {
+    public ArrayList<User> getResponse() {
         return Response;
     }
 
-    public void setResponse(String response) {
+    public void setResponse(ArrayList<User> response) {
         Response = response;
     }
 }

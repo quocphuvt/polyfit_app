@@ -87,26 +87,32 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         calledLogin.enqueue(new Callback<UserResponse>() {
             @Override
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
-                UserResponse userResponse = response.body();
-                if (userResponse.getStatus() == 0) {
-                    SharedPreferences sharedPreferences = getSharedPreferences("user", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = getSharedPreferences(Constants.LOGIN, MODE_PRIVATE).edit();
-                    if (sharedPreferences.getBoolean("isFirstTime", false)) {
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                if (response.isSuccessful()) {
+                    UserResponse userResponse = response.body();
+                    if (userResponse.getStatus() == 0) {
+                        SharedPreferences sharedPreferences = getSharedPreferences(Constants.LOGIN, MODE_PRIVATE);
+                        SharedPreferences.Editor editor = getSharedPreferences(Constants.LOGIN, MODE_PRIVATE).edit();
+                        Intent i;
+                        if (sharedPreferences.getBoolean("isFirstTime", false)) {
+                            i = new Intent(LoginActivity.this, MainActivity.class);
+                        } else {
+                            editor.putBoolean("isFirstTime", true);
+                            i = new Intent(LoginActivity.this, TutorialActivity.class);
+                        }
+                        editor.putString("username", userName);
+                        editor.putString("password", password);
+                        editor.putInt("id", userResponse.getObject().getId());
+//                    editor.putString("token", userResponse.getResponse());
+                        dismissProgressDialog();
+                        editor.apply();
+                        startActivity(i);
+                        Toast.makeText(LoginActivity.this, userResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                        finish();
                     } else {
-                        editor.putBoolean("isFirstTime", true);
-                        startActivity(new Intent(LoginActivity.this, TutorialActivity.class));
+                        Toast.makeText(LoginActivity.this, userResponse.getMessage(), Toast.LENGTH_SHORT).show();
                     }
-                    editor.putString("username", userName);
-                    editor.putString("password", password);
-                    editor.putString("token", userResponse.getResponse());
-                    dismissProgressDialog();
-                    editor.apply();
-                    Toast.makeText(LoginActivity.this, userResponse.getMessage(), Toast.LENGTH_SHORT).show();
-                    finish();
-                } else {
-                    Toast.makeText(LoginActivity.this, userResponse.getMessage(), Toast.LENGTH_SHORT).show();
                 }
+
             }
 
             @Override

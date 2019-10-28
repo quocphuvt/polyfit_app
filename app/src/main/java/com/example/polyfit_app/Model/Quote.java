@@ -2,21 +2,18 @@ package com.example.polyfit_app.Model;
 
 public class Quote {
     private int id;
-    private String imageUrl;
     private String title;
-    private String author;
+    private String image_url;
 
-    public Quote(int id, String imageUrl, String title, String author) {
-        this.id = id;
-        this.imageUrl = imageUrl;
+    public Quote(String title, String image_url) {
         this.title = title;
-        this.author = author;
+        this.image_url = image_url;
     }
 
-    public Quote(String imageUrl, String title, String author) {
-        this.imageUrl = imageUrl;
+    public Quote(int id, String title, String image_url) {
+        this.id = id;
         this.title = title;
-        this.author = author;
+        this.image_url = image_url;
     }
 
     public int getId() {
@@ -27,14 +24,6 @@ public class Quote {
         this.id = id;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
     public String getTitle() {
         return title;
     }
@@ -43,11 +32,11 @@ public class Quote {
         this.title = title;
     }
 
-    public String getAuthor() {
-        return author;
+    public String getImage_url() {
+        return image_url;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
     }
 }
