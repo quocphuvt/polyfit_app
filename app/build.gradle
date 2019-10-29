@@ -6,7 +6,7 @@ android {
     buildToolsVersion "29.0.1"
     defaultConfig {
         applicationId "com.example.polyfit_app"
-        minSdkVersion 17
+        minSdkVersion 24
         targetSdkVersion 29
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
@@ -117,6 +117,10 @@ dependencies {
     //Chart
     implementation 'com.github.lecho:hellocharts-android:v1.5.8'
     implementation 'com.android.support:multidex:1.0.3'
+
+    //Glide to support loading image
+    implementation 'com.github.bumptech.glide:glide:4.10.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     androidTestImplementation 'androidx.test:runner:1.2.0'

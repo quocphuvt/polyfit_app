@@ -1,34 +1,25 @@
 package com.example.polyfit_app.Model;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class Dishes {
     private int id;
     private String title;
-    private String imageUrl;
+    private String image_url;
     private float protein;
     private float fat;
     private float carb;
     private float calories;
-    private int _idMeals;
+    private String description;
+    private ArrayList<Ingredient> ingredients;
 
-    public Dishes(int id, String title, String imageUrl, float protein, float fat, float carb, float calories, int _idMeals) {
-        this.id = id;
-        this.title = title;
-        this.imageUrl = imageUrl;
-        this.protein = protein;
-        this.fat = fat;
-        this.carb = carb;
-        this.calories = calories;
-        this._idMeals = _idMeals;
+    public ArrayList<Ingredient> getIngredients() {
+        return ingredients;
     }
 
-    public Dishes(String title, String imageUrl, float protein, float fat, float carb, float calories, int _idMeals) {
-        this.title = title;
-        this.imageUrl = imageUrl;
-        this.protein = protein;
-        this.fat = fat;
-        this.carb = carb;
-        this.calories = calories;
-        this._idMeals = _idMeals;
+    public void setIngredients(ArrayList<Ingredient> ingredients) {
+        this.ingredients = ingredients;
     }
 
     public int getId() {
@@ -47,12 +38,12 @@ public class Dishes {
         this.title = title;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getImage_url() {
+        return image_url;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
     }
 
     public float getProtein() {
@@ -87,11 +78,11 @@ public class Dishes {
         this.calories = calories;
     }
 
-    public int get_idMeals() {
-        return _idMeals;
+    public String getDescription() {
+        return description;
     }
 
-    public void set_idMeals(int _idMeals) {
-        this._idMeals = _idMeals;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

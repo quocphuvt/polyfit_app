@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.example.polyfit_app.Model.Responses.UserResponse;
 import com.example.polyfit_app.Model.User;
 import com.example.polyfit_app.R;
 import com.example.polyfit_app.Service.remote.PolyFitService;
@@ -36,12 +37,12 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
 public class StepTwoSignUpActivity extends AppCompatActivity implements View.OnClickListener {
-    ImageView ic_backToStepOneSignUp;
-    LinearLayout btn_SignUpNow;
-    EditText edt_heigth, edt_weigth;
-    RadioButton rb_Male, rb_Female;
-    CheckBox cb_Accept;
-    PolyFitService polyFitService;
+    private ImageView ic_backToStepOneSignUp;
+    private LinearLayout btn_SignUpNow;
+    private EditText edt_heigth, edt_weigth;
+    private RadioButton rb_Male, rb_Female;
+    private CheckBox cb_Accept;
+    private PolyFitService polyFitService;
     private CompositeSubscription mSubscriptions = new CompositeSubscription();
 
     @Override
@@ -89,9 +90,6 @@ public class StepTwoSignUpActivity extends AppCompatActivity implements View.OnC
                     String password = extras.getString("password");
                     Float height = Float.valueOf(edt_heigth.getText().toString());
                     Float weight = Float.valueOf(edt_weigth.getText().toString());
-                    Float bmi = weight / (height * height);
-
-                    Log.e("PhayTran", "height" + height + ":::" + "weight" + weight + "\n" + "BMI" + bmi);
 
                     int gender = 2;
                     if (rb_Male.isChecked()) {
@@ -99,34 +97,51 @@ public class StepTwoSignUpActivity extends AppCompatActivity implements View.OnC
                     } else if (rb_Female.isChecked()) {
                         gender = 0;
                     }
-                    Log.e("PhayTran", "gender ::: " + gender);
+
                     SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                     Date date = new Date();
                     String currentDate = formatter.format(date);
-                    registerUser(displayName, userName, password, weight, height, bmi, gender, currentDate);
-
+                    User user = new User(userName, password, displayName, weight, height, gender);
+                    registerUser(user);
                 }
 
                 break;
         }
     }
 
-    private void registerUser(String displayName, String userName, String password, Float weight, Float height, Float bmi, int gender, String createAt) {
-        mSubscriptions.add(polyFitService.registerUser(displayName, userName, password, weight, height, gender, createAt)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<String>() {
-                    @Override
-                    public void call(String s) {
-                        if (s.contains("User already exists")) {
-                            Toast.makeText(StepTwoSignUpActivity.this, "" + s, Toast.LENGTH_SHORT).show();
-                        } else {
-//                            getUserByUserName(userName);
-                            startActivity(new Intent(StepTwoSignUpActivity.this, LoginActivity.class));
+    private void registerUser(User user) {
+        Call<UserResponse> calledRegister = polyFitService.registerUser(user);
+        calledRegister.enqueue(new Callback<UserResponse>() {
+            @Override
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                UserResponse userResponse = response.body();
+                if(userResponse.getStatus() == 0) {
+                    startActivity(new Intent(StepTwoSignUpActivity.this, LoginActivity.class));
+                } else {
+                    Toast.makeText(StepTwoSignUpActivity.this, userResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
 
-                        }
-                    }
-                }));
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+
+            }
+        });
+//        mSubscriptions.add(polyFitService.registerUser(displayName, userName, password, weight, height, gender, createAt)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Action1<String>() {
+//                    @Override
+//                    public void call(String s) {
+//                        if (s.contains("User already exists")) {
+//                            Toast.makeText(StepTwoSignUpActivity.this, "" + s, Toast.LENGTH_SHORT).show();
+//                        } else {
+////                            getUserByUserName(userName);
+//                            startActivity(new Intent(StepTwoSignUpActivity.this, LoginActivity.class));
+//
+//                        }
+//                    }
+//                }));
     }
 
 

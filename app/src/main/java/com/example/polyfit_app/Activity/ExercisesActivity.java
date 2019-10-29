@@ -5,30 +5,32 @@ import android.view.View;
 
 import com.example.polyfit_app.Adapter.ExcercisesAdapter;
 import com.example.polyfit_app.Interface.ItemClickListener;
-import com.example.polyfit_app.Model.Excercise;
+import com.example.polyfit_app.Model.Exercise;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.polyfit_app.Model.Responses.ExerciseResponse;
 import com.example.polyfit_app.R;
+import com.example.polyfit_app.Service.remote.ExerciseAPI;
+import com.example.polyfit_app.Service.remote.RetrofitClient;
 
 import java.util.ArrayList;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
 public class ExercisesActivity extends AppCompatActivity implements ItemClickListener {
-    private ArrayList<Excercise> excercises;
+    private ArrayList<Exercise> exercises;
     private RecyclerView rv_exercises;
+    private ExerciseAPI exerciseAPI;
 
     private void initView() {
         rv_exercises = findViewById(R.id.rv_exercises);
-    }
-
-    private void setSampleExercises() {
-        excercises = new ArrayList<>();
-        for (int i = 0; i < 7; i++) {
-            excercises.add(new Excercise("Fit Arms " + i, ""));
-        }
     }
 
     @Override
@@ -38,16 +40,37 @@ public class ExercisesActivity extends AppCompatActivity implements ItemClickLis
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Arms");
-
         initView();
-        setSampleExercises();
-        rv_exercises.setHasFixedSize(true);
-        rv_exercises.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
-        setDataForExcerciseList(excercises);
+
+        Retrofit retrofit = RetrofitClient.getInstance();
+        exerciseAPI = retrofit.create(ExerciseAPI.class);
+        this.getExerciseData();
     }
 
-    private void setDataForExcerciseList(ArrayList<Excercise> excercises) {
-        ExcercisesAdapter excercisesAdapter = new ExcercisesAdapter(excercises, this, this);
+    private void getExerciseData() {
+        Call<ExerciseResponse> exerciseResponseCall = exerciseAPI.getAllExercise();
+        exerciseResponseCall.enqueue(new Callback<ExerciseResponse>() {
+            @Override
+            public void onResponse(Call<ExerciseResponse> call, Response<ExerciseResponse> response) {
+                if(response.isSuccessful()) {
+                    ExerciseResponse exerciseResponse = response.body();
+                    if(exerciseResponse.getStatus() == 0) {
+                        setDataForExcerciseList(exerciseResponse.getResponse());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ExerciseResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void setDataForExcerciseList(ArrayList<Exercise> exercises) {
+        rv_exercises.setHasFixedSize(true);
+        rv_exercises.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+        ExcercisesAdapter excercisesAdapter = new ExcercisesAdapter(exercises, this, this);
         rv_exercises.setAdapter(excercisesAdapter);
     }
 

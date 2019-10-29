@@ -37,7 +37,6 @@ public class LoginMethod extends AppCompatActivity implements View.OnClickListen
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.loginWithEmail:
-                Log.e("PhayTV:::", "Intent");
                 startActivity(new Intent(LoginMethod.this, LoginActivity.class));
                 break;
             case R.id.tv_signUp:

@@ -73,10 +73,7 @@ public class DishesFragment extends Fragment implements ItemClickListener {
         View view = inflater.inflate(R.layout.activity_dishes_fragment, container, false);
         initView(view);
         dishesArrayList = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            Dishes dishes = new Dishes("Bò hầm cải chua" + i, "", 20, 20, 20, 100, 1);
-            dishesArrayList.add(dishes);
-        }
+
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
         setDataForDishesList(dishesArrayList);
@@ -130,7 +127,7 @@ public class DishesFragment extends Fragment implements ItemClickListener {
     private void setSampleIngredientData() {
         ingredients = new ArrayList<>();
         for (int i = 0; i < 8; i++) {
-            ingredients.add(new Ingredient("Thit bo" + i, 1000, "100g"));
+            ingredients.add(new Ingredient());
         }
 
         IngredientAdapter ingredientAdapter = new IngredientAdapter(ingredients, getContext());
@@ -173,7 +170,6 @@ public class DishesFragment extends Fragment implements ItemClickListener {
             TextView tv_title = view.findViewById(R.id.tv_item_title_ingredient);
             TextView tv_unit = view.findViewById(R.id.tv_item_quantity_ingredient);
             tv_title.setText(ingredient.getTitle());
-            tv_unit.setText(ingredient.getUnit());
             return view;
         }
     }

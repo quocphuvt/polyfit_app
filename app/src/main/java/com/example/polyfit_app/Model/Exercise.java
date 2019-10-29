@@ -1,6 +1,6 @@
 package com.example.polyfit_app.Model;
 
-public class Excercise {
+public class Exercise {
     private int id;
     private String title;
     private String introduction;
@@ -9,11 +9,10 @@ public class Excercise {
     private int sets;
     private int reps;
     private int rest;
-    private String videoUrl;
-    private String imageUrl;
-    private int _idLevel;
+    private String video_url;
+    private String image_url;
 
-    public Excercise(int id, String title, String introduction, String content, String tips, int sets, int reps, int rest, String videoUrl, String imageUrl, int _idLevel) {
+    public Exercise(int id, String title, String introduction, String content, String tips, int sets, int reps, int rest, String video_url, String image_url) {
         this.id = id;
         this.title = title;
         this.introduction = introduction;
@@ -22,19 +21,18 @@ public class Excercise {
         this.sets = sets;
         this.reps = reps;
         this.rest = rest;
-        this.videoUrl = videoUrl;
-        this.imageUrl = imageUrl;
-        this._idLevel = _idLevel;
+        this.video_url = video_url;
+        this.image_url = image_url;
     }
 
     //This contructor use for loading excercise list
-    public Excercise(String title, String imageUrl) {
+    public Exercise(String title, String image_url) {
         this.title = title;
-        this.imageUrl = imageUrl;
+        this.image_url = image_url;
     }
 
     //This contructor use for get data
-    public Excercise(String title, String introduction, String content, String tips, int sets, int reps, int rest, String videoUrl, String imageUrl) {
+    public Exercise(String title, String introduction, String content, String tips, int sets, int reps, int rest, String video_url, String image_url) {
         this.title = title;
         this.introduction = introduction;
         this.content = content;
@@ -42,8 +40,8 @@ public class Excercise {
         this.sets = sets;
         this.reps = reps;
         this.rest = rest;
-        this.videoUrl = videoUrl;
-        this.imageUrl = imageUrl;
+        this.video_url = video_url;
+        this.image_url = image_url;
     }
 
     public int getId() {
@@ -110,27 +108,19 @@ public class Excercise {
         this.rest = rest;
     }
 
-    public String getVideoUrl() {
-        return videoUrl;
+    public String getVideo_url() {
+        return video_url;
     }
 
-    public void setVideoUrl(String videoUrl) {
-        this.videoUrl = videoUrl;
+    public void setVideo_url(String video_url) {
+        this.video_url = video_url;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getImage_url() {
+        return image_url;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public int get_idLevel() {
-        return _idLevel;
-    }
-
-    public void set_idLevel(int _idLevel) {
-        this._idLevel = _idLevel;
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
     }
 }

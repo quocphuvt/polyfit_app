@@ -68,28 +68,28 @@
 
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/iv_avatar"
-                            android:layout_weight="0"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
+                            android:layout_weight="0"
                             android:src="@drawable/ic_avatar"
                             app:civ_border_color="#FFFFFF"
                             app:civ_border_width="2dp"
                             app:civ_circle_background_color="#fff" />
 
                         <LinearLayout
-                            android:layout_weight="1"
-                            android:paddingLeft="5dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
-                            android:orientation="vertical">
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:paddingLeft="5dp">
 
                             <TextView
                                 android:id="@+id/tv_UserName"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Username"
                                 android:fontFamily="@font/roboto"
+                                android:text="Username"
                                 android:textColor="@color/title"
                                 android:textSize="@dimen/text_lg" />
 
@@ -129,18 +129,19 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:text="Height"
-                                        android:textStyle="bold"
                                         android:textAlignment="center"
                                         android:textColor="@color/title"
-                                        android:textSize="13sp" />
+                                        android:textSize="13sp"
+                                        android:textStyle="bold" />
+
                                     <TextView
                                         android:id="@+id/tv_height"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:text="175"
-                                        android:textFontWeight="1"
                                         android:textAlignment="center"
                                         android:textColor="@color/content"
+                                        android:textFontWeight="1"
                                         android:textSize="@dimen/text_lg" />
                                 </LinearLayout>
                             </androidx.cardview.widget.CardView>
@@ -167,19 +168,19 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:text="Weight"
-                                        android:textStyle="bold"
                                         android:textAlignment="center"
                                         android:textColor="@color/title"
-                                        android:textSize="13sp" />
+                                        android:textSize="13sp"
+                                        android:textStyle="bold" />
 
                                     <TextView
                                         android:id="@+id/tv_weight"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:text="65kg"
-                                        android:textFontWeight="1"
                                         android:textAlignment="center"
                                         android:textColor="@color/content"
+                                        android:textFontWeight="1"
                                         android:textSize="@dimen/text_lg" />
                                 </LinearLayout>
                             </androidx.cardview.widget.CardView>
@@ -205,19 +206,19 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:text="BMI"
-                                        android:textStyle="bold"
                                         android:textAlignment="center"
                                         android:textColor="@color/title"
-                                        android:textSize="13sp" />
+                                        android:textSize="13sp"
+                                        android:textStyle="bold" />
 
                                     <TextView
                                         android:id="@+id/tv_BMI"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:text="23.3"
-                                        android:textFontWeight="1"
                                         android:textAlignment="center"
                                         android:textColor="@color/content"
+                                        android:textFontWeight="1"
                                         android:textSize="@dimen/text_lg" />
                                 </LinearLayout>
                             </androidx.cardview.widget.CardView>
@@ -256,7 +257,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="150dp"
                         android:layout_marginRight="5dp"
                         android:layout_weight="1"
                         android:gravity="center"
@@ -283,46 +284,48 @@
                             android:textSize="14sp" />
                     </LinearLayout>
 
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="150dp"
                         android:layout_marginLeft="5dp"
                         android:layout_weight="1">
-                        <androidx.cardview.widget.CardView
+
+                        <ImageView
+                            android:id="@+id/image_bg_abs_home"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            app:cardBackgroundColor="#F1F9FF">
+                            android:scaleType="centerCrop" />
 
-                            <LinearLayout
-                                android:id="@+id/abs_exercise_layout"
+                        <LinearLayout
+                            android:id="@+id/abs_exercise_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+
+                            android:orientation="vertical"
+                            android:padding="20dp">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/ic_abs" />
+
+                            <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:padding="20dp">
+                                android:text="Tập bụng"
+                                android:textColor="@color/white"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
 
-                                <ImageView
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
-                                    android:src="@drawable/ic_abs" />
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:text="Tập bụng"
-                                    android:textColor="@color/title"
-                                    android:textSize="18sp"
-                                    android:textStyle="bold" />
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="5dp"
-                                    android:text="6 múi chuẩn không cần chỉnh"
-                                    android:textColor="@color/content"
-                                    android:textSize="14sp" />
-                            </LinearLayout>
-                        </androidx.cardview.widget.CardView>
-                    </LinearLayout>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="6 múi chuẩn không cần chỉnh"
+                                android:textColor="@color/content"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </RelativeLayout>
                 </LinearLayout>
 
                 <LinearLayout
@@ -331,85 +334,91 @@
                     android:layout_marginTop="10dp"
                     android:orientation="horizontal">
 
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="150dp"
+                        android:layout_marginRight="5dp"
                         android:layout_weight="1">
-                        <androidx.cardview.widget.CardView
+
+                        <ImageView
+                            android:id="@+id/image_bg_arms_home"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginRight="5dp"
-                            app:cardBackgroundColor="#F1F9FF">
+                            android:scaleType="centerCrop" />
 
-                            <LinearLayout
+                        <LinearLayout
+                            android:id="@+id/arms_exercise_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+
+                            android:orientation="vertical"
+                            android:padding="20dp">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/ic_arms" />
+
+                            <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:padding="20dp">
+                                android:text="Bài tập tay"
+                                android:textColor="@color/white"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
 
-                                <ImageView
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
-                                    android:src="@drawable/ic_arms" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="Miệt mài quay tay vận may sẽ đến"
+                                android:textColor="@color/content"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </RelativeLayout>
 
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:text="Bài tập tay"
-                                    android:textColor="@color/title"
-                                    android:textSize="18sp"
-                                    android:textStyle="bold" />
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="5dp"
-                                    android:text="Miệt mài quay tay vận may sẽ đến"
-                                    android:textColor="@color/content"
-                                    android:textSize="14sp" />
-                            </LinearLayout>
-                        </androidx.cardview.widget.CardView>
-                    </LinearLayout>
-
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="150dp"
+                        android:layout_marginLeft="5dp"
                         android:layout_weight="1">
-                        <androidx.cardview.widget.CardView
+
+                        <ImageView
+                            android:id="@+id/image_bg_legs_home"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:scaleType="centerCrop" />
+
+                        <LinearLayout
+                            android:id="@+id/legs_exercise_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
                             android:layout_marginLeft="5dp"
-                            app:cardBackgroundColor="#F1F9FF">
+                            android:orientation="vertical"
+                            android:padding="20dp">
 
-                            <LinearLayout
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/ic_legs" />
+
+                            <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:padding="20dp">
+                                android:text="Chân"
+                                android:textColor="@color/white"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
 
-                                <ImageView
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
-                                    android:src="@drawable/ic_legs" />
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:text="Chân"
-                                    android:textColor="@color/title"
-                                    android:textSize="18sp"
-                                    android:textStyle="bold" />
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="5dp"
-                                    android:text="Chạy ngay đi trước khi mọi chuyện tồi tệ"
-                                    android:textColor="@color/content"
-                                    android:textSize="14sp" />
-                            </LinearLayout>
-                        </androidx.cardview.widget.CardView>
-                    </LinearLayout>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="Chạy ngay đi trước khi mọi chuyện tồi tệ"
+                                android:textColor="@color/content"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </RelativeLayout>
                 </LinearLayout>
 
                 <LinearLayout
@@ -418,90 +427,96 @@
                     android:layout_marginTop="10dp"
                     android:orientation="horizontal">
 
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="150dp"
+                        android:layout_marginRight="5dp"
                         android:layout_weight="1">
 
-                        <androidx.cardview.widget.CardView
+                        <ImageView
+                            android:id="@+id/image_bg_back_home"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:scaleType="centerCrop" />
+
+                        <LinearLayout
+                            android:id="@+id/shoulder_back_exercise_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
                             android:layout_marginRight="5dp"
-                            app:cardBackgroundColor="#F1F9FF">
+                            android:orientation="vertical"
+                            android:padding="20dp">
 
-                            <LinearLayout
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/ic_shoulder" />
+
+                            <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:padding="20dp">
+                                android:text="Cơ vai và lưng"
+                                android:textColor="@color/white"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
 
-                                <ImageView
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
-                                    android:src="@drawable/ic_shoulder" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="Các bài tập vai tiêu chuẩn"
+                                android:textColor="@color/content"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </RelativeLayout>
 
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:text="Cơ vai và lưng"
-                                    android:textColor="@color/title"
-                                    android:textSize="18sp"
-                                    android:textStyle="bold" />
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="5dp"
-                                    android:text="Các bài tập vai tiêu chuẩn"
-                                    android:textColor="@color/content"
-                                    android:textSize="14sp" />
-                            </LinearLayout>
-                        </androidx.cardview.widget.CardView>
-                    </LinearLayout>
-
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="150dp"
+                        android:layout_marginLeft="5dp"
                         android:layout_weight="1">
 
-                        <androidx.cardview.widget.CardView
+                        <ImageView
+                            android:id="@+id/image_bg_chest_home"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginLeft="5dp"
-                            app:cardBackgroundColor="#F1F9FF">
+                            android:scaleType="centerCrop" />
 
-                            <LinearLayout
+                        <LinearLayout
+                            android:id="@+id/chest_exercise_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:layout_marginLeft="5dp"
+
+                            android:orientation="vertical"
+                            android:padding="20dp">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/ic_chest" />
+
+                            <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:padding="20dp">
+                                android:text="Tập ngực"
+                                android:textColor="@color/white"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
 
-                                <ImageView
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
-                                    android:src="@drawable/ic_chest" />
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:text="Tập ngực"
-                                    android:textColor="@color/title"
-                                    android:textSize="18sp"
-                                    android:textStyle="bold" />
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="5dp"
-                                    android:text="Bài ngực nở nang"
-                                    android:textColor="@color/content"
-                                    android:textSize="14sp" />
-                            </LinearLayout>
-                        </androidx.cardview.widget.CardView>
-                    </LinearLayout>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="Bài ngực nở nang"
+                                android:textColor="@color/content"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </RelativeLayout>
                 </LinearLayout>
 
                 <LinearLayout
+                    android:layout_marginVertical="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -510,7 +525,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Thử thách 30 ngày"
+                        android:text="Chế độ ăn phổ biến"
                         android:textColor="@color/title"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -521,6 +536,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -532,6 +548,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Ăn gì hôm nay ?"
+                        android:layout_marginBottom="5dp"
                         android:textColor="@color/title"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -540,86 +557,127 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
-                        <LinearLayout
-                            android:layout_marginVertical="10dp"
-                            android:background="@color/secondary"
-                            android:paddingRight="20dp"
-                            android:paddingTop="20dp"
-                            android:paddingBottom="20dp"
+
+                        <RelativeLayout
+                            android:layout_marginVertical="5dp"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-                            <TextView
+                            android:layout_height="120dp">
+
+                            <ImageView
+                                android:id="@+id/image_bg_morning"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
+
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:gravity="right"
-                                android:text="Buổi sáng"
-                                android:textColor="@color/title"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:paddingLeft="120dp"
-                                android:gravity="right"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:text="Buổi sáng tràn đầy năng lượng cùng các món ăn độc đáo"
-                                android:textColor="@color/content"
-                                android:textSize="14sp" />
-                        </LinearLayout>
-                        <LinearLayout
-                            android:background="@color/secondary"
-                            android:paddingLeft="20dp"
-                            android:paddingTop="20dp"
-                            android:paddingBottom="20dp"
-                            android:layout_marginBottom="10dp"
+                                android:layout_marginVertical="10dp"
+                                android:orientation="vertical"
+                                android:paddingTop="20dp"
+                                android:paddingRight="20dp"
+                                android:paddingBottom="20dp">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="right"
+                                    android:text="Buổi sáng"
+                                    android:textColor="@color/title"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
+                                    android:gravity="right"
+                                    android:paddingLeft="120dp"
+                                    android:text="Buổi sáng tràn đầy năng lượng cùng các món ăn độc đáo"
+                                    android:textColor="@color/content"
+                                    android:textSize="14sp" />
+                            </LinearLayout>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_marginVertical="5dp"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-                            <TextView
+                            android:layout_height="120dp">
+
+                            <ImageView
+                                android:id="@+id/image_bg_noon"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
+
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:gravity="left"
-                                android:text="Buổi trưa"
-                                android:textColor="@color/title"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:paddingRight="120dp"
-                                android:gravity="left"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:text="Buổi trưa cho gia đình tràn đầy sức khỏe"
-                                android:textColor="@color/content"
-                                android:textSize="14sp" />
-                        </LinearLayout>
-                        <LinearLayout
-                            android:background="@color/secondary"
-                            android:paddingRight="20dp"
-                            android:paddingTop="20dp"
-                            android:paddingBottom="20dp"
+                                android:layout_marginBottom="10dp"
+
+                                android:orientation="vertical"
+                                android:paddingLeft="20dp"
+                                android:paddingTop="20dp"
+                                android:paddingBottom="20dp">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="left"
+                                    android:text="Buổi trưa"
+                                    android:textColor="@color/title"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
+                                    android:gravity="left"
+                                    android:paddingRight="120dp"
+                                    android:text="Buổi trưa cho gia đình tràn đầy sức khỏe"
+                                    android:textColor="@color/content"
+                                    android:textSize="14sp" />
+                            </LinearLayout>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_marginVertical="5dp"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-                            <TextView
+                            android:layout_height="120dp">
+
+                            <ImageView
+                                android:id="@+id/image_bg_night"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
+
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:gravity="right"
-                                android:text="Buổi chiều"
-                                android:textColor="@color/title"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:paddingLeft="120dp"
-                                android:gravity="right"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:text="Bữa ăn cho kết thúc một ngày làm việc mệt mỏi"
-                                android:textColor="@color/content"
-                                android:textSize="14sp" />
-                        </LinearLayout>
+                                android:orientation="vertical"
+                                android:paddingTop="20dp"
+                                android:paddingRight="20dp"
+                                android:paddingBottom="20dp">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="right"
+                                    android:text="Buổi chiều"
+                                    android:textColor="@color/title"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
+                                    android:gravity="right"
+                                    android:paddingLeft="120dp"
+                                    android:text="Bữa ăn cho kết thúc một ngày làm việc mệt mỏi"
+                                    android:textColor="@color/content"
+                                    android:textSize="14sp" />
+                            </LinearLayout>
+                        </RelativeLayout>
+
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

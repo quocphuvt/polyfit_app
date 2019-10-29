@@ -45,13 +45,12 @@ public class StepOneSignUpActivity extends AppCompatActivity implements View.OnC
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ic_closeSignUpStepOne:
-                Log.e("PhayTran", "Close stepOne");
                 finish();
                 break;
             case R.id.nextStepSignUp:
                 Intent intent = new Intent(StepOneSignUpActivity.this, StepTwoSignUpActivity.class);
                 if (edtDisplayName.getText().toString().isEmpty() || edtUsername.getText().toString().isEmpty() || edtPassword.getText().toString().isEmpty() || edtRetypePassword.getText().toString().isEmpty()) {
-                    Toast.makeText(this, "Please enter full your information", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
                 } else if (!edtPassword.getText().toString().equals(edtRetypePassword.getText().toString())) {
                     Toast.makeText(this, "Password and retype password not matched", Toast.LENGTH_SHORT).show();
                 } else {
@@ -60,22 +59,6 @@ public class StepOneSignUpActivity extends AppCompatActivity implements View.OnC
                     intent.putExtra("password", edtPassword.getText().toString());
                     startActivity(intent);
                 }
-
-
-//                String displayName=edtDisplayName.getText().toString();
-//                String username=edtUsername.getText().toString();
-//                String password=edtPassword.getText().toString();
-//                String reType=edtRetypePassword.getText().toString();
-//                if(displayName.isEmpty()){
-//                    Toast.makeText(this, "Please enter display name", Toast.LENGTH_SHORT).show();
-//                }else if(username.isEmpty()){
-//                    Toast.makeText(this, "Please enter user name", Toast.LENGTH_SHORT).show();
-//                }
-//                else if(password.isEmpty() || !password.equals(reType) || reType.isEmpty()){
-//                    Toast.makeText(this, "Please check password", Toast.LENGTH_SHORT).show();
-//                }else {
-//                    registerUser(displayName,username,password);
-//                }
                 break;
         }
     }

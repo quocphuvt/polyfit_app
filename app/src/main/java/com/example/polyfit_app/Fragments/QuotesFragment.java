@@ -34,15 +34,15 @@ public class QuotesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_quotes, container, false);
-        deck_pager_quotes = view.findViewById(R.id.deck_pager_quotes);
-        quotes = new ArrayList<>();
-        quotes.add(new Quote("", "Có công mài sắt có ngày nên kim", "Quoc Phu"));
-        quotes.add(new Quote("", "Bàu ơi thương lấy bí cùng \n Tuy ràng khác giống nhưng chung 1 nồi", "Quoc Phu"));
-        quotes.add(new Quote("", "Cố gắng không ngừng nghỉ", "Quoc Phu 2"));
-        quotes.add(new Quote("", "Có công mài sắt có ngày nên kim", "Quoc Phu"));
-
-        QuotesDeckViewPager quotesDeckViewPager = new QuotesDeckViewPager(getChildFragmentManager(), quotes, getContext());
-        deck_pager_quotes.setAdapter(quotesDeckViewPager);
+//        deck_pager_quotes = view.findViewById(R.id.deck_pager_quotes);
+//        quotes = new ArrayList<>();
+//        quotes.add(new Quote("""Có công mài sắt có ngày nên kim", "Quoc Phu"));
+//        quotes.add(new Quote("", "Bàu ơi thương lấy bí cùng \n Tuy ràng khác giống nhưng chung 1 nồi", "Quoc Phu"));
+//        quotes.add(new Quote("", "Cố gắng không ngừng nghỉ", "Quoc Phu 2"));
+//        quotes.add(new Quote("", "Có công mài sắt có ngày nên kim", "Quoc Phu"));
+//
+//        QuotesDeckViewPager quotesDeckViewPager = new QuotesDeckViewPager(getChildFragmentManager(), quotes, getContext());
+//        deck_pager_quotes.setAdapter(quotesDeckViewPager);
         return view;
     }
 
@@ -65,7 +65,7 @@ class QuotesDeckViewPager extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         Quote quote = quotes.get(position);
-        return new CardQuoteFragment("", quote.getTitle(), quote.getAuthor());//TODO: Pass quote.getImage() to arg #1
+        return new CardQuoteFragment("", quote.getTitle(), quote.getImage_url());//TODO: Pass quote.getImage() to arg #1
     }
 
     @Override
