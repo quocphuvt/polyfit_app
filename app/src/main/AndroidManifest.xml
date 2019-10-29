@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.polyfit_app">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".Service.ForegroundServices"
         android:allowBackup="true"
@@ -11,24 +15,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.ReminderScreenActivity">
-
-        </activity>
-        <activity android:name=".Activity.ReminderActivity" />
-
-        <activity android:name=".Activity.Main2Activity" />
-        <activity android:name=".SplashScreen">
+        <activity android:name=".Activity.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Login.StepTwoSignUpActivity" />
-        <activity android:name=".Login.StepOneSignUpActivity" />
-        <activity android:name=".Login.LoginActivity" />
-        <activity android:name=".Login.LoginMethod" />
+        <activity android:name=".Activity.ReminderActivity"></activity>
+        <activity android:name=".Activity.MainActivity"/>
+        <activity android:name=".Activity.TutorialActivity" />
+        <activity android:name=".Activity.ExerciseDetailsActivity"/>
+        <activity android:name=".Activity.ExercisesActivity" android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Activity.Login.StepTwoSignUpActivity" />
+        <activity android:name=".Activity.Login.StepOneSignUpActivity" />
+        <activity android:name=".Activity.Login.LoginActivity" />
+        <activity android:name=".Activity.Login.LoginMethod"/>
         <activity android:name="com.soundcloud.android.crop.CropImageActivity" />
+        <activity android:name=".Activity.ReminderScreenActivity"/>
 
         <receiver android:name=".Service.Reminder.ReminderServices">
             <intent-filter>
@@ -37,6 +41,7 @@
         </receiver>
         <service android:name=".Service.local.StepCountServices" />
     </application>
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WAKE_LOCK"/>

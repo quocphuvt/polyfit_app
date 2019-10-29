@@ -23,7 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
-import com.example.polyfit_app.Activity.Main2Activity;
+import com.example.polyfit_app.Activity.MainActivity;
 import com.example.polyfit_app.R;
 
 import static com.example.polyfit_app.Service.ForegroundServices.CHANNEL_ID;
@@ -46,7 +46,7 @@ public class StepCountServices extends Service implements SensorEventListener {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Intent notificationIntent = new Intent(this, Main2Activity.class);
+        Intent notificationIntent = new Intent(this, MainActivity.class);
         pendingIntent = PendingIntent.getActivity(this,
                 0, notificationIntent, 0);
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);

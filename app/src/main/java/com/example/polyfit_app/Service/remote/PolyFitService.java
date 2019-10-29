@@ -2,6 +2,7 @@ package com.example.polyfit_app.Service.remote;
 
 
 import com.example.polyfit_app.Model.Response;
+import com.example.polyfit_app.Model.Responses.UserResponse;
 import com.example.polyfit_app.Model.User;
 
 import java.util.List;
@@ -19,21 +20,15 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import rx.Observable;
 
-public interface PolyFitService {
+public interface  PolyFitService {
+    @GET("user/getCurrentUser/{id}")
+    Call<UserResponse> getCurrentUser(@Path("id") int userId);
+
     @POST("user/register")
-    @FormUrlEncoded
-    Observable<String> registerUser(@Field("display_name") String displayName,
-                                    @Field("username") String username,
-                                    @Field("password") String password,
-                                    @Field("weight") Float weight,
-                                    @Field("height") Float height,
-                                    @Field("gender") Integer gender,
-                                    @Field("create_at") String create_at);
+    Call<UserResponse> registerUser(@Body() User user);
 
     @POST("user/login")
-    @FormUrlEncoded
-    Observable<String> loginUser(@Field("username") String username,
-                                 @Field("password") String password);
+    Call<UserResponse> loginUser(@Body() User user);
 
     @GET("user/{username}")
     Call<String> getUserByUserName(@Path("username") String username);

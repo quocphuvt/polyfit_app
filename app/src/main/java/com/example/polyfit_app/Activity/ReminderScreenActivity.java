@@ -20,7 +20,7 @@ import android.widget.Toast;
 
 import com.agik.AGIKSwipeButton.Controller.OnSwipeCompleteListener;
 import com.agik.AGIKSwipeButton.View.Swipe_Button_View;
-import com.example.polyfit_app.Helpers.FullScreen;
+
 import com.example.polyfit_app.R;
 
 import java.util.Objects;
@@ -35,7 +35,7 @@ public class ReminderScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Objects.requireNonNull(getSupportActionBar()).hide();
-        FullScreen.setFullScreen(ReminderScreenActivity.this);
+
         Window wind;
         wind = this.getWindow();
         wind.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);

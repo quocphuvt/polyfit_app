@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Login.StepTwoSignUpActivity">
+    tools:context=".Activity.Login.StepTwoSignUpActivity">
     <LinearLayout
         android:layout_margin="15sp"
         android:layout_width="wrap_content"
@@ -79,13 +79,13 @@
            android:layout_height="wrap_content">
            <RadioButton
                android:id="@+id/rb_Male"
-               android:buttonTint="@color/place_holder"
+               android:buttonTint="@color/primary"
                android:text="Male"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"/>
            <RadioButton
                android:id="@+id/rb_female"
-               android:buttonTint="@color/place_holder"
+               android:buttonTint="@color/primary"
                android:layout_marginLeft="30dp"
                android:text="Female"
                android:layout_width="wrap_content"
@@ -103,7 +103,7 @@
             android:layout_height="wrap_content"/>
         <CheckBox
             android:id="@+id/cb_Accept"
-            app:buttonTint="@color/place_holder"
+            app:buttonTint="@color/primary"
             android:layout_marginTop="15dp"
             android:layout_marginHorizontal="30dp"
             android:textColor="#919191"
@@ -129,7 +129,7 @@
             <androidx.cardview.widget.CardView
                 app:cardCornerRadius="10dp"
                 android:background="@drawable/back_ground_button_gradient"
-                app:cardBackgroundColor="#F2620F"
+                app:cardBackgroundColor="@color/primary"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <TextView

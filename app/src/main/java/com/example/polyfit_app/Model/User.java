@@ -2,6 +2,7 @@ package com.example.polyfit_app.Model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "polyfit_users")
@@ -21,7 +22,7 @@ public class User {
     @ColumnInfo(name = "bmi")
     private Float bmi;
     @ColumnInfo(name = "created_at")
-    private String create_at;
+    private String createdAt;
     @ColumnInfo(name = "gender")
     private int gender;
     @ColumnInfo(name = "is_verified")
@@ -39,6 +40,22 @@ public class User {
         this.gender = gender;
         this.isVerified = isVerified;
         this.phoneNumber = phoneNumber;
+    }
+
+    @Ignore()
+    public User(String username, String password) { //This use for logining
+        this.username = username;
+        this.password = password;
+    }
+
+    @Ignore()
+    public User(String username, String password, String display_name, Float weight, Float height, int gender) { //This use for registering
+        this.username = username;
+        this.password = password;
+        this.display_name = display_name;
+        this.weight = weight;
+        this.height = height;
+        this.gender = gender;
     }
 
     public String getUsername() {
@@ -97,12 +114,12 @@ public class User {
         this.bmi = bmi;
     }
 
-    public String getCreate_at() {
-        return create_at;
+    public String getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreate_at(String create_at) {
-        this.create_at = create_at;
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 
     public int getGender() {

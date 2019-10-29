@@ -9,14 +9,21 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.polyfit_app.Adapter.DishesAdapter;
+import com.example.polyfit_app.Model.Dishes;
 import com.example.polyfit_app.R;
+
+import java.util.ArrayList;
 
 public class DietsFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private String mParam1;
     private String mParam2;
+    ArrayList<Dishes> dishesArrayList;
     private OnFragmentInteractionListener mListener;
 
     public DietsFragment() {
@@ -44,7 +51,8 @@ public class DietsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_diets, container, false);
+        View view=inflater.inflate(R.layout.activity_dishes_fragment, container, false);
+        return view;
     }
 
     public void onButtonPressed(Uri uri) {

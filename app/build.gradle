@@ -6,22 +6,24 @@ android {
     buildToolsVersion "29.0.1"
     defaultConfig {
         applicationId "com.example.polyfit_app"
-        minSdkVersion '19'
+        minSdkVersion 24
         targetSdkVersion 29
+        multiDexEnabled true
+        vectorDrawables.useSupportLibrary = true
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        /*      javaCompileOptions {
+        javaCompileOptions {
             annotationProcessorOptions {
                 arguments = ["room.schemaLocation":
                                      "$projectDir/schemas".toString()]
             }
-        }*/
+        }
     }
-    /*   sourceSets {
+    sourceSets {
         androidTest.assets.srcDirs +=
                 files("$projectDir/schemas".toString())
-    }*/
+    }
 
     buildTypes {
         release {
@@ -46,19 +48,18 @@ dependencies {
 
     implementation 'com.squareup.okhttp3:logging-interceptor:3.3.1'
     implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
+    implementation 'com.github.gratusik:AGIKSwipeButton:1.0.1'
 
     //RxJava
     implementation 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
     implementation 'io.reactivex:rxjava:1.2.0'
     implementation 'io.reactivex:rxandroid:1.2.1'
     implementation 'com.squareup.retrofit2:converter-scalars:2.3.0'
-    //material Dialog
 
+    //Firebase
     implementation 'com.google.firebase:firebase-storage:16.0.4'
     implementation 'com.google.firebase:firebase-auth:16.0.5'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
     //cropimv
     implementation 'com.soundcloud.android:android-crop:1.0.1@aar'
     //animation
@@ -67,9 +68,6 @@ dependencies {
     //picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
-
 
     implementation 'com.squareup.retrofit2:retrofit:2.6.1'
     implementation 'com.google.code.gson:gson:2.6.1'
@@ -81,15 +79,16 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.x.x'
     implementation 'de.hdodenhof:circleimageview:3.0.1'
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
+    //Bottom sheet
+    implementation 'com.flipboard:bottomsheet-core:1.5.3'
+    implementation 'com.flipboard:bottomsheet-commons:1.5.3'
+
+    //Deck (Custom viewpager);
+    implementation 'com.github.bloderxd:deck:0.1'
     //Room DB
     implementation 'android.arch.persistence.room:runtime:2.1.0'
     annotationProcessor 'android.arch.persistence.room:compiler:2.1.0'
     androidTestImplementation 'android.arch.persistence.room:testing:2.1.0'
-    implementation 'androidx.room:room-runtime:2.1.0'
-    annotationProcessor 'androidx.room:room-compiler:2.1.0'
-
-
-    //PhayTRan
 
     // ViewModel and LiveData
     implementation "android.arch.lifecycle:extensions:1.1.0"
@@ -114,9 +113,16 @@ dependencies {
     testImplementation "android.arch.persistence.room:testing:1.0.0"
     //Swith button
     implementation 'com.github.zcweng:switch-button:0.0.3@aar'
-//Swipe button
-//    implementation 'com.ebanx:swipe-button:0.8.3'
-    implementation 'com.github.gratusik:AGIKSwipeButton:1.0.1'
 
+    //Chart
+    implementation 'com.github.lecho:hellocharts-android:v1.5.8'
+    implementation 'com.android.support:multidex:1.0.3'
 
+    //Glide to support loading image
+    implementation 'com.github.bumptech.glide:glide:4.10.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
+
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }

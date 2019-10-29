@@ -29,6 +29,7 @@
                android:layout_gravity="center"
                android:textSize="30dp"
                android:text="Reminder"
+               android:textColor="@color/title"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"/>
        </LinearLayout>
@@ -44,7 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:backgroundTint="#030852"
+        android:backgroundTint="@color/primary"
         android:layout_margin="20dp"
         android:pointerIcon="arrow"
         android:src="@drawable/plus"

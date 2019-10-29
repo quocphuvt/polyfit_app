@@ -102,7 +102,7 @@ public class RetrofitClient {
         if (instance == null) {
             instance = new Retrofit.Builder()
                     .baseUrl(Constants.BASE_URL)
-                    .addConverterFactory(ScalarsConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                     .build();
         }
