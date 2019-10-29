@@ -1,7 +1,5 @@
 package com.example.polyfit_app.Model;
 
-import com.example.polyfit_app.Model.Excercise;
-
 import java.util.ArrayList;
 
 public class Level {
@@ -9,7 +7,7 @@ public class Level {
     private String title;
     private String image;
     private String description;
-    private ArrayList<Excercise> excercises;
+    private ArrayList<Exercise> exercises;
     private ArrayList<Diet> diets;
 
     public int getId() {
@@ -44,12 +42,12 @@ public class Level {
         this.description = description;
     }
 
-    public ArrayList<Excercise> getExcercises() {
-        return excercises;
+    public ArrayList<Exercise> getExercises() {
+        return exercises;
     }
 
-    public void setExcercises(ArrayList<Excercise> excercises) {
-        this.excercises = excercises;
+    public void setExercises(ArrayList<Exercise> exercises) {
+        this.exercises = exercises;
     }
 
     public ArrayList<Diet> getDiets() {

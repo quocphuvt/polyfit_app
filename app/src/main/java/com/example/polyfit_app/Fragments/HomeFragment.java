@@ -24,9 +24,10 @@ import com.example.polyfit_app.Activity.ExercisesActivity;
 import com.example.polyfit_app.Activity.Login.LoginActivity;
 import com.example.polyfit_app.Adapter.DietsHomeAdapter;
 import com.example.polyfit_app.Model.BodyParts;
-import com.example.polyfit_app.Model.Challenge;
 import com.example.polyfit_app.Activity.ReminderActivity;
+import com.example.polyfit_app.Model.Diet;
 import com.example.polyfit_app.Model.Responses.BodypartResponse;
+import com.example.polyfit_app.Model.Responses.DietsResponse;
 import com.example.polyfit_app.Model.Responses.UserResponse;
 import com.example.polyfit_app.Model.User;
 import com.example.polyfit_app.R;
@@ -63,8 +64,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private String mParam1;
     private String mParam2;
     private OnFragmentInteractionListener mListener;
-    private RecyclerView rv_challenges;
-    private ArrayList<Challenge> sampleChanlleges;
+    private RecyclerView rv_diets;
     private PolyFitService polyFitService;
     private TextView tv_UserName, tv_startDate, tv_height, tv_weight, tv_bmi;
     private ImageView iv_avatar, ic_reminder, iv_bg_abs, iv_bg_arms, iv_bg_leg, iv_bg_back, iv_bg_chest, iv_bg_morning, iv_bg_noon, iv_bg_night;
@@ -87,7 +87,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         tv_weight = view.findViewById(R.id.tv_weight);
         tv_bmi = view.findViewById(R.id.tv_BMI);
         iv_avatar = view.findViewById(R.id.iv_avatar);
-        rv_challenges = view.findViewById(R.id.rv_challenges);
+        rv_diets = view.findViewById(R.id.rv_challenges);
         iv_avatar.setOnClickListener(this);
         ic_reminder = view.findViewById(R.id.ic_reminder);
         ic_reminder.setOnClickListener(this);
@@ -154,24 +154,38 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
         int userId = sharedPreferences.getInt("id", 0);
 
-
+        this.getDietData();
         this.getUserById(userId);
         this.getAllBodyParts();
         this.setBackgroundImageForMeals();
-
-//        sampleChanlleges = new ArrayList<>(); //Set sample challenge data
-//        sampleChanlleges.add(new Challenge("30 ngày thanh lọc", "Thử thách 30 ngày thanh lọc cơ thể", ""));
-//        sampleChanlleges.add(new Challenge("16 ngày giảm cân", "Thử thách 16 ngảy giảm cân", ""));
-//        sampleChanlleges.add(new Challenge("1 ngày ăn kiêng", "Thử thách 1 ngày thanh lọc cơ thể", ""));
-        renderChallenges(sampleChanlleges);
         return view;
     }
 
-    private void renderChallenges(ArrayList<Challenge> challenges) {
-        DietsHomeAdapter dietsHomeAdapter = new DietsHomeAdapter(challenges, getContext());
-        rv_challenges.setHasFixedSize(true);
-        rv_challenges.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-        rv_challenges.setAdapter(dietsHomeAdapter);
+    private void getDietData() {
+        Call<DietsResponse> dietsResponseCall = dietsAPI.getAllDiets();
+        dietsResponseCall.enqueue(new Callback<DietsResponse>() {
+            @Override
+            public void onResponse(Call<DietsResponse> call, Response<DietsResponse> response) {
+                if(response.isSuccessful()) {
+                    DietsResponse dietsResponse = response.body();
+                    if(dietsResponse.getStatus() == 0) {
+                        renderDiets(dietsResponse.getResponse());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DietsResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void renderDiets(ArrayList<Diet> diets) {
+        DietsHomeAdapter dietsHomeAdapter = new DietsHomeAdapter(diets, getContext());
+        rv_diets.setHasFixedSize(true);
+        rv_diets.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+        rv_diets.setAdapter(dietsHomeAdapter);
     }
 
     public void onButtonPressed(Uri uri) {
