@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,6 +24,7 @@ import com.bumptech.glide.Glide;
 import com.example.polyfit_app.Activity.ExercisesActivity;
 import com.example.polyfit_app.Activity.Login.LoginActivity;
 import com.example.polyfit_app.Adapter.DietsHomeAdapter;
+import com.example.polyfit_app.Adapter.Home.HomeBodypartsAdapter;
 import com.example.polyfit_app.Model.BodyParts;
 import com.example.polyfit_app.Activity.ReminderActivity;
 import com.example.polyfit_app.Model.Diet;
@@ -67,15 +69,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private RecyclerView rv_diets;
     private PolyFitService polyFitService;
     private TextView tv_UserName, tv_startDate, tv_height, tv_weight, tv_bmi;
-    private ImageView iv_avatar, ic_reminder, iv_bg_abs, iv_bg_arms, iv_bg_leg, iv_bg_back, iv_bg_chest, iv_bg_morning, iv_bg_noon, iv_bg_night;
+    private ImageView iv_avatar, ic_reminder, iv_bg_morning, iv_bg_noon, iv_bg_night;
     private PhotoView viewAvatar;
-    private LinearLayout changeAvatar, abs_exercise_layout, arms_exercise_layout, legs_excercise_layout, back_exercise_layout, chest_exercise_layout;
+    private LinearLayout changeAvatar;
     private TextView tv_ChangeAvatar;
     private AlertDialog mDialog;
     private View mView;
     private AlertDialog.Builder mBuilder;
     private BodypartsAPI bodypartsAPI;
     private DietsAPI dietsAPI;
+    private RecyclerView rv_bodyparts;
 
     public HomeFragment() {
     }
@@ -91,23 +94,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         iv_avatar.setOnClickListener(this);
         ic_reminder = view.findViewById(R.id.ic_reminder);
         ic_reminder.setOnClickListener(this);
-        //Layout bodyparts
-        abs_exercise_layout = view.findViewById(R.id.abs_exercise_layout);
-        arms_exercise_layout = view.findViewById(R.id.arms_exercise_layout);
-        legs_excercise_layout = view.findViewById(R.id.legs_exercise_layout);
-        back_exercise_layout = view.findViewById(R.id.shoulder_back_exercise_layout);
-        chest_exercise_layout = view.findViewById(R.id.chest_exercise_layout);
-        abs_exercise_layout.setOnClickListener(this);
-        arms_exercise_layout.setOnClickListener(this);
-        legs_excercise_layout.setOnClickListener(this);
-        back_exercise_layout.setOnClickListener(this);
-        chest_exercise_layout.setOnClickListener(this);
-        //Bodypart's image background
-        iv_bg_abs = view.findViewById(R.id.image_bg_abs_home);
-        iv_bg_arms = view.findViewById(R.id.image_bg_arms_home);
-        iv_bg_back = view.findViewById(R.id.image_bg_back_home);
-        iv_bg_chest = view.findViewById(R.id.image_bg_chest_home);
-        iv_bg_leg = view.findViewById(R.id.image_bg_legs_home);
+        rv_bodyparts = view.findViewById(R.id.rv_bodyparts_home);
         //Meal's image background
         iv_bg_morning = view.findViewById(R.id.image_bg_morning);
         iv_bg_noon = view.findViewById(R.id.image_bg_noon);
@@ -142,16 +129,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         bodypartsAPI = retrofit.create(BodypartsAPI.class);
         dietsAPI = retrofit.create(DietsAPI.class);
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Constants.LOGIN, MODE_PRIVATE);
-        JSONObject tokenObject = null;
-        String token = null;
-        try {
-            tokenObject = new JSONObject(sharedPreferences.getString("token", ""));
-            token = tokenObject.getString("token");
-            Log.e("phayTran", token);
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
         int userId = sharedPreferences.getInt("id", 0);
 
         this.getDietData();
@@ -186,12 +164,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         rv_diets.setHasFixedSize(true);
         rv_diets.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
         rv_diets.setAdapter(dietsHomeAdapter);
-    }
-
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
     }
 
     @Override
@@ -235,8 +207,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             case R.id.ic_reminder:
                 startActivity(new Intent(getActivity(), ReminderActivity.class));
                 break;
-            case R.id.abs_exercise_layout:
-                startActivity(new Intent(getActivity(), ExercisesActivity.class));
         }
     }
 
@@ -260,16 +230,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 .into(iv_bg_night);
     }
 
-    private Map<Integer, ImageView> mapValueToBodypartImageBackground() {
-        Map<Integer, ImageView> map = new HashMap<>();
-        map.put(121, iv_bg_back);
-        map.put(11, iv_bg_arms);
-        map.put(21, iv_bg_leg);
-        map.put(31, iv_bg_abs);
-        map.put(111, iv_bg_chest);
-        return map;
-    }
-
     private void getAllBodyParts() {
         Call<BodypartResponse> calledGetAll = bodypartsAPI.getAllBodyParts();
         calledGetAll.enqueue(new Callback<BodypartResponse>() {
@@ -277,15 +237,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             public void onResponse(Call<BodypartResponse> call, Response<BodypartResponse> response) {
                 BodypartResponse bodypartResponse = response.body();
                 if (bodypartResponse.getStatus() == 0) {
-                    mapValueToBodypartImageBackground().forEach((k, v) -> {
-                        for(BodyParts bodyParts: bodypartResponse.getResponse()) {
-                            if(bodyParts.getId() == k) {
-                                Glide.with(getActivity())
-                                        .load(bodyParts.getImage_url())
-                                        .into(v);
-                            }
-                        }
-                    });
+                    bodypartResponse.getResponse().add(0, new BodyParts(0));
+                    HomeBodypartsAdapter homeBodypartsAdapter = new HomeBodypartsAdapter(bodypartResponse.getResponse(), getActivity());
+                    rv_bodyparts.setHasFixedSize(true);
+                    rv_bodyparts.setLayoutManager(new GridLayoutManager(getActivity(), 2, RecyclerView.VERTICAL, false));
+                    rv_bodyparts.setAdapter(homeBodypartsAdapter);
                 }
             }
 

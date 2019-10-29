@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.polyfit_app">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -14,8 +15,9 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.SplashScreen">
+        android:usesCleartextTraffic="true"
+        tools:replace="android:icon">
+        <activity android:name=".Activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,7 +25,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activity.ReminderActivity"></activity>
-        <activity android:name=".Activity.MainActivity"/>
+        <activity android:name=".Activity.SplashScreen"/>
         <activity android:name=".Activity.TutorialActivity" />
         <activity android:name=".Activity.ExerciseDetailsActivity"/>
         <activity android:name=".Activity.ExercisesActivity" android:theme="@style/AppTheme.NoActionBar" />

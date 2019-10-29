@@ -17,12 +17,12 @@ import com.example.polyfit_app.R;
 
 import java.util.ArrayList;
 
-public class ExcercisesAdapter extends RecyclerView.Adapter<ExercisesViewHolder> {
+public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesViewHolder> {
     private ArrayList<Exercise> exercises;
     private Context context;
     private ItemClickListener itemClickListener;
 
-    public ExcercisesAdapter(ArrayList<Exercise> exercises, Context context, ItemClickListener itemClickListener) {
+    public ExercisesAdapter(ArrayList<Exercise> exercises, Context context, ItemClickListener itemClickListener) {
         this.exercises = exercises;
         this.context = context;
         this.itemClickListener = itemClickListener;
@@ -49,8 +49,7 @@ public class ExcercisesAdapter extends RecyclerView.Adapter<ExercisesViewHolder>
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                itemClickListener.onClickItem(1); //TODO: PASS ITEMID FOR CONTEXT
-                context.startActivity(new Intent(context, ExerciseDetailsActivity.class));
+                itemClickListener.onClickItem(exercise.getId());
             }
         });
     }
