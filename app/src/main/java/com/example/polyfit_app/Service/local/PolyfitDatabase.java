@@ -13,7 +13,7 @@ import com.example.polyfit_app.Model.User;
 import com.example.polyfit_app.Service.local.DAO.ReminderDAO;
 import com.example.polyfit_app.Service.local.DAO.UserDAO;
 
-@Database(entities = {User.class, Reminder.class}, version = 4)
+@Database(entities = {User.class, Reminder.class}, version = 5)
 
 public abstract class PolyfitDatabase extends RoomDatabase {
     private static final String DB_NAME = "polyfit_db";

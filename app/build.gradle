@@ -67,6 +67,7 @@ dependencies {
     implementation 'com.daimajia.androidanimations:library:2.3@aar'
     //picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.google.firebase:firebase-messaging:17.3.4'
     testImplementation 'junit:junit:4.12'
 
     implementation 'com.squareup.retrofit2:retrofit:2.6.1'
@@ -126,3 +127,4 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }
+apply plugin: 'com.google.gms.google-services'

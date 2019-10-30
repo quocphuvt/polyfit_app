@@ -33,6 +33,10 @@ public interface  PolyFitService {
     @GET("user/{username}")
     Call<String> getUserByUserName(@Path("username") String username);
 
+    @POST("user/logout")
+    @FormUrlEncoded
+    Call<UserResponse> userLogout(@Field("id") Integer id);
+
 
     @POST("history/add")
     @FormUrlEncoded

@@ -5,6 +5,8 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import com.google.gson.annotations.SerializedName;
+
 @Entity(tableName = "polyfit_users")
 public class User {
     @PrimaryKey(autoGenerate = true)
@@ -29,6 +31,26 @@ public class User {
     private Boolean isVerified;
     @ColumnInfo(name = "phone_number")
     private String phoneNumber;
+    @SerializedName("firebase_token")
+    private String firebase_token;
+    @ColumnInfo(name = "isOnline")
+    private boolean isOnline;
+
+    public String getFirebase_token() {
+        return firebase_token;
+    }
+
+    public void setFirebase_token(String firebase_token) {
+        this.firebase_token = firebase_token;
+    }
+
+    public boolean isOnline() {
+        return isOnline;
+    }
+
+    public void setOnline(boolean online) {
+        isOnline = online;
+    }
 
     public User(String username, String password, String display_name, Float weight, Float height, int gender, Boolean isVerified, String phoneNumber) {
         this.username = username;
@@ -46,6 +68,14 @@ public class User {
     public User(String username, String password) { //This use for logining
         this.username = username;
         this.password = password;
+    }
+
+    @Ignore()
+    public User(String username, String password,boolean isOnline,String firebase_token) { //This use for logining
+        this.username = username;
+        this.password = password;
+        this.isOnline=isOnline;
+        this.firebase_token=firebase_token;
     }
 
     @Ignore()

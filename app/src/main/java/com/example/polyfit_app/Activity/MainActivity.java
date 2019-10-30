@@ -25,6 +25,7 @@ import com.example.polyfit_app.Service.local.StepCountServices;
 import com.example.polyfit_app.Service.remote.BodypartsAPI;
 import com.example.polyfit_app.Service.remote.RetrofitClient;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.List;
 import java.util.Objects;
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Objects.requireNonNull(getSupportActionBar()).hide();
 //        getReminder();
+        showToken();
         runServices();
         TabLayout tabLayout = findViewById(R.id.tabLayout);
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_home));
@@ -78,6 +80,10 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+    public void showToken() {
+
+        Log.e("token", FirebaseInstanceId.getInstance().getToken());
     }
 
     //getAlarm

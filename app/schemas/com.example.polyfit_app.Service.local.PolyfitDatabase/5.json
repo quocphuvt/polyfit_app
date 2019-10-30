@@ -1,7 +1,7 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 4,
+    "version": 5,
     "identityHash": "494c0627c6119524c51835ec85e12bad",
     "entities": [
       {
@@ -75,7 +75,7 @@
             "notNull": false
           },
           {
-            "fieldPath": "token",
+            "fieldPath": "firebase_token",
             "columnName": "firebase_token",
             "affinity": "TEXT",
             "notNull": false

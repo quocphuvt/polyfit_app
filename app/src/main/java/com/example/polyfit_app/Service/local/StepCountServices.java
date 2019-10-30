@@ -93,7 +93,7 @@ public class StepCountServices extends Service implements SensorEventListener {
             SharedPreferences.Editor editor=getSharedPreferences("StepCount",MODE_PRIVATE).edit();
             editor.putString("Step",step+"");
             editor.apply();
-            Log.e("PhayTran", "Running " + step);
+//            Log.e("PhayTran", "Running " + step);
                 notification.setContentText("Your step today " + step);
                 notification.setSmallIcon(R.drawable.logo);
                 notificationManager.notify(id,notification.build());
