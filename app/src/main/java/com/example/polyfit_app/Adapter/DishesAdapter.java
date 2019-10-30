@@ -41,7 +41,7 @@ public class DishesAdapter  extends RecyclerView.Adapter<DishesViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                itemClickListener.onClickItem(1);
+                itemClickListener.onClickItem(position);
             }
         });
 

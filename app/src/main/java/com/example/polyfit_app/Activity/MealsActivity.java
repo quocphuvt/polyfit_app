@@ -2,13 +2,17 @@ package com.example.polyfit_app.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
+import android.view.WindowManager;
 
 import com.example.polyfit_app.Fragments.Meals.MorningFragment;
 import com.example.polyfit_app.Fragments.Meals.NightFragment;
@@ -16,55 +20,45 @@ import com.example.polyfit_app.Fragments.Meals.NoonFragment;
 import com.example.polyfit_app.R;
 import com.gigamole.navigationtabstrip.NavigationTabStrip;
 
+import java.util.Objects;
+
 public class MealsActivity extends AppCompatActivity {
     private NavigationTabStrip tab_meals;
     private ViewPager pager_meals;
+    private Toolbar toolbar;
 
     private void initView() {
         tab_meals = findViewById(R.id.tab_meals);
         pager_meals = findViewById(R.id.pager_meals);
+        toolbar = findViewById(R.id.toolbar);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meals);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        Objects.requireNonNull(getSupportActionBar()).hide();
         initView();
         configTabs();
+
+        Intent i = getIntent();
+        String dietTitle = i.getStringExtra("title");
+        toolbar.setTitle("Chế độ ăn " + dietTitle.toLowerCase());
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        pager_meals.setOffscreenPageLimit(3);
         MealsPagerAdapter mealsPagerAdapter = new MealsPagerAdapter(getSupportFragmentManager());
         pager_meals.setAdapter(mealsPagerAdapter);
-        tab_meals.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                tab_meals.setTabIndex(position);
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                tab_meals.setTabIndex(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-
-        tab_meals.setOnTabStripSelectedIndexListener(new NavigationTabStrip.OnTabStripSelectedIndexListener() {
-            @Override
-            public void onStartTabSelected(String title, int index) {
-                pager_meals.setCurrentItem(index);
-            }
-
-            @Override
-            public void onEndTabSelected(String title, int index) {
-
-            }
-        });
+        tab_meals.setViewPager(pager_meals);
     }
-    
+
     private void configTabs() {
-        tab_meals.setTabIndex(0, true);
         tab_meals.setStripColor(Color.RED);
         tab_meals.setStripWeight(5);
         tab_meals.setStripFactor(2);

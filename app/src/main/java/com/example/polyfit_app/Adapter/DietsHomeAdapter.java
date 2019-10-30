@@ -44,7 +44,9 @@ public class DietsHomeAdapter extends RecyclerView.Adapter<DietsHomeViewHolder> 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                context.startActivity(new Intent(context, MealsActivity.class));
+                Intent i = new Intent(context, MealsActivity.class);
+                i.putExtra("title", diet.getTitle());
+                context.startActivity(i);
             }
         });
     }

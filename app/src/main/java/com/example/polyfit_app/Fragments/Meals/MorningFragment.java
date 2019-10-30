@@ -10,14 +10,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.example.polyfit_app.Activity.Login.DishesDetails;
 import com.example.polyfit_app.Adapter.DishesAdapter;
 import com.example.polyfit_app.Interface.ItemClickListener;
 import com.example.polyfit_app.Model.Dishes;
+import com.example.polyfit_app.Model.Ingredient;
 import com.example.polyfit_app.Model.Responses.DishesResponse;
 import com.example.polyfit_app.R;
 import com.example.polyfit_app.Service.remote.DishesAPI;
 import com.example.polyfit_app.Service.remote.RetrofitClient;
+import com.flipboard.bottomsheet.BottomSheetLayout;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,9 +37,16 @@ import retrofit2.Retrofit;
 public class MorningFragment extends Fragment implements ItemClickListener {
     private RecyclerView rv_dishes_morning;
     private DishesAPI dishesAPI;
+    private BottomSheetLayout bottomSheetLayout;
+    private ArrayList<Dishes> dishes;
 
     public MorningFragment() {
         // Required empty public constructor
+    }
+
+    private void initView(View view) {
+        rv_dishes_morning = view.findViewById(R.id.rv_dishes_morning);
+        bottomSheetLayout = view.findViewById(R.id.bottom_sheet_morning_dishes_details);
     }
 
 
@@ -42,7 +56,7 @@ public class MorningFragment extends Fragment implements ItemClickListener {
         Retrofit retrofit = RetrofitClient.getInstance();
         dishesAPI = retrofit.create(DishesAPI.class);
         View view =inflater.inflate(R.layout.fragment_morning, container, false);
-        rv_dishes_morning = view.findViewById(R.id.rv_dishes_morning);
+        initView(view);
         rv_dishes_morning.setHasFixedSize(true);
         rv_dishes_morning.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         // Inflate the layout for this fragment
@@ -58,6 +72,7 @@ public class MorningFragment extends Fragment implements ItemClickListener {
                 if(response.isSuccessful()) {
                     DishesResponse dishesResponse = response.body();
                     if(dishesResponse.getStatus() == 0) {
+                        dishes = dishesResponse.getResponse();
                         DishesAdapter dishesAdapter = new DishesAdapter(dishesResponse.getResponse(), getContext(), MorningFragment.this);
                         rv_dishes_morning.setAdapter(dishesAdapter);
                     }
@@ -72,8 +87,11 @@ public class MorningFragment extends Fragment implements ItemClickListener {
     }
 
     @Override
-    public void onClickItem(int id) {
-
+    public void onClickItem(int id) { //This's item's position
+        Dishes dish = dishes.get(id);
+        ArrayList<Ingredient> ingredients = dish.getIngredients();
+        DishesDetails dishesDetails = new DishesDetails(getContext(), dish, ingredients, bottomSheetLayout);
+        bottomSheetLayout.showWithSheetView(dishesDetails.getView());
     }
 
     @Override

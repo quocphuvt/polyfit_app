@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.flipboard.bottomsheet.BottomSheetLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_sheet_morning_dishes_details"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragments.Meals.MorningFragment">
@@ -11,4 +12,4 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
 
-</FrameLayout>
+</com.flipboard.bottomsheet.BottomSheetLayout>

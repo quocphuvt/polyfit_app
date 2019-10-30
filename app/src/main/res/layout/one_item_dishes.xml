@@ -2,11 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_marginVertical="10dp"
+    android:padding="2.5dp"
+    android:layout_marginVertical="2.5dp"
     android:layout_width="match_parent"
     android:layout_height="200dp">
 
     <androidx.cardview.widget.CardView
+        app:cardUseCompatPadding="true"
         android:layout_width="match_parent"
         app:cardBackgroundColor="@color/secondary"
         app:cardCornerRadius="2dp"

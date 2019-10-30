@@ -42,7 +42,6 @@ public class DishesFragment extends Fragment implements ItemClickListener {
         recyclerView = view.findViewById(R.id.rv_dishes);
         sheet_dish = view.findViewById(R.id.bottom_sheet_dish_details);
         bottomSheetIngredientView = LayoutInflater.from(getContext()).inflate(R.layout.bottom_sheet_dish_details, sheet_dish, false);
-        lv_ingredients = bottomSheetIngredientView.findViewById(R.id.lv_ingredients_dish_details);
     }
 
     public DishesFragment() {
@@ -76,8 +75,6 @@ public class DishesFragment extends Fragment implements ItemClickListener {
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
-        setDataForDishesList(dishesArrayList);
-        setSampleIngredientData();
         return view;
     }
 
@@ -106,7 +103,7 @@ public class DishesFragment extends Fragment implements ItemClickListener {
 
     @Override
     public void onClickItem(int id) {
-        showDishBottomSheet();
+
     }
 
     @Override
@@ -117,60 +114,5 @@ public class DishesFragment extends Fragment implements ItemClickListener {
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
-    }
-
-    private void showDishBottomSheet() {
-        sheet_dish.showWithSheetView(bottomSheetIngredientView);
-        setSampleIngredientData();
-    }
-
-    private void setSampleIngredientData() {
-        ingredients = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
-            ingredients.add(new Ingredient());
-        }
-
-        IngredientAdapter ingredientAdapter = new IngredientAdapter(ingredients, getContext());
-        lv_ingredients.setAdapter(ingredientAdapter);
-    }
-
-    private void setDataForDishesList(ArrayList<Dishes> dishesList) {
-        DishesAdapter dishesAdapter = new DishesAdapter(dishesArrayList, getActivity(), this);
-        recyclerView.setAdapter(dishesAdapter);
-    }
-
-    class IngredientAdapter extends BaseAdapter {
-        private ArrayList<Ingredient> ingredients;
-        private Context context;
-
-        public IngredientAdapter(ArrayList<Ingredient> ingredients, Context context) {
-            this.ingredients = ingredients;
-            this.context = context;
-        }
-
-        @Override
-        public int getCount() {
-            return ingredients.size();
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.one_item_ingredient, viewGroup, false);
-            Ingredient ingredient = ingredients.get(i);
-            TextView tv_title = view.findViewById(R.id.tv_item_title_ingredient);
-            TextView tv_unit = view.findViewById(R.id.tv_item_quantity_ingredient);
-            tv_title.setText(ingredient.getTitle());
-            return view;
-        }
     }
 }
