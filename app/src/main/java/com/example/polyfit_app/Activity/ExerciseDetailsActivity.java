@@ -88,10 +88,6 @@ public class ExerciseDetailsActivity extends AppCompatActivity {
 
         this.getExerciseData(exId);
 
-        if(exercise.getTips().equals("null")) {
-            fab_tips.hide();
-        }
-
         fab_tips.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -120,6 +116,10 @@ public class ExerciseDetailsActivity extends AppCompatActivity {
                     ExerciseResponse exerciseResponse = response.body();
                     if(exerciseResponse.getStatus() == 0) {
                         exercise = exerciseResponse.getData();
+                        if(exercise.getTips().equals("null")) {
+                            fab_tips.hide();
+                        }
+
                         if(exercise.getImage_url().equals("null")) {
                             video_ex.setVisibility(View.VISIBLE);
                             video_ex.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
