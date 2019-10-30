@@ -1,9 +1,12 @@
 package com.example.polyfit_app.Model;
 
+import java.util.ArrayList;
+
 public class BodyParts {
     private int id;
     private String title;
     private String image_url;
+    private ArrayList<Exercise> exercises;
 
     public BodyParts(int id) {
         this.id = id;
@@ -37,5 +40,13 @@ public class BodyParts {
 
     public void setImage_url(String image_url) {
         this.image_url = image_url;
+    }
+
+    public ArrayList<Exercise> getExercises() {
+        return exercises;
+    }
+
+    public void setExercises(ArrayList<Exercise> exercises) {
+        this.exercises = exercises;
     }
 }

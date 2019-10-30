@@ -25,7 +25,6 @@ public class DietsFragment extends Fragment {
     private String mParam2;
     ArrayList<Dishes> dishesArrayList;
     private OnFragmentInteractionListener mListener;
-
     public DietsFragment() {
     }
 

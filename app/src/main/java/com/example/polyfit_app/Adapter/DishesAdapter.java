@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.polyfit_app.Interface.ItemClickListener;
 import com.example.polyfit_app.Model.Dishes;
 import com.example.polyfit_app.R;
@@ -35,11 +36,12 @@ public class DishesAdapter  extends RecyclerView.Adapter<DishesViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull DishesViewHolder holder, int position) {
         Dishes dishes = dishesArrayList.get(position);
-        holder.title.setText(dishesArrayList.get(position).getTitle());
+        holder.title_dishes.setText(dishesArrayList.get(position).getTitle());
+        Glide.with(context).load(dishes.getImage_url()).centerCrop().into(holder.iv_bg_dishes);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                itemClickListener.onClickItem(1);
+                itemClickListener.onClickItem(position);
             }
         });
 

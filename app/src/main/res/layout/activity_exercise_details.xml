@@ -16,9 +16,23 @@
 
             <include layout="@layout/toolbar" />
             <LinearLayout
+                android:orientation="vertical"
                 android:background="#BCE0FD"
                 android:layout_width="match_parent"
                 android:layout_height="200dp">
+
+                <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/iv_exercise_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+                <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                    android:visibility="gone"
+                    android:id="@+id/video_exercise_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:showFullScreenButton="false" />
             </LinearLayout>
             <LinearLayout
                 android:layout_marginTop="10dp"
@@ -146,7 +160,7 @@
                 <TextView
                     android:id="@+id/tv_content_ex_detail"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/roboto"
                     android:gravity="left"
@@ -163,9 +177,9 @@
         android:id="@+id/fab_tips"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:src="@drawable/ic_diet"
+        android:pointerIcon="alias"
+        android:src="@drawable/ic_lightbulb_outline_white_24dp"
         app:fabCustomSize="50dp"
-        android:backgroundTint="@color/primary"
         android:layout_margin="30dp"
         android:layout_gravity="bottom|right" />
 

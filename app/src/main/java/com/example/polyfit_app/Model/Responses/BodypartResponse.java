@@ -9,6 +9,7 @@ import retrofit2.http.Body;
 
 public class BodypartResponse extends BaseResponse {
     private ArrayList<BodyParts> Response;
+    private BodyParts Object;
     public BodypartResponse(int status, String message) {
         super(status, message);
     }
@@ -19,5 +20,13 @@ public class BodypartResponse extends BaseResponse {
 
     public void setResponse(ArrayList<BodyParts> response) {
         Response = response;
+    }
+
+    public BodyParts getObject() {
+        return Object;
+    }
+
+    public void setObject(BodyParts object) {
+        Object = object;
     }
 }

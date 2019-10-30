@@ -122,6 +122,18 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.10.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
 
+    //Youtube
+    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5'
+
+    //Sweet dialog
+    implementation 'com.github.f0ris.sweetalert:library:1.5.1'
+
+    //Power Menu
+    implementation "com.github.skydoves:powermenu:2.1.2"
+
+    //Tab trip
+    implementation 'com.github.devlight.navigationtabstrip:navigationtabstrip:1.0.4'
+
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

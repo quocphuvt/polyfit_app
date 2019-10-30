@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class ExerciseResponse extends BaseResponse {
     private ArrayList<Exercise> Response;
+    private Exercise data;
     public ExerciseResponse(int status, String message) {
         super(status, message);
     }
@@ -16,5 +17,13 @@ public class ExerciseResponse extends BaseResponse {
 
     public void setResponse(ArrayList<Exercise> response) {
         Response = response;
+    }
+
+    public Exercise getData() {
+        return data;
+    }
+
+    public void setData(Exercise data) {
+        this.data = data;
     }
 }

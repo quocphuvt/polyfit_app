@@ -1,6 +1,7 @@
 package com.example.polyfit_app.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.polyfit_app.Activity.MealsActivity;
 import com.example.polyfit_app.Model.Challenge;
 import com.example.polyfit_app.Model.Diet;
 import com.example.polyfit_app.R;
@@ -39,6 +41,14 @@ public class DietsHomeAdapter extends RecyclerView.Adapter<DietsHomeViewHolder> 
 //        holder.iv_img.setImageResource(diet.getImage_url());
         Glide.with(context).load(diet.getImage_url()).centerCrop().into(holder.iv_img);
         holder.tv_title.setText(diet.getTitle());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(context, MealsActivity.class);
+                i.putExtra("title", diet.getTitle());
+                context.startActivity(i);
+            }
+        });
     }
 
     @Override

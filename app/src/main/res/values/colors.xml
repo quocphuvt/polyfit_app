@@ -15,4 +15,8 @@
     <color name="content">#70BDFF</color>
     <color name="positive">#21BA45</color>
     <color name="negative">#C10015</color>
+<!--    Meal's color-->
+    <color name="morning">#a9f1f6</color>
+    <color name="noon">#e77e28</color>
+    <color name="night">#483475</color>
 </resources>
