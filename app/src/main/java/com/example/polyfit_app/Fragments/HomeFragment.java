@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.polyfit_app.Activity.DishesTodayActivity;
 import com.example.polyfit_app.Activity.ExercisesActivity;
 import com.example.polyfit_app.Activity.Login.LoginActivity;
 import com.example.polyfit_app.Adapter.DietsHomeAdapter;
@@ -39,6 +41,7 @@ import com.example.polyfit_app.Service.remote.PolyFitService;
 import com.example.polyfit_app.Service.remote.RetrofitClient;
 import com.example.polyfit_app.Utils.Constants;
 import com.github.chrisbanes.photoview.PhotoView;
+import com.skyfishjy.library.RippleBackground;
 import com.soundcloud.android.crop.Crop;
 
 import org.json.JSONException;
@@ -79,6 +82,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private BodypartsAPI bodypartsAPI;
     private DietsAPI dietsAPI;
     private RecyclerView rv_bodyparts;
+    private RippleBackground ripple_reminder;
+    private RelativeLayout layout_reminder, layout_morning, layout_noon, layout_night;
 
     public HomeFragment() {
     }
@@ -99,6 +104,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         iv_bg_morning = view.findViewById(R.id.image_bg_morning);
         iv_bg_noon = view.findViewById(R.id.image_bg_noon);
         iv_bg_night = view.findViewById(R.id.image_bg_night);
+        ripple_reminder = view.findViewById(R.id.ripple_reminder);
+        layout_reminder = view.findViewById(R.id.layout_reminder);
+        layout_morning = view.findViewById(R.id.layout_morning);
+        layout_noon = view.findViewById(R.id.layout_noon);
+        layout_night = view.findViewById(R.id.layout_night);
+
+        layout_reminder.setOnClickListener(this);
+        layout_morning.setOnClickListener(this);
+        layout_noon.setOnClickListener(this);
+        layout_night.setOnClickListener(this);
     }
 
     public static HomeFragment newInstance(String param1, String param2) {
@@ -124,6 +139,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         connectView(view);
+        ripple_reminder.startRippleAnimation();
         Retrofit retrofit = RetrofitClient.getInstance();
         polyFitService = retrofit.create(PolyFitService.class);
         bodypartsAPI = retrofit.create(BodypartsAPI.class);
@@ -185,6 +201,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
+        Intent i;
         switch (view.getId()) {
             case R.id.iv_avatar:
                 Toast.makeText(getActivity(), "Click on avatar!!!", Toast.LENGTH_SHORT).show();
@@ -206,6 +223,27 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.ic_reminder:
                 startActivity(new Intent(getActivity(), ReminderActivity.class));
+                break;
+            case R.id.layout_reminder:
+                startActivity(new Intent(getActivity(), ReminderActivity.class));
+                break;
+            case R.id.layout_morning:
+                i = new Intent(getContext(), DishesTodayActivity.class);
+                i.putExtra("title", "sáng");
+                i.putExtra("mealId", 161);
+                startActivity(i);
+                break;
+            case R.id.layout_noon:
+                i = new Intent(getContext(), DishesTodayActivity.class);
+                i.putExtra("title", "trưa");
+                i.putExtra("mealId", 171);
+                startActivity(i);
+                break;
+            case R.id.layout_night:
+                i = new Intent(getContext(), DishesTodayActivity.class);
+                i.putExtra("title", "chiều tối");
+                i.putExtra("mealId", 181);
+                startActivity(i);
                 break;
         }
     }

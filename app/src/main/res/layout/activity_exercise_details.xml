@@ -19,7 +19,7 @@
                 android:orientation="vertical"
                 android:background="#BCE0FD"
                 android:layout_width="match_parent"
-                android:layout_height="200dp">
+                android:layout_height="220dp">
 
                 <ImageView
                     android:visibility="gone"
@@ -35,7 +35,7 @@
                     app:showFullScreenButton="false" />
             </LinearLayout>
             <LinearLayout
-                android:layout_marginTop="10dp"
+                android:layout_marginVertical="15dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:orientation="horizontal"
@@ -67,7 +67,7 @@
                 </LinearLayout>
                 <LinearLayout
                     android:layout_weight="0"
-                    android:background="#BCE0FD"
+                    android:background="@color/primary"
                     android:layout_width="3dp"
                     android:layout_height="match_parent"/>
                 <LinearLayout
@@ -96,7 +96,7 @@
                 </LinearLayout>
                 <LinearLayout
                     android:layout_weight="0"
-                    android:background="#BCE0FD"
+                    android:background="@color/primary"
                     android:layout_width="3dp"
                     android:layout_height="match_parent"/>
                 <LinearLayout
@@ -128,7 +128,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -169,17 +169,24 @@
                     android:text="Bài tập cơ ngực phổ biến với mọi người có thể tập bất cứ đâu. Bài tập cơ ngực phổ biến với mọi người có thể tập bất cứ đâu. Bài tập cơ ngực phổ biến với mọi người có thể tập bất cứ đâu. Bài tập cơ ngực phổ biến với mọi người có thể tập bất cứ đâu. Bài tập cơ ngực phổ biến với mọi người có thể tập bất cứ đâu"
                     android:textColor="@color/content"
                     android:textSize="15sp" />
+
+                <ImageView
+                    android:id="@+id/iv_second_exercise_details"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_height="180dp" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_tips"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
         android:pointerIcon="alias"
         android:src="@drawable/ic_lightbulb_outline_white_24dp"
-        app:fabCustomSize="50dp"
+        app:fabCustomSize="55dp"
         android:layout_margin="30dp"
         android:layout_gravity="bottom|right" />
 

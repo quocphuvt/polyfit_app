@@ -49,7 +49,7 @@ public class ExerciseDetailsActivity extends AppCompatActivity {
     private TextView tv_sets, tv_reps, tv_restTime, tv_title, tv_introduction, tv_content;
     private FloatingActionButton fab_tips;
     private Toolbar toolbar;
-    private ImageView iv_ex;
+    private ImageView iv_ex, iv_second_exercise_details;
     private YouTubePlayerView video_ex;
     private ExerciseAPI exerciseAPI;
     private Exercise exercise;
@@ -60,12 +60,20 @@ public class ExerciseDetailsActivity extends AppCompatActivity {
         tv_restTime = findViewById(R.id.tv_rest_time_detail);
         tv_title = findViewById(R.id.tv_title_ex_detail);
         tv_introduction = findViewById(R.id.tv_intro_ex_detail);
+        iv_second_exercise_details = findViewById(R.id.iv_second_exercise_details);
         tv_content = findViewById(R.id.tv_content_ex_detail);
         iv_ex = findViewById(R.id.iv_exercise_details);
         video_ex = findViewById(R.id.video_exercise_details);
         fab_tips = findViewById(R.id.fab_tips);
         toolbar = findViewById(R.id.toolbar);
     }
+
+    @Override
+    public void finish() {
+        super.finish();
+        video_ex.release();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,13 +135,25 @@ public class ExerciseDetailsActivity extends AppCompatActivity {
                                 public void onReady(@NotNull YouTubePlayer youTubePlayer) {
                                     super.onReady(youTubePlayer);
                                     String videoUrl = exercise.getVideo_url();
-                                    String videoId = videoUrl.substring(videoUrl.indexOf("=") + 1, videoUrl.length());
+                                    String videoId = videoUrl.substring(videoUrl.lastIndexOf("/") + 1, videoUrl.length());
                                     youTubePlayer.loadVideo(videoId, 0);
                                 }
                             });
                         } else if(exercise.getVideo_url().equals("null")) {
                             iv_ex.setVisibility(View.VISIBLE);
                             Glide.with(ExerciseDetailsActivity.this).load(exercise.getImage_url()).centerCrop().into(iv_ex);
+                        } else {
+                            video_ex.setVisibility(View.VISIBLE);
+                            video_ex.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+                                @Override
+                                public void onReady(@NotNull YouTubePlayer youTubePlayer) {
+                                    super.onReady(youTubePlayer);
+                                    String videoUrl = exercise.getVideo_url();
+                                    String videoId = videoUrl.substring(videoUrl.lastIndexOf("/") + 1, videoUrl.length());
+                                    youTubePlayer.loadVideo(videoId, 0);
+                                }
+                            });
+                            Glide.with(ExerciseDetailsActivity.this).load(exercise.getImage_url()).centerCrop().into(iv_second_exercise_details);
                         }
 
                         tv_reps.setText(exercise.getReps()+"");

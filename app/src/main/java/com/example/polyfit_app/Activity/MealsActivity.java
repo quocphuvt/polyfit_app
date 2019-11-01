@@ -20,10 +20,13 @@ import com.example.polyfit_app.Fragments.Meals.NoonFragment;
 import com.example.polyfit_app.R;
 import com.gigamole.navigationtabstrip.NavigationTabStrip;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
+import devlight.io.library.ntb.NavigationTabBar;
+
 public class MealsActivity extends AppCompatActivity {
-    private NavigationTabStrip tab_meals;
+    private NavigationTabBar tab_meals;
     private ViewPager pager_meals;
     private Toolbar toolbar;
 
@@ -40,7 +43,7 @@ public class MealsActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Objects.requireNonNull(getSupportActionBar()).hide();
         initView();
-        configTabs();
+        addModelTab();
 
         Intent i = getIntent();
         String dietTitle = i.getStringExtra("title");
@@ -58,18 +61,33 @@ public class MealsActivity extends AppCompatActivity {
         tab_meals.setViewPager(pager_meals);
     }
 
-    private void configTabs() {
-        tab_meals.setStripColor(Color.RED);
-        tab_meals.setStripWeight(5);
-        tab_meals.setStripFactor(2);
-        tab_meals.setStripType(NavigationTabStrip.StripType.LINE);
-        tab_meals.setStripGravity(NavigationTabStrip.StripGravity.BOTTOM);
-        tab_meals.setTypeface("fonts/typeface.ttf");
-        tab_meals.setCornersRadius(3);
-        tab_meals.setAnimationDuration(300);
-        tab_meals.setInactiveColor(this.getResources().getColor(R.color.content));
-        tab_meals.setActiveColor(this.getResources().getColor(R.color.title));
-        tab_meals.setTitles("Sáng", "Trưa", "Tối");
+    private void addModelTab() {
+        final ArrayList<NavigationTabBar.Model> models = new ArrayList<>();
+        models.add(
+                new NavigationTabBar.Model.Builder(
+                        getResources().getDrawable(R.drawable.tab_morning),
+                        getResources().getColor(R.color.morning)
+                ).title("Sáng")
+                        .badgeTitle("NTB")
+                        .build()
+        );
+        models.add(
+                new NavigationTabBar.Model.Builder(
+                        getResources().getDrawable(R.drawable.tab_noon),
+                        getResources().getColor(R.color.noon)
+                ).title("Trưa")
+                        .badgeTitle("with")
+                        .build()
+        );
+        models.add(
+                new NavigationTabBar.Model.Builder(
+                        getResources().getDrawable(R.drawable.tab_night),
+                        getResources().getColor(R.color.night)
+                ).title("Tối")
+                        .badgeTitle("state")
+                        .build()
+        );
+        tab_meals.setModels(models);
     }
 }
 

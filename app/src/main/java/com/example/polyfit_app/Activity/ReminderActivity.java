@@ -1,6 +1,7 @@
 package com.example.polyfit_app.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -41,18 +42,19 @@ import java.util.Objects;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ReminderActivity extends AppCompatActivity implements View.OnClickListener {
-    FloatingActionButton fab;
-    Dialog dialog;
-    TextView textTime;
-    CircleImageView monday, tuesday, wednesday, thursday, friday, saturday, sunday;
-    CheckBox everyday;
-    TextView btnSaveAlarm;
-    int hours, minutes;
-    int hoursSet, minutesSet;
-    RecyclerView viewReminder;
-    List<Reminder> listReminder;
-    ReminderAdapter reminderAdapter;
-    ImageView backReminder;
+    private FloatingActionButton fab;
+    private Dialog dialog;
+    private TextView textTime;
+    private CircleImageView monday, tuesday, wednesday, thursday, friday, saturday, sunday;
+    private CheckBox everyday;
+    private TextView btnSaveAlarm;
+    private int hours, minutes;
+    private int hoursSet, minutesSet;
+    private RecyclerView viewReminder;
+    private List<Reminder> listReminder;
+    private ReminderAdapter reminderAdapter;
+    private ImageView backReminder;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,17 +71,20 @@ public class ReminderActivity extends AppCompatActivity implements View.OnClickL
     private void connectView() {
         fab = findViewById(R.id.fab);
         fab.setOnClickListener(this);
+        toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("Nhắc nhở");
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         viewReminder = findViewById(R.id.viewReminder);
-        backReminder = findViewById(R.id.backReminder);
-        backReminder.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.backReminder:
-                super.onBackPressed();
-                break;
             case R.id.fab:
                 showDialog();
                 break;
