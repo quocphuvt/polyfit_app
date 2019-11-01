@@ -7,18 +7,20 @@
     android:orientation="vertical"
     tools:context=".Activity.MealsActivity">
     <include layout="@layout/toolbar" />
-    <com.gigamole.navigationtabstrip.NavigationTabStrip
+    <devlight.io.library.ntb.NavigationTabBar
         android:id="@+id/tab_meals"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        app:nts_color="#000"
-        app:nts_size="15sp"
-        app:nts_factor="2.5"
-        app:nts_gravity="bottom"
-        app:nts_typeface="fonts/typeface.otf"
-        app:nts_corners_radius="1.5dp"
-        app:nts_animation_duration="300"
-/>
+        app:ntb_animation_duration="400"
+        app:ntb_active_color="#FFFFFF"
+        app:ntb_typeface="fonts/custom_typeface.ttf"
+        app:ntb_badge_use_typeface="true"
+        app:ntb_titled="true"
+        app:ntb_swiped="true"
+        app:ntb_bg_color="@color/primary"
+        app:ntb_inactive_color="@color/noon"
+        app:ntb_badge_size="10sp"
+        app:ntb_title_size="10sp"/>
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/pager_meals"
         android:layout_width="match_parent"

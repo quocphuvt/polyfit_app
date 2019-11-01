@@ -134,6 +134,12 @@ dependencies {
     //Tab trip
     implementation 'com.github.devlight.navigationtabstrip:navigationtabstrip:1.0.4'
 
+    //Navigation Tabbar
+    implementation 'devlight.io:navigationtabbar:1.2.5'
+
+    //Ripple background
+    implementation 'com.skyfishjy.ripplebackground:library:1.0.1'
+
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

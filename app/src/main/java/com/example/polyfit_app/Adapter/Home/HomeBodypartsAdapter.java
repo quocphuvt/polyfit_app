@@ -47,6 +47,7 @@ public class HomeBodypartsAdapter extends RecyclerView.Adapter<HomeBodypartsView
             holder.tv_title.setText("Các bộ phận");
             holder.tv_title.setTextColor(context.getResources().getColor(R.color.title));
             holder.tv_description.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            holder.tv_description.setTextColor(Color.parseColor("#407088"));
             holder.tv_description.setText("Các bài tập này tập trung vào các nhóm cơ cụ thể.");
         } else {
             Glide.with(context).load(bodypart.getImage_url()).centerCrop().into(holder.iv_bg);

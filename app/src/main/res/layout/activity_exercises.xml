@@ -29,6 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/primary"
+                app:navigationIcon="@drawable/ic_keyboard_arrow_left_white_36dp"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
 
@@ -50,7 +51,7 @@
                         android:id="@+id/tv_description_header_exercise"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="40dp"
                         android:maxLines="2"
                         android:paddingLeft="30dp"
                         android:paddingRight="30dp"

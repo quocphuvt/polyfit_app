@@ -53,6 +53,13 @@ public class ExercisesActivity extends AppCompatActivity implements ItemClickLis
         Retrofit retrofit = RetrofitClient.getInstance();
         bodypartsAPI = retrofit.create(BodypartsAPI.class);
 
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
         Intent i = getIntent();
         int bodyPartId = i.getIntExtra("id", 0);
         String title = i.getStringExtra("title");
