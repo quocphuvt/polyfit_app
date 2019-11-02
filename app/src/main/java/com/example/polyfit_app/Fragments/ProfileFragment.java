@@ -150,7 +150,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         for (int i = 0; i < listStep.size(); ++i) {
 //            axisValues.add(new AxisValue(i).setLabel(hours[i]));
                 axisValues.add(new AxisValue(i).setLabel(listStep.get(i).getHour()+""));
-                values.add(new PointValue(i, listStep.get(i).getStep()));
+                values.add(new PointValue(i, listStep.get(i).getStep()*4));
                 Log.e("listStep",listStep.get(i).getStep()+" : "+listStep.get(i).getHour());
 
         }
