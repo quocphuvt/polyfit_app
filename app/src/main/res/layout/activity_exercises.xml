@@ -76,12 +76,4 @@
 
     <include layout="@layout/content_exercises" />
 
-    <ImageView
-        android:id="@+id/iv_header_bg_exercise"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        app:layout_anchor="@+id/app_bar"
-        app:layout_anchorGravity="center"></ImageView>
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
