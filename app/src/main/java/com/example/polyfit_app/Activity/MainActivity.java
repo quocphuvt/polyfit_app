@@ -1,7 +1,14 @@
 package com.example.polyfit_app.Activity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.WindowManager;
@@ -18,15 +25,22 @@ import com.example.polyfit_app.Fragments.ProfileFragment;
 import com.example.polyfit_app.Fragments.DietsFragment;
 import com.example.polyfit_app.Model.Reminder;
 import com.example.polyfit_app.Model.Responses.BodypartResponse;
+import com.example.polyfit_app.Model.Routine;
 import com.example.polyfit_app.R;
 
+import com.example.polyfit_app.Service.Reminder.ReminderServices;
 import com.example.polyfit_app.Service.local.PolyfitDatabase;
 import com.example.polyfit_app.Service.local.StepCountServices;
 import com.example.polyfit_app.Service.remote.BodypartsAPI;
 import com.example.polyfit_app.Service.remote.RetrofitClient;
+import com.example.polyfit_app.Utils.Constants;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -46,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Objects.requireNonNull(getSupportActionBar()).hide();
 //        getReminder();
+
         showToken();
         runServices();
         TabLayout tabLayout = findViewById(R.id.tabLayout);
@@ -75,24 +90,20 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
 
             }
         });
+
     }
+
 
     @Override
     public void onFragmentInteraction(Uri uri) {
 
     }
+
     public void showToken() {
 
         Log.e("token", FirebaseInstanceId.getInstance().getToken());
     }
 
-    //getAlarm
-    private void getReminder(){
-        List<Reminder> reminders= PolyfitDatabase.getInstance(MainActivity.this).reminderDAO().getReminder();
-        for(int i=0;i<reminders.size();i++){
-            Log.e("PHAYTV",reminders.get(i).getHour()+"");
-        }
-    }
 
     private void runServices() {
         Intent serviceIntent = new Intent(this, StepCountServices.class);
@@ -100,32 +111,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
     }
 
 
-//    //Register alarm
-//    if (chk_monday.isChecked()) {
-//        forday(2);
-//    } else if (chk_tuesday.isChecked()) {
-//        forday(3);
-//    } else if (chk_wednesday.isChecked()) {
-//        forday(4);
-//    } else if (chk_thursday.isChecked()) {
-//        forday(5);
-//    } else if (chk_friday.isChecked()) {
-//        forday(6);
-//    } else if (chk_sat.isChecked()) {
-//        forday(7);
-//    } else if (chk_sunday.isChecked()) {
-//        forday(1);
-//    }
-//
-//    public void forday(int week) {
-//
-//        calSet.set(Calendar.DAY_OF_WEEK, week);
-//        calSet.set(Calendar.HOUR_OF_DAY, hour);
-//        calSet.set(Calendar.MINUTE, minuts);
-//        calSet.set(Calendar.SECOND, 0);
-//        calSet.set(Calendar.MILLISECOND, 0);
-//
-//        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
-//                calSet.getTimeInMillis(), 1 * 60 * 60 * 1000, pendingIntent);
-//    }
+
+
+
 }

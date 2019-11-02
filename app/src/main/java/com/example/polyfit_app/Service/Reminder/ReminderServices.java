@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.util.Log;
 
 import com.example.polyfit_app.R;
 
@@ -14,6 +15,7 @@ public class ReminderServices extends BroadcastReceiver {
 //            mediaPlayer = MediaPlayer.create(context, R.raw.cock_song);
 //            mediaPlayer.start();
 //            mediaPlayer.setLooping(true);
+            Log.e("Reminder","reminder on receive");
             Intent intentToScreenReminder = new Intent("reminderServices");
             intentToScreenReminder.setClassName("com.example.polyfit_app", "com.example.polyfit_app.Activity.ReminderScreenActivity");
             intentToScreenReminder.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

@@ -120,6 +120,7 @@ public class StepTwoSignUpActivity extends AppCompatActivity implements View.OnC
                 } else {
                     Toast.makeText(StepTwoSignUpActivity.this, userResponse.getMessage(), Toast.LENGTH_SHORT).show();
                 }
+                Log.e("PhayTran",userResponse.getStatus()+" : "+userResponse.getMessage());
             }
 
             @Override

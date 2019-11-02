@@ -363,13 +363,14 @@ public class ReminderActivity extends AppCompatActivity implements View.OnClickL
         @Override
         public void onReceive(Context context, Intent intent) {
 
-            Log.e("PhayTran", "Finish");
+            Log.e("Reminder","reminder on receive activity");
         }
 
     };
 
     //Setup reminder
     private void setupReminder() {
+        Log.e("Reminder","setup");
         List<Reminder> reminderList = PolyfitDatabase.getInstance(ReminderActivity.this).reminderDAO().getReminder();
         for (int i = 0; i < reminderList.size(); i++) {
             if (listReminder.get(i).getTurnOn() == 0) {

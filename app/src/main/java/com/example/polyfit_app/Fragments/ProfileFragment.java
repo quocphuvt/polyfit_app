@@ -22,8 +22,10 @@ import com.example.polyfit_app.Activity.Login.LoginMethod;
 import com.example.polyfit_app.Activity.MainActivity;
 import com.example.polyfit_app.Activity.TutorialActivity;
 import com.example.polyfit_app.Model.Responses.UserResponse;
+import com.example.polyfit_app.Model.StepCount;
 import com.example.polyfit_app.Model.User;
 import com.example.polyfit_app.R;
+import com.example.polyfit_app.Service.local.PolyfitDatabase;
 import com.example.polyfit_app.Service.remote.PolyFitService;
 import com.example.polyfit_app.Service.remote.RetrofitClient;
 import com.example.polyfit_app.Utils.Constants;
@@ -52,7 +54,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private LineChartView history_chart;
-    public final static String[] hours = new String[]{"6", "12", "18", "24"};
+    public final static String[] hours = new String[]{"5","7","9","11", "13","15", "17","19","21"};
     private PolyFitService polyFitService;
     private String mParam1;
     private String mParam2;
@@ -138,12 +140,27 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         List<AxisValue> axisValues = new ArrayList<AxisValue>();
 
         List<PointValue> values = new ArrayList<PointValue>();
+        List<StepCount> listStep=new ArrayList<>();
+        listStep = PolyfitDatabase.getInstance(getActivity()).stepDAO().getStepCount();
+    /*    listStep.add(60);
+        listStep.add(10);
+        listStep.add(25);
+        listStep.add(35);*/
 
-        for (int i = 0; i < hours.length; ++i) {
-            axisValues.add(new AxisValue(i).setLabel(hours[i]));
-            values.add(new PointValue(i, i + 10));
+        for (int i = 0; i < listStep.size(); ++i) {
+//            axisValues.add(new AxisValue(i).setLabel(hours[i]));
+                axisValues.add(new AxisValue(i).setLabel(listStep.get(i).getHour()+""));
+                values.add(new PointValue(i, listStep.get(i).getStep()));
+                Log.e("listStep",listStep.get(i).getStep()+" : "+listStep.get(i).getHour());
+
         }
-
+        /*if(!listStep.isEmpty()) {
+            for (int i = 0; i < listStep.size(); i++) {
+               Log.e("listStep",listStep.get(i).getStep()+" : "+listStep.get(i).getHour());
+                values.add(new PointValue(i, listStep.get(i).getStep()));
+            }
+        }
+*/
 
         //In most cased you can call data model methods in builder-pattern-like manner.
         Line line = new Line(values).setColor(Color.CYAN).setCubic(true);

@@ -9,11 +9,15 @@ import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.polyfit_app.Model.Reminder;
+import com.example.polyfit_app.Model.Routine;
+import com.example.polyfit_app.Model.StepCount;
 import com.example.polyfit_app.Model.User;
 import com.example.polyfit_app.Service.local.DAO.ReminderDAO;
+import com.example.polyfit_app.Service.local.DAO.RoutineDAO;
+import com.example.polyfit_app.Service.local.DAO.StepDAO;
 import com.example.polyfit_app.Service.local.DAO.UserDAO;
 
-@Database(entities = {User.class, Reminder.class}, version = 5)
+@Database(entities = {User.class, Reminder.class,Routine.class, StepCount.class}, version = 8)
 
 public abstract class PolyfitDatabase extends RoomDatabase {
     private static final String DB_NAME = "polyfit_db";
@@ -32,4 +36,7 @@ public abstract class PolyfitDatabase extends RoomDatabase {
 
     public abstract UserDAO userDAO();
     public abstract ReminderDAO reminderDAO();
+    public abstract RoutineDAO routineDAO();
+    public abstract StepDAO stepDAO();
+
 }

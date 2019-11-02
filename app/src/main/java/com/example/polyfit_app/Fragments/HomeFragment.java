@@ -1,9 +1,14 @@
 package com.example.polyfit_app.Fragments;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +27,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.polyfit_app.Activity.ExercisesActivity;
 import com.example.polyfit_app.Activity.Login.LoginActivity;
+import com.example.polyfit_app.Activity.MainActivity;
+import com.example.polyfit_app.Activity.ReminderScreenActivity;
 import com.example.polyfit_app.Adapter.DietsHomeAdapter;
 import com.example.polyfit_app.Model.BodyParts;
 import com.example.polyfit_app.Activity.ReminderActivity;
@@ -29,8 +36,10 @@ import com.example.polyfit_app.Model.Diet;
 import com.example.polyfit_app.Model.Responses.BodypartResponse;
 import com.example.polyfit_app.Model.Responses.DietsResponse;
 import com.example.polyfit_app.Model.Responses.UserResponse;
+import com.example.polyfit_app.Model.Routine;
 import com.example.polyfit_app.Model.User;
 import com.example.polyfit_app.R;
+import com.example.polyfit_app.Service.local.PolyfitDatabase;
 import com.example.polyfit_app.Service.remote.BodypartsAPI;
 import com.example.polyfit_app.Service.remote.DietsAPI;
 import com.example.polyfit_app.Service.remote.PolyFitService;
@@ -45,8 +54,10 @@ import org.json.JSONObject;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -76,6 +87,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private AlertDialog.Builder mBuilder;
     private BodypartsAPI bodypartsAPI;
     private DietsAPI dietsAPI;
+    List<Routine> routines;
 
     public HomeFragment() {
     }
@@ -153,12 +165,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             e.printStackTrace();
         }
         int userId = sharedPreferences.getInt("id", 0);
-
         this.getDietData();
         this.getUserById(userId);
         this.getAllBodyParts();
         this.setBackgroundImageForMeals();
+        routines = PolyfitDatabase.getInstance(getActivity()).routineDAO().getRoutine();
+        if (!routines.isEmpty()) {
+            Log.e("Routine", routines.get(0).getStepCount() + " : " + routines.size());
+        }
         return view;
+
     }
 
     private void getDietData() {
@@ -369,5 +385,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             viewAvatar.setImageURI(Crop.getOutput(data));
         }
     }
+
+
 
 }
