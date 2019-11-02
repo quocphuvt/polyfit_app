@@ -19,12 +19,6 @@
         android:orientation="vertical"
         android:padding="20dp">
 
-        <ImageView
-            android:id="@+id/iv_icon_bodypart_home"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/ic_abs" />
-
         <TextView
             android:id="@+id/tv_title_bodypart_home"
             android:layout_width="match_parent"

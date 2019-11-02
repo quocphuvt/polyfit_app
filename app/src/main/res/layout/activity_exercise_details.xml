@@ -2,133 +2,154 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:id="@+id/exercise_layout"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activity.ExerciseDetailsActivity">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <include layout="@layout/toolbar" />
+
             <LinearLayout
-                android:orientation="vertical"
-                android:background="#BCE0FD"
                 android:layout_width="match_parent"
-                android:layout_height="220dp">
+                android:layout_marginTop="10dp"
+                android:layout_marginHorizontal="10dp"
+                android:layout_height="220dp"
+                android:background="#BCE0FD"
+                android:orientation="vertical">
 
                 <ImageView
-                    android:visibility="gone"
                     android:id="@+id/iv_exercise_details"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    android:visibility="gone" />
 
                 <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
-                    android:visibility="gone"
                     android:id="@+id/video_exercise_details"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:visibility="gone"
                     app:showFullScreenButton="false" />
             </LinearLayout>
+
             <LinearLayout
-                android:layout_marginVertical="15dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="50dp">
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:background="@color/white"
+                android:layout_marginVertical="10dp"
+                android:layout_marginHorizontal="10dp"
+                android:orientation="horizontal">
+
                 <LinearLayout
-                    android:layout_weight="1"
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
                     <TextView
                         android:id="@+id/tv_sets_detail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
                         android:gravity="center"
-                        android:textSize="20sp"
                         android:text="3"
-                        android:fontFamily="@font/roboto"
                         android:textColor="@color/primary"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:textSize="20sp" />
+
                     <TextView
-                        android:gravity="center"
-                        android:textSize="15sp"
-                        android:text="Sets"
-                        android:textStyle="bold"
-                        android:fontFamily="@font/roboto"
-                        android:textColor="@color/title"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:gravity="center"
+                        android:text="Sets"
+                        android:textColor="@color/title"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
+
                 <LinearLayout
-                    android:layout_weight="0"
-                    android:background="@color/primary"
                     android:layout_width="3dp"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    android:layout_weight="0"
+                    android:background="@color/primary" />
+
                 <LinearLayout
-                    android:layout_weight="1"
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
                     <TextView
                         android:id="@+id/tv_reps_detail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
                         android:gravity="center"
-                        android:textSize="20sp"
                         android:text="10"
-                        android:fontFamily="@font/roboto"
                         android:textColor="@color/primary"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:textSize="20sp" />
+
                     <TextView
-                        android:gravity="center"
-                        android:textSize="15sp"
-                        android:text="Reps"
-                        android:textStyle="bold"
-                        android:fontFamily="@font/roboto"
-                        android:textColor="@color/title"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:gravity="center"
+                        android:text="Reps"
+                        android:textColor="@color/title"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
+
                 <LinearLayout
-                    android:layout_weight="0"
-                    android:background="@color/primary"
                     android:layout_width="3dp"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    android:layout_weight="0"
+                    android:background="@color/primary" />
+
                 <LinearLayout
-                    android:layout_weight="1"
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
                     <TextView
                         android:id="@+id/tv_rest_time_detail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
                         android:gravity="center"
-                        android:textSize="20sp"
                         android:text="15s"
-                        android:fontFamily="@font/roboto"
                         android:textColor="@color/primary"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:textSize="20sp" />
+
                     <TextView
-                        android:gravity="center"
-                        android:textSize="15sp"
-                        android:text="Rest time"
-                        android:textStyle="bold"
-                        android:fontFamily="@font/roboto"
-                        android:textColor="@color/title"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:gravity="center"
+                        android:text="Rest time"
+                        android:textColor="@color/title"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
             </LinearLayout>
+
             <!--        Content-->
             <LinearLayout
+                android:background="@color/white"
+                android:paddingBottom="20dp"
+                android:layout_marginHorizontal="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <TextView
@@ -137,6 +158,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto"
                     android:gravity="left"
+                    android:layout_marginTop="20dp"
                     android:paddingLeft="30dp"
                     android:paddingRight="30dp"
                     android:text="Dumpbel press"
@@ -160,7 +182,7 @@
                 <TextView
                     android:id="@+id/tv_content_ex_detail"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/roboto"
                     android:gravity="left"
@@ -172,11 +194,40 @@
 
                 <ImageView
                     android:id="@+id/iv_second_exercise_details"
-                    android:layout_marginTop="20dp"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
+                    android:layout_height="180dp"
                     android:layout_marginHorizontal="30dp"
-                    android:layout_height="180dp" />
+                    android:layout_marginTop="20dp" />
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginVertical="10dp"
+                android:orientation="vertical"
+                android:layout_marginHorizontal="10dp"
+                android:paddingBottom="30dp"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:gravity="left"
+                    android:layout_marginTop="20dp"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp"
+                    android:text="Gợi ý bài tập liên quan"
+                    android:textColor="@color/title"
+                    android:textSize="@dimen/text_md"
+                    android:textStyle="bold" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_suggested_exercise"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 
@@ -184,10 +235,10 @@
         android:id="@+id/fab_tips"
         android:layout_width="55dp"
         android:layout_height="55dp"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="20dp"
         android:pointerIcon="alias"
         android:src="@drawable/ic_lightbulb_outline_white_24dp"
-        app:fabCustomSize="55dp"
-        android:layout_margin="30dp"
-        android:layout_gravity="bottom|right" />
+        app:fabCustomSize="55dp" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

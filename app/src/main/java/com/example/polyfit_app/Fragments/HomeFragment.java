@@ -1,5 +1,6 @@
 package com.example.polyfit_app.Fragments;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,11 +43,9 @@ import com.example.polyfit_app.Service.remote.PolyFitService;
 import com.example.polyfit_app.Service.remote.RetrofitClient;
 import com.example.polyfit_app.Utils.Constants;
 import com.github.chrisbanes.photoview.PhotoView;
+import com.pnikosis.materialishprogress.ProgressWheel;
 import com.skyfishjy.library.RippleBackground;
 import com.soundcloud.android.crop.Crop;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -109,7 +109,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         layout_morning = view.findViewById(R.id.layout_morning);
         layout_noon = view.findViewById(R.id.layout_noon);
         layout_night = view.findViewById(R.id.layout_night);
-
         layout_reminder.setOnClickListener(this);
         layout_morning.setOnClickListener(this);
         layout_noon.setOnClickListener(this);
