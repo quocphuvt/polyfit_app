@@ -18,7 +18,7 @@
             android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/primary"
+            android:background="@drawable/header_gradient"
             android:fitsSystemWindows="true"
             app:contentScrim="@color/primary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
@@ -28,7 +28,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@color/primary"
+                android:background="@drawable/header_gradient"
                 app:navigationIcon="@drawable/ic_keyboard_arrow_left_white_36dp"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
@@ -36,11 +36,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-                <ImageView
-                    android:id="@+id/iv_header_bg_exercise"
-                    android:scaleType="centerCrop"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"></ImageView>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -79,5 +75,13 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <include layout="@layout/content_exercises" />
+
+    <ImageView
+        android:id="@+id/iv_header_bg_exercise"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        app:layout_anchor="@+id/app_bar"
+        app:layout_anchorGravity="center"></ImageView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

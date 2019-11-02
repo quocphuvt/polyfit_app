@@ -18,8 +18,9 @@
     <color name="background">#3c4245</color>
     <color name="positive">#21BA45</color>
     <color name="negative">#C10015</color>
+    <color name="social">#3b5998</color>
 <!--    Meal's color-->
-    <color name="morning">#f1d4d4</color>
+    <color name="morning">#DBB3B3</color>
     <color name="noon">#ddb6c6</color>
     <color name="night">#946D97</color>
 <!--    Level-->
