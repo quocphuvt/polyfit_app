@@ -124,7 +124,7 @@ public class ExerciseDetailsActivity extends AppCompatActivity implements ItemCl
                         .setSelectedTextColor(Color.WHITE)
                         .setMenuColor(Color.WHITE)
                         .build();
-                    powerMenu.showAtLocation(fab_tips, Gravity.BOTTOM, 370, 0);
+                    powerMenu.showAtLocation(fab_tips, Gravity.CENTER_VERTICAL,0,0);
             }
         });
     }

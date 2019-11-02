@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.example.polyfit_app.Fragments.DishesFragment;
+import com.example.polyfit_app.Fragments.ExerciseFragment;
 import com.example.polyfit_app.Fragments.HistoriesFragment;
 import com.example.polyfit_app.Fragments.HomeFragment;
 import com.example.polyfit_app.Fragments.ProfileFragment;
@@ -33,8 +34,8 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
                 DishesFragment dietsFragment = new DishesFragment();
                 return dietsFragment;
             case 2:
-                QuotesFragment quotesFragment = new QuotesFragment();
-                return quotesFragment;
+                ExerciseFragment exerciseFragment = new ExerciseFragment();
+                return exerciseFragment;
             case 3:
                 ProfileFragment profileFragment = new ProfileFragment();
                 return profileFragment;
