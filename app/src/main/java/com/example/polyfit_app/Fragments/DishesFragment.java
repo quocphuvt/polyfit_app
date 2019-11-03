@@ -1,8 +1,6 @@
 package com.example.polyfit_app.Fragments;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.net.Uri;
@@ -10,29 +8,20 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
 
-import com.example.polyfit_app.Adapter.DishesAdapter;
 import com.example.polyfit_app.Interface.ItemClickListener;
-import com.example.polyfit_app.Model.Dishes;
-import com.example.polyfit_app.Model.Ingredient;
 import com.example.polyfit_app.R;
 import com.flipboard.bottomsheet.BottomSheetLayout;
-
-import java.util.ArrayList;
 
 public class DishesFragment extends Fragment implements ItemClickListener {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private String mParam1;
     private String mParam2;
-    //
-    private ListView lv_ingredients;
-    private ArrayList<Ingredient> ingredients;
+
     private View bottomSheetIngredientView;
     private BottomSheetLayout sheet_dish;
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -66,7 +55,7 @@ public class DishesFragment extends Fragment implements ItemClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_dishes_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_dishes, container, false);
         initView(view);
         return view;
     }
