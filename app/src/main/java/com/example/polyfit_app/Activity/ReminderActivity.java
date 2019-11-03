@@ -173,6 +173,7 @@ public class ReminderActivity extends AppCompatActivity implements View.OnClickL
                     }
                 }
                 break;
+
             case R.id.btnSaveAlarm:
                 if (!textTime.getText().equals("Set time")) {
                     saveReminder();
@@ -243,7 +244,7 @@ public class ReminderActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void ifEveryDayChecked() {
-        if (monday.getDrawable().getConstantState() ==
+       /* if (monday.getDrawable().getConstantState() ==
                 ContextCompat.getDrawable(ReminderActivity.this, R.drawable.monday_white).getConstantState()) {
             monday.setImageResource(R.drawable.monday_blue);
         } else {
@@ -285,7 +286,24 @@ public class ReminderActivity extends AppCompatActivity implements View.OnClickL
             sunday.setImageResource(R.drawable.sunday_blue);
         } else {
             sunday.setImageResource(R.drawable.sunday_white);
-        }
+        }*/
+       if(everyday.isChecked()){
+           monday.setImageResource(R.drawable.monday_blue);
+           tuesday.setImageResource(R.drawable.tuesday_blue);
+           wednesday.setImageResource(R.drawable.wednesday_blue);
+           thursday.setImageResource(R.drawable.thurday_blue);
+           friday.setImageResource(R.drawable.friday_blue);
+           saturday.setImageResource(R.drawable.saturday_blue);
+           sunday.setImageResource(R.drawable.sunday_blue);
+       }else {
+           monday.setImageResource(R.drawable.monday_white);
+           tuesday.setImageResource(R.drawable.tuesday_white);
+           wednesday.setImageResource(R.drawable.wednesday_white);
+           thursday.setImageResource(R.drawable.thurday_white);
+           friday.setImageResource(R.drawable.friday_white);
+           saturday.setImageResource(R.drawable.saturday_white);
+           sunday.setImageResource(R.drawable.sunday_white);
+       }
 
     }
 
