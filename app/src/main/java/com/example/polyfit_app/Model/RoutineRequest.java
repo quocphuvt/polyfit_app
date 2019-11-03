@@ -10,24 +10,25 @@ import androidx.room.PrimaryKey;
 public class RoutineRequest {
     private int id;
     private int step_count;
-    private String createdAt;
+    private String create_date;
     private String updatedAt;
     private String time_practice;
     private String calories_consumed;
     private int id_user;
 
-    public RoutineRequest(int step_count, String time_practice, String calories_consumed, int id_user) {
+    public RoutineRequest(int id, int step_count, String create_date, String updatedAt, String time_practice, String calories_consumed, int id_user) {
+        this.id = id;
         this.step_count = step_count;
+        this.create_date = create_date;
+        this.updatedAt = updatedAt;
         this.time_practice = time_practice;
         this.calories_consumed = calories_consumed;
         this.id_user = id_user;
     }
 
-    public RoutineRequest(int id, int step_count, String createdAt, String updatedAt, String time_practice, String calories_consumed, int id_user) {
-        this.id = id;
+    public RoutineRequest(int step_count, String create_date, String time_practice, String calories_consumed, int id_user) {
         this.step_count = step_count;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.create_date = create_date;
         this.time_practice = time_practice;
         this.calories_consumed = calories_consumed;
         this.id_user = id_user;
@@ -49,12 +50,12 @@ public class RoutineRequest {
         this.step_count = step_count;
     }
 
-    public String getCreatedAt() {
-        return createdAt;
+    public String getCreate_date() {
+        return create_date;
     }
 
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
+    public void setCreate_date(String create_date) {
+        this.create_date = create_date;
     }
 
     public String getUpdatedAt() {
