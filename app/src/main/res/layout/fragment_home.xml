@@ -372,8 +372,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginVertical="10dp"
                                 android:orientation="vertical"
-                                android:paddingTop="20dp"
-                                android:paddingRight="20dp">
+                                android:paddingTop="20dp">
 
                                 <TextView
                                     android:layout_width="150dp"
@@ -404,9 +403,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="10dp"
-
                                 android:orientation="vertical"
-                                android:paddingLeft="20dp"
                                 android:paddingTop="20dp"
                                 android:paddingBottom="20dp">
 
@@ -414,6 +411,7 @@
                                     android:layout_width="150dp"
                                     android:layout_gravity="left"
                                     android:padding="5dp"
+                                    android:gravity="right"
                                     android:layout_height="wrap_content"
                                     android:background="#80FFFFFF"
                                     android:text="Buổi trưa"
@@ -440,7 +438,6 @@
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical"
                                 android:paddingTop="20dp"
-                                android:paddingRight="20dp"
                                 android:paddingBottom="20dp">
 
                                 <TextView
