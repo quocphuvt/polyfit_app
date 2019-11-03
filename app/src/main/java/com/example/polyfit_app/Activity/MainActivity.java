@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         SharedPreferences sharedPreferences = getSharedPreferences(Constants.LOGIN, MODE_PRIVATE);
         for (int i = 0; i < routineList.size(); i++) {
             Log.e("getRoutine", routineList.get(i).getStepCount() + "");
-            RoutineRequest routine = new RoutineRequest(routineList.get(i).getStepCount(), routineList.get(i).getTimePractice(), (routineList.get(i).getStepCount() * 4) + "", sharedPreferences.getInt("id", 0));
+            RoutineRequest routine = new RoutineRequest(routineList.get(i).getStepCount(), routineList.get(i).getCreatedAt(),routineList.get(i).getTimePractice(), (routineList.get(i).getStepCount() * 4) + "", sharedPreferences.getInt("id", 0));
             Call<RoutineResponse> callRoutine = routineAPI.createRoutine(routine);
             callRoutine.enqueue(new Callback<RoutineResponse>() {
                 @Override

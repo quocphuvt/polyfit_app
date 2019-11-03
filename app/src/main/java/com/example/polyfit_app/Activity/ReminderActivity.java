@@ -1,6 +1,7 @@
 package com.example.polyfit_app.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -241,6 +242,7 @@ public class ReminderActivity extends AppCompatActivity implements View.OnClickL
                 }, hours, minutes, true);
 
         timePickerDialog.show();
+
     }
 
     private void ifEveryDayChecked() {

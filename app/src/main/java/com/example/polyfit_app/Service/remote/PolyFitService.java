@@ -1,7 +1,9 @@
 package com.example.polyfit_app.Service.remote;
 
 
+import com.example.polyfit_app.Model.History;
 import com.example.polyfit_app.Model.Response;
+import com.example.polyfit_app.Model.Responses.HistoryResponse;
 import com.example.polyfit_app.Model.Responses.UserResponse;
 import com.example.polyfit_app.Model.User;
 
@@ -30,18 +32,19 @@ public interface  PolyFitService {
     @POST("user/login")
     Call<UserResponse> loginUser(@Body() User user);
 
+    @POST("user/update")
+    Call<UserResponse> updateUser(@Body User user);
+
     @POST("user/logout")
     @FormUrlEncoded
     Call<UserResponse> userLogout(@Field("id") Integer id);
 
-    @GET("user/{username}")
-    Call<String> getUserByUserName(@Path("username") String username);
+    @GET("user/getUserByUsername/{username}")
+    Call<UserResponse> getUserByUserName(@Path("username") String username);
 
 
-    @POST("history/add")
-    @FormUrlEncoded
-    Observable<String> addHistory(@Field("bmi") Float bmi,
-                                  @Field("id_user") Integer id_user);
+    @POST("history/create")
+    Call<HistoryResponse> addHistory(@Body History history );
 
     @GET("user/profile")
     Call<String> getUser(@Header("Authorization") String token);

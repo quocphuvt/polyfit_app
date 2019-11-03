@@ -304,6 +304,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                             Date date = format.parse(user.getCreatedAt());
                             String formattedDate = format.format(date);
                             setData(user.getUsername(), formattedDate, user.getHeight(), user.getWeight(), user.getBmi());
+                            SharedPreferences.Editor editor=getActivity().getSharedPreferences(Constants.USER_INF,MODE_PRIVATE).edit();
+                            editor.putString("height",String.valueOf(user.getHeight()));
+                            editor.putString("weight",String.valueOf(user.getWeight()));
+                            editor.apply();
                         } catch (Exception e) {
                             Log.e("err:", e + "");
                         }
