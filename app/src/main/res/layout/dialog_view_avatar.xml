@@ -11,7 +11,7 @@
             android:layout_margin="5dp"
             android:id="@+id/avatarView"
             android:layout_gravity="center"
-            android:src="@drawable/crop__ic_done"
+            android:src="@drawable/ic_avatar"
             android:layout_width="400dp"
             android:layout_height="400dp"/>
     </androidx.cardview.widget.CardView>

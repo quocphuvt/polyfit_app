@@ -1,9 +1,12 @@
 package com.example.polyfit_app.Fragments;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -43,10 +47,19 @@ import com.example.polyfit_app.Service.remote.PolyFitService;
 import com.example.polyfit_app.Service.remote.RetrofitClient;
 import com.example.polyfit_app.Utils.Constants;
 import com.github.chrisbanes.photoview.PhotoView;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.pnikosis.materialishprogress.ProgressWheel;
 import com.skyfishjy.library.RippleBackground;
 import com.soundcloud.android.crop.Crop;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -83,7 +96,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private DietsAPI dietsAPI;
     private RecyclerView rv_bodyparts;
     private RippleBackground ripple_reminder;
+    ProgressDialog processDialog;
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
+    private StorageReference storageRef = storage.getReferenceFromUrl(Constants.STORAGE_IMAGE);
     private RelativeLayout layout_reminder, layout_morning, layout_noon, layout_night;
+    private String linkAvatar;
 
     public HomeFragment() {
     }
@@ -144,13 +161,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         bodypartsAPI = retrofit.create(BodypartsAPI.class);
         dietsAPI = retrofit.create(DietsAPI.class);
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Constants.LOGIN, MODE_PRIVATE);
-
         int userId = sharedPreferences.getInt("id", 0);
-
         this.getDietData();
         this.getUserById(userId);
         this.getAllBodyParts();
         this.setBackgroundImageForMeals();
+
         return view;
     }
 
@@ -159,9 +175,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         dietsResponseCall.enqueue(new Callback<DietsResponse>() {
             @Override
             public void onResponse(Call<DietsResponse> call, Response<DietsResponse> response) {
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     DietsResponse dietsResponse = response.body();
-                    if(dietsResponse.getStatus() == 0) {
+                    if (dietsResponse.getStatus() == 0) {
                         renderDiets(dietsResponse.getResponse());
                     }
                 }
@@ -203,11 +219,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         Intent i;
         switch (view.getId()) {
             case R.id.iv_avatar:
-                Toast.makeText(getActivity(), "Click on avatar!!!", Toast.LENGTH_SHORT).show();
-//        Picasso.get().load(linkAvatar).into(photoView);
                 mBuilder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()));
                 mView = getLayoutInflater().inflate(R.layout.dialog_view_avatar, null, false);
                 viewAvatar = mView.findViewById(R.id.avatarView);
+                setAvatarToPhotoView(viewAvatar);
                 changeAvatar = mView.findViewById(R.id.changeAvatar);
                 tv_ChangeAvatar = mView.findViewById(R.id.tv_ChangeAvatar);
                 mBuilder.setView(mView);
@@ -216,7 +231,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 changeAvatar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Crop.pickImage(getActivity());
+                        if (tv_ChangeAvatar.getText().toString().equals("Change Avatar")) {
+                            Crop.pickImage(getActivity(), HomeFragment.this);
+                        }
+                        if (tv_ChangeAvatar.getText().toString().equals("Apply")) {
+                            updateAvatar();
+                        }
                     }
                 });
                 break;
@@ -245,6 +265,84 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 startActivity(i);
                 break;
         }
+    }
+
+    private void updateAvatar() {
+        processDialog = new ProgressDialog(getActivity());
+        processDialog.setCancelable(false);
+        processDialog.setMessage("Processing...");
+        processDialog.show();
+        final StorageReference mountainsRef = storageRef.child(new Date() + ".png");
+        viewAvatar.setDrawingCacheEnabled(true);
+        viewAvatar.buildDrawingCache();
+        Bitmap bitmap = ((BitmapDrawable) viewAvatar.getDrawable()).getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] data = baos.toByteArray();
+        final UploadTask uploadTask = mountainsRef.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Toast.makeText(getActivity(), "ERROR", Toast.LENGTH_SHORT).show();
+                processDialog.dismiss();
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                    @Override
+                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                        if (!task.isSuccessful()) {
+                            throw task.getException();
+                        }
+                        return mountainsRef.getDownloadUrl();
+                    }
+                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Uri> task) {
+                        if (task.isSuccessful()) {
+                            Uri downloadUri = task.getResult();
+                            assert downloadUri != null;
+                            linkAvatar = downloadUri.toString();
+
+//                            viewAvatar.setImageResource(R.drawable.ic_launcher_foreground);
+                            Log.d("Link", linkAvatar);
+                            handleUpdateUser();
+                        } else {
+                            processDialog.dismiss();
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    private void handleUpdateUser() {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Constants.LOGIN, MODE_PRIVATE);
+
+        User user = new User(sharedPreferences.getInt("id", 0), linkAvatar);
+        Call<UserResponse> callUpdate = polyFitService.updateUser(user);
+        callUpdate.enqueue(new Callback<UserResponse>() {
+            @Override
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                UserResponse userResponse = response.body();
+                Log.e("PhayTran", response.body() + " :: " + response.code() + "::" + userResponse.getMessage());
+
+                if (userResponse.getStatus() == 0) {
+                    Toast.makeText(getActivity(), "Updated", Toast.LENGTH_SHORT).show();
+                    processDialog.dismiss();
+                } else {
+                    Log.e("PhayTran", "Create failed");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+                processDialog.dismiss();
+
+                Log.e("PhayTran", "failed" + call.request() + ":::" + t.getMessage());
+            }
+        });
     }
 
 
@@ -303,10 +401,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                         try {
                             Date date = format.parse(user.getCreatedAt());
                             String formattedDate = format.format(date);
-                            setData(user.getUsername(), formattedDate, user.getHeight(), user.getWeight(), user.getBmi());
-                            SharedPreferences.Editor editor=getActivity().getSharedPreferences(Constants.USER_INF,MODE_PRIVATE).edit();
-                            editor.putString("height",String.valueOf(user.getHeight()));
-                            editor.putString("weight",String.valueOf(user.getWeight()));
+                            setData(user.getUsername(), formattedDate, user.getHeight(), user.getWeight(), user.getBmi(), user.getAvatar());
+                            SharedPreferences.Editor editor = getActivity().getSharedPreferences(Constants.USER_INF, MODE_PRIVATE).edit();
+                            editor.putString("height", String.valueOf(user.getHeight()));
+                            editor.putString("weight", String.valueOf(user.getWeight()));
+                            editor.putString("imageLink", user.getAvatar());
                             editor.apply();
                         } catch (Exception e) {
                             Log.e("err:", e + "");
@@ -326,12 +425,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         });
     }
 
-    private void setData(String userName, String startDate, Float height, Float weight, Float bmi) {
+    private void setData(String userName, String startDate, Float height, Float weight, Float bmi, String imageLink) {
         tv_UserName.setText(userName);
         tv_startDate.setText(startDate);
         tv_height.setText(String.valueOf(height));
         tv_weight.setText(String.valueOf(weight));
         tv_bmi.setText(String.valueOf(bmi));
+        setAvatar(imageLink);
     }
 
     @Override
@@ -348,9 +448,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 changeAvatar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        updateAvtar();
-//                        imv_avatar.setImageURI(Crop.getOutput(data));
-
+                        updateAvatar();
                     }
                 });
 
@@ -365,6 +463,23 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         if (resultCode == RESULT_OK) {
             viewAvatar.setImageURI(Crop.getOutput(data));
         }
+    }
+
+    private void setAvatar(String imageLink) {
+        Glide.with(this)
+                .load(imageLink)
+                .centerCrop()
+                .placeholder(R.drawable.ic_avatar)
+                .into(iv_avatar);
+    }
+
+    private void setAvatarToPhotoView(PhotoView avatarToPhotoView) {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Constants.USER_INF, MODE_PRIVATE);
+        Glide.with(this)
+                .load(sharedPreferences.getString("imageLink", ""))
+                .centerCrop()
+                .placeholder(R.drawable.ic_avatar)
+                .into(avatarToPhotoView);
     }
 
 }
