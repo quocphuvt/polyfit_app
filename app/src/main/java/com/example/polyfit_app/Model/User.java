@@ -24,6 +24,7 @@ public class User {
     @ColumnInfo(name = "bmi")
     private Float bmi;
     @ColumnInfo(name = "created_at")
+
     private String createdAt;
     @ColumnInfo(name = "gender")
     private int gender;

@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="250dp"
-    android:layout_marginVertical="2.5dp"
+    android:layout_marginVertical="1.5dp"
     android:orientation="vertical"
-    android:padding="4dp">
+    android:paddingHorizontal="4dp">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -37,17 +37,19 @@
                     android:id="@+id/tv_title_item_dishes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto"
+                    android:fontFamily="@font/montserrat_bold"
                     android:text="Bò hầm cải chua"
                     android:textColor="@color/title"
-                    android:textSize="@dimen/text_xl" />
+                    android:textSize="@dimen/text_md" />
 
                 <TextView
                     android:id="@+id/tv_description_item_dishes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:fontFamily="@font/montserrat_light"
                     android:layout_marginTop="5dp"
-                    android:text="Ngon từ nước , ngọt từ xương"
+                    android:text="Xem chi tiết"
                     android:textColor="@color/content"
                     android:textSize="@dimen/text_md" />
             </LinearLayout>

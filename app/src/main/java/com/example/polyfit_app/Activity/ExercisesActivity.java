@@ -31,16 +31,13 @@ import retrofit2.Retrofit;
 public class ExercisesActivity extends AppCompatActivity implements ItemClickListener {
     private RecyclerView rv_exercises;
     private BodypartsAPI bodypartsAPI;
-    private ImageView iv_headerBackground;
     private TextView tv_totalWorkouts, tv_workoutDescription;
-    private AppBarLayout app_bar;
+    private int bodyPartId;
 
     private void initView() {
         rv_exercises = findViewById(R.id.rv_exercises);
-        iv_headerBackground = findViewById(R.id.iv_header_bg_exercise);
         tv_totalWorkouts = findViewById(R.id.tv_total_workout_header_exercise);
         tv_workoutDescription = findViewById(R.id.tv_description_header_exercise);
-        app_bar = findViewById(R.id.app_bar);
     }
 
     @Override
@@ -61,7 +58,7 @@ public class ExercisesActivity extends AppCompatActivity implements ItemClickLis
         });
 
         Intent i = getIntent();
-        int bodyPartId = i.getIntExtra("id", 0);
+        bodyPartId = i.getIntExtra("id", 0);
         String title = i.getStringExtra("title");
 
         getSupportActionBar().setTitle(title);
@@ -118,6 +115,7 @@ public class ExercisesActivity extends AppCompatActivity implements ItemClickLis
         Intent i = new Intent(this, ExerciseDetailsActivity.class);
         i.putExtra("id", id);
         i.putExtra("part", getSupportActionBar().getTitle());
+        i.putExtra("bodyPartId", bodyPartId);
         startActivity(i);
     }
 

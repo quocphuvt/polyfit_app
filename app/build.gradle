@@ -142,6 +142,9 @@ dependencies {
     //Ripple background
     implementation 'com.skyfishjy.ripplebackground:library:1.0.1'
 
+    //Flexbox
+    implementation 'com.google.android:flexbox:1.1.1'
+
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

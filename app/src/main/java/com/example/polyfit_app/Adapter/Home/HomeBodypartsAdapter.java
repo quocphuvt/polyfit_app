@@ -42,7 +42,6 @@ public class HomeBodypartsAdapter extends RecyclerView.Adapter<HomeBodypartsView
     public void onBindViewHolder(@NonNull HomeBodypartsViewHolder holder, int position) {
         BodyParts bodypart = bodyParts.get(position);
         if(bodypart.getId() == 0) {
-            holder.iv_icon.setVisibility(View.GONE);
             holder.tv_title.setGravity(Gravity.CENTER);
             holder.tv_title.setText("Các bộ phận");
             holder.tv_title.setTextColor(context.getResources().getColor(R.color.title));
@@ -69,23 +68,18 @@ public class HomeBodypartsAdapter extends RecyclerView.Adapter<HomeBodypartsView
         switch (title) {
             case "Tay":
                 holder.tv_description.setText("Bài tập cho cơ tay sau, tay trước");
-                holder.iv_icon.setImageResource(R.drawable.ic_arms);
                 break;
             case "Chân":
                 holder.tv_description.setText("Phát triển toàn diện cơ chân, đùi và mông");
-                holder.iv_icon.setImageResource(R.drawable.ic_legs);
                 break;
             case "Bụng":
                 holder.tv_description.setText("Trở nên 6 múi cùng chúng tôi");
-                holder.iv_icon.setImageResource(R.drawable.ic_abs);
                 break;
             case "Ngực":
                 holder.tv_description.setText("Phát triển tối đa cơ ngực");
-                holder.iv_icon.setImageResource(R.drawable.ic_chest);
                 break;
             default:
                 holder.tv_description.setText("Bài tập cho cơ lưng, xô và vai");
-                holder.iv_icon.setImageResource(R.drawable.ic_shoulder);
         }
     }
 
@@ -96,13 +90,12 @@ public class HomeBodypartsAdapter extends RecyclerView.Adapter<HomeBodypartsView
 }
 
 class HomeBodypartsViewHolder extends RecyclerView.ViewHolder {
-    protected ImageView iv_bg, iv_icon;
+    protected ImageView iv_bg;
     protected TextView tv_title, tv_description;
 
     public HomeBodypartsViewHolder(@NonNull View itemView) {
         super(itemView);
         iv_bg = itemView.findViewById(R.id.iv_item_bodypart_home);
-        iv_icon = itemView.findViewById(R.id.iv_icon_bodypart_home);
         tv_title = itemView.findViewById(R.id.tv_title_bodypart_home);
         tv_description = itemView.findViewById(R.id.tv_description_bodypart_home);
     }

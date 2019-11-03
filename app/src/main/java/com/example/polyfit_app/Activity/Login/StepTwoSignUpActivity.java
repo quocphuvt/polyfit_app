@@ -2,6 +2,8 @@ package com.example.polyfit_app.Activity.Login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -110,21 +112,30 @@ public class StepTwoSignUpActivity extends AppCompatActivity implements View.OnC
     }
 
     private void registerUser(User user) {
+        ProgressDialog progressDialog=new ProgressDialog(StepTwoSignUpActivity.this);
+        progressDialog.setCancelable(false);
+        progressDialog.setTitle("Processing");
+        progressDialog.show();
         Call<UserResponse> calledRegister = polyFitService.registerUser(user);
         calledRegister.enqueue(new Callback<UserResponse>() {
             @Override
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 UserResponse userResponse = response.body();
                 if(userResponse.getStatus() == 0) {
+                    Log.e("PhayTran","success");
+                    progressDialog.dismiss();
                     startActivity(new Intent(StepTwoSignUpActivity.this, LoginActivity.class));
                 } else {
+                    progressDialog.dismiss();
                     Toast.makeText(StepTwoSignUpActivity.this, userResponse.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<UserResponse> call, Throwable t) {
+                progressDialog.dismiss();
 
+                Log.e("PhayTran","failed"+call.request()+":::"+t.getMessage());
             }
         });
 //        mSubscriptions.add(polyFitService.registerUser(displayName, userName, password, weight, height, gender, createAt)
@@ -143,6 +154,7 @@ public class StepTwoSignUpActivity extends AppCompatActivity implements View.OnC
 //                    }
 //                }));
     }
+
 
 
 //    private void addHistory(float user_bmi, int user_id) {

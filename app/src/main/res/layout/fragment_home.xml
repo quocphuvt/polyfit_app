@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <RelativeLayout
         android:id="@+id/layoutHome"
         android:layout_width="match_parent"
@@ -16,54 +15,48 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp">
+                android:layout_height="150dp"
+                android:background="@drawable/header_gradient">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/header_gradient">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="40dp"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:text="Khám phá"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_xl" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="20dp"
-                        android:layout_marginTop="35dp"
-                        android:fontFamily="@font/teko"
-                        android:text="Khám phá"
-                        android:textColor="@color/white"
-                        android:textSize="30dp" />
+                <com.skyfishjy.library.RippleBackground xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/ripple_reminder"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="10dp"
+                    app:rb_color="#ddb6c6"
+                    app:rb_duration="3000"
+                    app:rb_radius="20dp"
+                    app:rb_rippleAmount="4"
+                    app:rb_scale="2">
 
-                    <com.skyfishjy.library.RippleBackground xmlns:android="http://schemas.android.com/apk/res/android"
-                        xmlns:app="http://schemas.android.com/apk/res-auto"
-                        android:id="@+id/ripple_reminder"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_margin="10dp"
-                        app:rb_color="#ddb6c6"
-                        app:rb_duration="3000"
-                        app:rb_radius="20dp"
-                        app:rb_rippleAmount="4"
-                        app:rb_scale="2">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center">
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center">
+                        <ImageView
+                            android:id="@+id/ic_reminder"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:src="@drawable/ic_access_alarm_white_24dp" />
+                    </LinearLayout>
 
-                            <ImageView
-                                android:id="@+id/ic_reminder"
-                                android:layout_width="35dp"
-                                android:layout_height="35dp"
-                                android:src="@drawable/ic_access_alarm_white_24dp" />
-                        </LinearLayout>
-
-                    </com.skyfishjy.library.RippleBackground>
-                </RelativeLayout>
-            </androidx.cardview.widget.CardView>
+                </com.skyfishjy.library.RippleBackground>
+            </RelativeLayout>
         </FrameLayout>
 
         <FrameLayout
@@ -114,19 +107,20 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:fontFamily="@font/roboto"
+                        android:fontFamily="@font/montserrat_medium"
                         android:text="Quoc phu"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/text_lg" />
+                        android:textSize="@dimen/text_md" />
 
                     <TextView
                         android:id="@+id/tv_startDate"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:fontFamily="@font/montserrat_semi_bold"
                         android:text="2019-09-01"
-                        android:textColor="@color/subTitle"
-                        android:textSize="@dimen/text_md" />
+                        android:textColor="@color/primary"
+                        android:textSize="@dimen/text_sm" />
                 </LinearLayout>
             </LinearLayout>
         </FrameLayout>
@@ -166,7 +160,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="Đánh giá chỉ số"
+                            android:text="Đánh giá"
+                            android:fontFamily="@font/montserrat_semi_bold"
                             android:textColor="@color/primary"
                             android:textSize="@dimen/text_sm"></TextView>
 
@@ -177,6 +172,7 @@
                             android:gravity="center"
                             android:paddingBottom="5dp"
                             android:text="Bình thường"
+                            android:fontFamily="@font/montserrat_bold"
                             android:textColor="@color/content"
                             android:textStyle="bold"></TextView>
 
@@ -201,9 +197,10 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:text="Height"
+                            android:fontFamily="@font/montserrat_regular"
                             android:textAlignment="center"
-                            android:textColor="@color/title"
-                            android:textSize="13sp"
+                            android:textColor="@color/primary"
+                            android:textSize="@dimen/text_md"
                             android:textStyle="bold" />
 
                         <TextView
@@ -213,7 +210,7 @@
                             android:layout_weight="1"
                             android:text="175"
                             android:textAlignment="center"
-                            android:textColor="@color/content"
+                            android:textColor="@color/morning"
                             android:textFontWeight="1"
                             android:textSize="@dimen/text_md" />
                     </LinearLayout>
@@ -237,6 +234,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:text="Weight"
+                            android:fontFamily="@font/montserrat_regular"
                             android:textAlignment="center"
                             android:textColor="@color/title"
                             android:textSize="13sp"
@@ -272,6 +270,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:text="BMI"
+                            android:fontFamily="@font/montserrat_regular"
                             android:textAlignment="center"
                             android:textColor="@color/title"
                             android:textSize="13sp"
@@ -291,7 +290,6 @@
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
         </FrameLayout>
-
 
         <FrameLayout
             android:id="@+id/content_home"
@@ -378,25 +376,16 @@
                                 android:paddingRight="20dp">
 
                                 <TextView
-                                    android:layout_width="match_parent"
+                                    android:layout_width="150dp"
+                                    android:layout_gravity="right"
+                                    android:padding="5dp"
                                     android:layout_height="wrap_content"
                                     android:background="#80FFFFFF"
-                                    android:gravity="right"
                                     android:text="Buổi sáng"
                                     android:textColor="@color/title"
                                     android:textSize="18sp"
                                     android:textStyle="bold" />
 
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="5dp"
-                                    android:background="#80FFFFFF"
-                                    android:gravity="right"
-                                    android:paddingLeft="120dp"
-                                    android:text="Buổi sáng tràn đầy năng lượng cùng các món ăn độc đáo"
-                                    android:textColor="@color/content"
-                                    android:textSize="14sp" />
                             </LinearLayout>
                         </RelativeLayout>
 
@@ -422,25 +411,16 @@
                                 android:paddingBottom="20dp">
 
                                 <TextView
-                                    android:layout_width="match_parent"
+                                    android:layout_width="150dp"
+                                    android:layout_gravity="left"
+                                    android:padding="5dp"
                                     android:layout_height="wrap_content"
                                     android:background="#80FFFFFF"
-                                    android:gravity="left"
                                     android:text="Buổi trưa"
                                     android:textColor="@color/title"
                                     android:textSize="18sp"
                                     android:textStyle="bold" />
 
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="5dp"
-                                    android:background="#80FFFFFF"
-                                    android:gravity="left"
-                                    android:paddingRight="120dp"
-                                    android:text="Buổi trưa cho gia đình tràn đầy sức khỏe"
-                                    android:textColor="@color/content"
-                                    android:textSize="14sp" />
                             </LinearLayout>
                         </RelativeLayout>
 
@@ -464,25 +444,16 @@
                                 android:paddingBottom="20dp">
 
                                 <TextView
-                                    android:layout_width="match_parent"
+                                    android:layout_width="150dp"
+                                    android:layout_gravity="right"
+                                    android:padding="5dp"
                                     android:layout_height="wrap_content"
                                     android:background="#80FFFFFF"
-                                    android:gravity="right"
                                     android:text="Buổi chiều"
                                     android:textColor="@color/title"
                                     android:textSize="18sp"
                                     android:textStyle="bold" />
 
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="5dp"
-                                    android:background="#80FFFFFF"
-                                    android:gravity="right"
-                                    android:paddingLeft="120dp"
-                                    android:text="Bữa ăn cho kết thúc một ngày làm việc mệt mỏi"
-                                    android:textColor="@color/content"
-                                    android:textSize="14sp" />
                             </LinearLayout>
                         </RelativeLayout>
                     </LinearLayout>
@@ -490,7 +461,7 @@
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="120dp"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="5dp"
                         app:cardBackgroundColor="@color/dark_blue">
 
                         <RelativeLayout
@@ -528,6 +499,50 @@
                                 android:layout_alignParentRight="true"
                                 android:layout_margin="20dp"
                                 android:src="@drawable/phone_alarm" />
+                        </RelativeLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp"
+                        android:layout_marginTop="8dp"
+                        app:cardBackgroundColor="@color/social">
+
+                        <RelativeLayout
+                            android:id="@+id/layout_social"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="20dp"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Cộng đồng"
+                                    android:textColor="@color/white"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
+                                    android:text="Tham gia cộng đồng cùng \ntrao đổi kinh nghiệm với nhau"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/text_sm"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+                            <ImageView
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_margin="20dp"
+                                android:src="@drawable/connection" />
                         </RelativeLayout>
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>

@@ -43,8 +43,8 @@ public class SplashScreen extends AppCompatActivity {
                     finish();
                 } else {
                     Intent mainIntent = new Intent(SplashScreen.this, LoginMethod.class);
-                    SplashScreen.this.startActivity(mainIntent);
-                    SplashScreen.this.finish();
+                    startActivity(mainIntent);
+                    finish();
                 }
             }
         }, SPLASH_DISPLAY_LENGTH);

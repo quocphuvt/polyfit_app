@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class UserResponse extends BaseResponse {
     private User Object;
-    private ArrayList<User> Response;
+//    private ArrayList<User> Response;
 
     public UserResponse(int status, String message) {
         super(status, message);
@@ -21,11 +21,11 @@ public class UserResponse extends BaseResponse {
         Object = object;
     }
 
-    public ArrayList<User> getResponse() {
-        return Response;
-    }
-
-    public void setResponse(ArrayList<User> response) {
-        Response = response;
-    }
+//    public ArrayList<User> getResponse() {
+//        return Response;
+//    }
+//
+//    public void setResponse(ArrayList<User> response) {
+//        Response = response;
+//    }
 }
