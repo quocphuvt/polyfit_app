@@ -127,18 +127,6 @@
                         android:textColor="@color/primary"
                         android:textSize="@dimen/text_lg"
                         android:textStyle="bold"></TextView>
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:padding="5dp"
-                        android:layout_marginVertical="10dp"
-                        android:layout_marginLeft="15dp"
-                        android:layout_gravity="center"
-                        android:gravity="center|right"
-                        android:text="Chỉnh sửa"
-                        android:layout_marginRight="20dp"
-                        android:textColor="@color/primary"
-                        android:textSize="@dimen/text_md"></TextView>
                 </LinearLayout>
 
                 <LinearLayout
@@ -178,7 +166,6 @@
                     android:id="@+id/edtHeight"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-
                     android:layout_gravity="center"
                     android:backgroundTint="@color/primary"
                     android:text="150"
@@ -218,10 +205,10 @@
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:backgroundTint="#2196F3"
+                    android:backgroundTint="@color/primary"
                     android:text="170"
                     android:textAlignment="center"
-                    android:textColor="#2196F3"></androidx.appcompat.widget.AppCompatEditText>
+                    android:textColor="@color/primary"></androidx.appcompat.widget.AppCompatEditText>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

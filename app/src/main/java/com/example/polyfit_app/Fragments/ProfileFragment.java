@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -132,7 +133,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.btnUpdateBMI:
                 if (btnUpdateBMI.getText().toString().equals("Tôi muốn cập nhật BMI")) {
-                    btnUpdateBMI.setText("Update now");
+                    btnUpdateBMI.setText("Cập nhật ngay");
                     enableFocus();
                 } else {
                     addHistory();
@@ -142,29 +143,34 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     }
 
     private void addHistory() {
-        SharedPreferences sharedPreferences=getActivity().getSharedPreferences(Constants.LOGIN,Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Constants.LOGIN, Context.MODE_PRIVATE);
+        if (TextUtils.isEmpty(edtWeight.getText().toString())) {
+            Toast.makeText(getContext(), "Vui lòng nhập cân nặng", Toast.LENGTH_SHORT).show();
+        } else if (TextUtils.isEmpty(edtHeight.getText().toString())) {
+            Toast.makeText(getContext(), "Vui lòng nhập cân nặng", Toast.LENGTH_SHORT).show();
+        } else {
+            float bmi = Float.valueOf(edtWeight.getText().toString()) / (Float.valueOf(edtHeight.getText().toString()) * 2);
+            History history = new History(bmi * 100, sharedPreferences.getInt("id", 0));
+            Call<HistoryResponse> calledRegister = polyFitService.addHistory(history);
+            calledRegister.enqueue(new Callback<HistoryResponse>() {
+                @Override
+                public void onResponse(Call<HistoryResponse> call, Response<HistoryResponse> response) {
+                    HistoryResponse historyResponse = response.body();
+                    if (historyResponse.getStatus() == 0) {
+                        Log.e("PhayTran", "success");
+                        updateUser(sharedPreferences.getInt("id", 0));
 
-        float bmi=Float.valueOf(edtWeight.getText().toString())/(Float.valueOf(edtHeight.getText().toString())*2);
-        History history = new History(bmi*100, sharedPreferences.getInt("id",0));
-        Call<HistoryResponse> calledRegister = polyFitService.addHistory(history);
-        calledRegister.enqueue(new Callback<HistoryResponse>() {
-            @Override
-            public void onResponse(Call<HistoryResponse> call, Response<HistoryResponse> response) {
-                HistoryResponse historyResponse = response.body();
-                if (historyResponse.getStatus() == 0) {
-                    Log.e("PhayTran", "success");
-                    updateUser(sharedPreferences.getInt("id",0));
-
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<HistoryResponse> call, Throwable t) {
-                progressDialog.dismiss();
+                @Override
+                public void onFailure(Call<HistoryResponse> call, Throwable t) {
+                    progressDialog.dismiss();
 
-                Log.e("PhayTran", "failed" + call.request() + ":::" + t.getMessage());
-            }
-        });
+                    Log.e("PhayTran", "failed" + call.request() + ":::" + t.getMessage());
+                }
+            });
+        }
     }
 
     public interface OnFragmentInteractionListener {
@@ -270,34 +276,37 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         edtWeight.setFocusable(false);
         edtWeight.setFocusableInTouchMode(false);
     }
-    private void setUserInf(){
-        SharedPreferences sharedPreferences=getActivity().getSharedPreferences(Constants.USER_INF,Context.MODE_PRIVATE);
-        edtHeight.setText(sharedPreferences.getString("height",""));
-        edtWeight.setText(sharedPreferences.getString("weight",""));
+
+    private void setUserInf() {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Constants.USER_INF, Context.MODE_PRIVATE);
+        edtHeight.setText(sharedPreferences.getString("height", ""));
+        edtWeight.setText(sharedPreferences.getString("weight", ""));
     }
-    private void updateSharePref(float height,float weight){
-        SharedPreferences.Editor editor=getActivity().getSharedPreferences(Constants.USER_INF,Context.MODE_PRIVATE).edit();
-        editor.putString("height",String.valueOf(height));
-        editor.putString("weight",String.valueOf(weight));
+
+    private void updateSharePref(float height, float weight) {
+        SharedPreferences.Editor editor = getActivity().getSharedPreferences(Constants.USER_INF, Context.MODE_PRIVATE).edit();
+        editor.putString("height", String.valueOf(height));
+        editor.putString("weight", String.valueOf(weight));
         editor.apply();
 
     }
-    private void updateUser( int user_id) {
-        User user=new User(user_id,Float.valueOf(edtWeight.getText().toString()),Float.valueOf(edtHeight.getText().toString()));
+
+    private void updateUser(int user_id) {
+        User user = new User(user_id, Float.valueOf(edtWeight.getText().toString()), Float.valueOf(edtHeight.getText().toString()));
         Call<UserResponse> callUpdate = polyFitService.updateUser(user);
         callUpdate.enqueue(new Callback<UserResponse>() {
             @Override
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 UserResponse userResponse = response.body();
-                Log.e("PhayTran",response.body()+" :: "+response.code()+"::"+userResponse.getMessage());
+                Log.e("PhayTran", response.body() + " :: " + response.code() + "::" + userResponse.getMessage());
 
-                if(userResponse.getStatus() == 0) {
-                    Log.e("PhayTran","Create success");
-                    updateSharePref(Float.valueOf(edtHeight.getText().toString()),Float.valueOf(edtWeight.getText().toString()));
+                if (userResponse.getStatus() == 0) {
+                    Log.e("PhayTran", "Create success");
+                    updateSharePref(Float.valueOf(edtHeight.getText().toString()), Float.valueOf(edtWeight.getText().toString()));
                     btnUpdateBMI.setText("Tôi muốn cập nhật BMI");
                     disableFocus();
                 } else {
-                  Log.e("PhayTran","Create failed");
+                    Log.e("PhayTran", "Create failed");
                 }
             }
 
@@ -305,7 +314,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             public void onFailure(Call<UserResponse> call, Throwable t) {
                 progressDialog.dismiss();
 
-                Log.e("PhayTran","failed"+call.request()+":::"+t.getMessage());
+                Log.e("PhayTran", "failed" + call.request() + ":::" + t.getMessage());
             }
         });
     }

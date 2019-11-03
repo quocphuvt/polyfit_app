@@ -35,11 +35,8 @@ public class DishesFragment extends Fragment implements ItemClickListener {
     private BottomSheetLayout sheet_dish;
 
     private OnFragmentInteractionListener mListener;
-    ArrayList<Dishes> dishesArrayList;
-    RecyclerView recyclerView;
 
     private void initView(View view) {
-        recyclerView = view.findViewById(R.id.rv_dishes);
         sheet_dish = view.findViewById(R.id.bottom_sheet_dish_details);
         bottomSheetIngredientView = LayoutInflater.from(getContext()).inflate(R.layout.bottom_sheet_dish_details, sheet_dish, false);
     }
@@ -71,10 +68,6 @@ public class DishesFragment extends Fragment implements ItemClickListener {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_dishes_fragment, container, false);
         initView(view);
-        dishesArrayList = new ArrayList<>();
-
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
         return view;
     }
 
