@@ -12,14 +12,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.AppCompatEditText;
 import androidx.fragment.app.Fragment;
 
+import com.example.polyfit_app.Activity.Login.LoginActivity;
 import com.example.polyfit_app.Activity.Login.LoginMethod;
+import com.example.polyfit_app.Activity.Login.StepTwoSignUpActivity;
+import com.example.polyfit_app.Model.History;
+import com.example.polyfit_app.Model.Responses.HistoryResponse;
 import com.example.polyfit_app.Model.Responses.UserResponse;
 import com.example.polyfit_app.Model.StepCount;
+import com.example.polyfit_app.Model.User;
 import com.example.polyfit_app.R;
 import com.example.polyfit_app.Service.local.PolyfitDatabase;
 import com.example.polyfit_app.Service.remote.PolyFitService;
@@ -57,6 +64,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private String mParam2;
     SharedPreferences sharedPreferences;
     private OnFragmentInteractionListener mListener;
+    AppCompatEditText edtHeight, edtWeight;
+    Button btnUpdateBMI;
 
     public ProfileFragment() {
     }
@@ -121,7 +130,41 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 Log.e("Logout", "Logout" + sharedPreferences.getInt("id", 0));
                 logoutUser(sharedPreferences.getInt("id", 0));
                 break;
+            case R.id.btnUpdateBMI:
+                if (btnUpdateBMI.getText().toString().equals("Tôi muốn cập nhật BMI")) {
+                    btnUpdateBMI.setText("Update now");
+                    enableFocus();
+                } else {
+                    addHistory();
+                }
+                break;
         }
+    }
+
+    private void addHistory() {
+        SharedPreferences sharedPreferences=getActivity().getSharedPreferences(Constants.LOGIN,Context.MODE_PRIVATE);
+
+        float bmi=Float.valueOf(edtWeight.getText().toString())/(Float.valueOf(edtHeight.getText().toString())*2);
+        History history = new History(bmi*100, sharedPreferences.getInt("id",0));
+        Call<HistoryResponse> calledRegister = polyFitService.addHistory(history);
+        calledRegister.enqueue(new Callback<HistoryResponse>() {
+            @Override
+            public void onResponse(Call<HistoryResponse> call, Response<HistoryResponse> response) {
+                HistoryResponse historyResponse = response.body();
+                if (historyResponse.getStatus() == 0) {
+                    Log.e("PhayTran", "success");
+                    updateUser(sharedPreferences.getInt("id",0));
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<HistoryResponse> call, Throwable t) {
+                progressDialog.dismiss();
+
+                Log.e("PhayTran", "failed" + call.request() + ":::" + t.getMessage());
+            }
+        });
     }
 
     public interface OnFragmentInteractionListener {
@@ -131,6 +174,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private void connectView(View view) {
         ImageView icSetting = view.findViewById(R.id.icLogout);
         history_chart = view.findViewById(R.id.history_chart);
+        edtHeight = view.findViewById(R.id.edtHeight);
+        edtWeight = view.findViewById(R.id.edtWeight);
+        disableFocus();
+        btnUpdateBMI = view.findViewById(R.id.btnUpdateBMI);
+        btnUpdateBMI.setOnClickListener(this);
+        setUserInf();
         List<AxisValue> axisValues = new ArrayList<AxisValue>();
         List<StepCount> listStep = new ArrayList<>();
         listStep = PolyfitDatabase.getInstance(getActivity()).stepDAO().getStepCount();
@@ -205,5 +254,59 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         progressDialog.setMessage("Processing...");
         progressDialog.setIndeterminate(false);
         progressDialog.show();
+    }
+
+    private void enableFocus() {
+        edtHeight.setFocusable(true);
+        edtHeight.setFocusableInTouchMode(true);
+        edtWeight.setFocusable(true);
+        edtWeight.setFocusableInTouchMode(true);
+    }
+
+    private void disableFocus() {
+        edtHeight.setFocusable(false);
+        edtHeight.requestFocus(1);
+        edtHeight.setFocusableInTouchMode(false);
+        edtWeight.setFocusable(false);
+        edtWeight.setFocusableInTouchMode(false);
+    }
+    private void setUserInf(){
+        SharedPreferences sharedPreferences=getActivity().getSharedPreferences(Constants.USER_INF,Context.MODE_PRIVATE);
+        edtHeight.setText(sharedPreferences.getString("height",""));
+        edtWeight.setText(sharedPreferences.getString("weight",""));
+    }
+    private void updateSharePref(float height,float weight){
+        SharedPreferences.Editor editor=getActivity().getSharedPreferences(Constants.USER_INF,Context.MODE_PRIVATE).edit();
+        editor.putString("height",String.valueOf(height));
+        editor.putString("weight",String.valueOf(weight));
+        editor.apply();
+
+    }
+    private void updateUser( int user_id) {
+        User user=new User(user_id,Float.valueOf(edtWeight.getText().toString()),Float.valueOf(edtHeight.getText().toString()));
+        Call<UserResponse> callUpdate = polyFitService.updateUser(user);
+        callUpdate.enqueue(new Callback<UserResponse>() {
+            @Override
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                UserResponse userResponse = response.body();
+                Log.e("PhayTran",response.body()+" :: "+response.code()+"::"+userResponse.getMessage());
+
+                if(userResponse.getStatus() == 0) {
+                    Log.e("PhayTran","Create success");
+                    updateSharePref(Float.valueOf(edtHeight.getText().toString()),Float.valueOf(edtWeight.getText().toString()));
+                    btnUpdateBMI.setText("Tôi muốn cập nhật BMI");
+                    disableFocus();
+                } else {
+                  Log.e("PhayTran","Create failed");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+                progressDialog.dismiss();
+
+                Log.e("PhayTran","failed"+call.request()+":::"+t.getMessage());
+            }
+        });
     }
 }

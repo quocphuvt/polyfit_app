@@ -37,6 +37,10 @@ public class User {
     @ColumnInfo(name = "isOnline")
     private boolean isOnline;
 
+    public User() {
+    }
+
+    @Ignore
     public User(String username, String password, String display_name, Float weight, Float height, int gender, Boolean isVerified, String phoneNumber) {
         this.username = username;
         this.password = password;
@@ -47,6 +51,13 @@ public class User {
         this.gender = gender;
         this.isVerified = isVerified;
         this.phoneNumber = phoneNumber;
+    }
+
+    @Ignore
+    public User(int id, Float weight, Float height) {
+        this.id = id;
+        this.weight = weight;
+        this.height = height;
     }
 
     @Ignore()

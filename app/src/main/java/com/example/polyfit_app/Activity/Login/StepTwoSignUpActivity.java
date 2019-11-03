@@ -16,6 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.example.polyfit_app.Model.History;
+import com.example.polyfit_app.Model.Responses.HistoryResponse;
 import com.example.polyfit_app.Model.Responses.UserResponse;
 import com.example.polyfit_app.Model.User;
 import com.example.polyfit_app.R;
@@ -45,6 +47,7 @@ public class StepTwoSignUpActivity extends AppCompatActivity implements View.OnC
     private RadioButton rb_Male, rb_Female;
     private CheckBox cb_Accept;
     private PolyFitService polyFitService;
+    ProgressDialog progressDialog;
     private CompositeSubscription mSubscriptions = new CompositeSubscription();
 
     @Override
@@ -112,7 +115,7 @@ public class StepTwoSignUpActivity extends AppCompatActivity implements View.OnC
     }
 
     private void registerUser(User user) {
-        ProgressDialog progressDialog=new ProgressDialog(StepTwoSignUpActivity.this);
+        progressDialog=new ProgressDialog(StepTwoSignUpActivity.this);
         progressDialog.setCancelable(false);
         progressDialog.setTitle("Processing");
         progressDialog.show();
@@ -123,8 +126,9 @@ public class StepTwoSignUpActivity extends AppCompatActivity implements View.OnC
                 UserResponse userResponse = response.body();
                 if(userResponse.getStatus() == 0) {
                     Log.e("PhayTran","success");
-                    progressDialog.dismiss();
-                    startActivity(new Intent(StepTwoSignUpActivity.this, LoginActivity.class));
+//                    progressDialog.dismiss();
+//                    startActivity(new Intent(StepTwoSignUpActivity.this, LoginActivity.class));
+                    getUserByUserName(user.getUsername());
                 } else {
                     progressDialog.dismiss();
                     Toast.makeText(StepTwoSignUpActivity.this, userResponse.getMessage(), Toast.LENGTH_SHORT).show();
@@ -157,43 +161,55 @@ public class StepTwoSignUpActivity extends AppCompatActivity implements View.OnC
 
 
 
-//    private void addHistory(float user_bmi, int user_id) {
-//        mSubscriptions.add(polyFitService.addHistory(user_bmi, user_id)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Action1<String>() {
-//                    @Override
-//                    public void call(String s) {
-//                        if (s.contains("Add Success!")) {
-//                            startActivity(new Intent(StepTwoSignUpActivity.this, LoginActivity.class));
-//                        } else
-//                            Toast.makeText(StepTwoSignUpActivity.this, "" + s, Toast.LENGTH_SHORT).show();
-//                    }
-//                }));
-//    }
+    private void addHistory(float user_bmi, int user_id) {
+        History history=new History(user_bmi,user_id);
+        Call<HistoryResponse> calledRegister = polyFitService.addHistory(history);
+        calledRegister.enqueue(new Callback<HistoryResponse>() {
+            @Override
+            public void onResponse(Call<HistoryResponse> call, Response<HistoryResponse> response) {
+                HistoryResponse historyResponse = response.body();
+                if(historyResponse.getStatus() == 0) {
+                    Log.e("PhayTran","success");
+                    startActivity(new Intent(StepTwoSignUpActivity.this,LoginActivity.class));
+                } else {
+                    progressDialog.dismiss();
+                    Toast.makeText(StepTwoSignUpActivity.this, historyResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
 
-//    private void getUserByUserName(String userName) {
-//        polyFitService.getUserByUserName(userName).enqueue(new Callback<String>() {
-//            @Override
-//            public void onResponse(Call<String> call, Response<String> response) {
-//                if (response.isSuccessful()) {
-//                    Gson gson = new Gson();
-//                    String jsonOutput = response.body();
-//                    Type listType = new TypeToken<List<User>>() {
-//                    }.getType();
-//                    List<User> users = gson.fromJson(jsonOutput, listType);
-//                    Log.e("Phaytv", "Success::" + response.body());
-//                    Log.e("PhayTv", users.get(0).getId() + "");
-//                    addHistory(users.get(0).getBmi(), users.get(0).getId());
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<String> call, Throwable t) {
-//
-//            }
-//        });
-//    }
+            @Override
+            public void onFailure(Call<HistoryResponse> call, Throwable t) {
+                progressDialog.dismiss();
+
+                Log.e("PhayTran","failed"+call.request()+":::"+t.getMessage());
+            }
+        });
+    }
+
+    private void getUserByUserName(String userName) {
+        Call<UserResponse> userResponseCall = polyFitService.getUserByUserName(userName);
+        userResponseCall.enqueue(new Callback<UserResponse>() {
+            @Override
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                if (response.isSuccessful()) {
+                    UserResponse userResponse = response.body();
+                    if (userResponse.getStatus() == 0) {
+                        User user = userResponse.getObject();
+                        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                        addHistory(user.getBmi(),user.getId());
+                    }
+                } else {
+                   Log.e("ERROR","ERROR");
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+                Log.e("ERROR","ERROR");
+            }
+        });
+        }
+
 
 }

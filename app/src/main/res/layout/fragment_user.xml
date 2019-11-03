@@ -130,11 +130,13 @@
                 </LinearLayout>
 
                 <androidx.appcompat.widget.AppCompatEditText
+                    android:inputType="number"
+                    android:id="@+id/edtHeight"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:backgroundTint="#2196F3"
-                    android:text="150dp"
+                    android:text="150"
                     android:textAlignment="center"
                     android:textColor="#2196F3"></androidx.appcompat.widget.AppCompatEditText>
 
@@ -166,6 +168,8 @@
                 </LinearLayout>
 
                 <androidx.appcompat.widget.AppCompatEditText
+                    android:inputType="number"
+                    android:id="@+id/edtWeight"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -207,12 +211,13 @@
             </LinearLayout>
 
             <Button
+                android:id="@+id/btnUpdateBMI"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="#2699FB"
                 android:padding="20sp"
-                android:text="Cập nhập"
+                android:text="Tôi muốn cập nhật BMI"
                 android:textColor="#ffff">
 
             </Button>
