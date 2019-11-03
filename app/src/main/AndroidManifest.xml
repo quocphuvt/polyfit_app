@@ -30,7 +30,7 @@
             android:name=".Activity.DishesTodayActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".Activity.MealsActivity" />
-        <activity android:name=".Activity.MainActivity">
+        <activity android:name=".Activity.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -38,7 +38,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activity.ReminderActivity" />
-        <activity android:name=".Activity.SplashScreen" />
+        <activity android:name=".Activity.MainActivity" />
         <activity android:name=".Activity.TutorialActivity" />
         <activity android:name=".Activity.ExerciseDetailsActivity" />
         <activity
