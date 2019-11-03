@@ -87,7 +87,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }else {
             showProgressDialog();
             String token = FirebaseInstanceId.getInstance().getToken();
-            Log.e("token ::: ", token);
             User user = new User(userName, password,true,token);
             Call<UserResponse> calledLogin = polyFitService.loginUser(user);
             calledLogin.enqueue(new Callback<UserResponse>() {
@@ -123,7 +122,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 @Override
                 public void onFailure(Call<UserResponse> call, Throwable t) {
-
+                    progressDialog.dismiss();
+                    Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
         }
