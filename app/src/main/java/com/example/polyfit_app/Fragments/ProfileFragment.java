@@ -151,7 +151,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
 
         //In most cased you can call data model methods in builder-pattern-like manner.
-        Line line = new Line(values).setColor(Color.CYAN).setCubic(true);
+        Line line = new Line(values).setColor(Color.parseColor("#be7575")).setCubic(true);
 
         line.setHasPoints(true);
 

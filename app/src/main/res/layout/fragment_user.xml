@@ -1,200 +1,244 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F1F9FF "
-    android:layout_weight="6"
     android:orientation="vertical"
     tools:context=".Fragments.ProfileFragment">
-<LinearLayout
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <ImageView
-        android:id="@+id/icLogout"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_gravity="right"
-        android:background="#000000"
-        android:src="@drawable/ic_logout"></ImageView>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:orientation="horizontal">
+        android:background="#F1F9FF "
+        android:orientation="vertical"
+        tools:context=".Fragments.ProfileFragment">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.3">
+            android:background="@drawable/header_gradient"
+            android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:text="Lời khuyên"
-                android:textColor="#75C1FF"
-                android:textSize="15sp"></TextView>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.7">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Current BMI"
-                android:textColor="#75C1FF"
-                android:textSize="15sp"></TextView>
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="10dp"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.3">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="30dp"
-                android:text="Cập nhập thông tin của bạn thường xuyên để chúng tôi gợi ý nhiều bài tập và chế độ ăn hơn"
-                android:textColor="#2699FB"
-                android:textStyle="bold">
-
-            </TextView>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.7">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="24.5"
-                android:textColor="#2699FB"
-                android:textSize="40sp"></TextView>
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#FFFFFF"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/icLogout"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="20dp"
+                android:layout_gravity="right"
+                android:src="@drawable/ic_logout"></ImageView>
 
             <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.3">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:text="Lời khuyên"
+                            android:textColor="@color/white"
+                            android:textSize="15sp"
+                            android:textStyle="bold"></TextView>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.7">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Current BMI"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_md"
+                            android:textStyle="bold"></TextView>
+                    </LinearLayout>
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center">
+                    android:layout_marginVertical="10dp"
+                    android:orientation="horizontal">
 
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_marginHorizontal="10dp"
-                        android:src="@drawable/ic_arms"></ImageView>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.3">
 
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginRight="30dp"
+                            android:fontFamily="@font/montserrat_light"
+                            android:text="Cập nhập thông tin của bạn thường xuyên để chúng tôi gợi ý nhiều bài tập và chế độ ăn hơn"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_sm"
+                            android:textStyle="bold">
+
+                        </TextView>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.7">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="24.5"
+                            android:textColor="@color/noon"
+                            android:textSize="40sp"></TextView>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Chiều cao (cm)"
+                        android:padding="5dp"
+                        android:layout_marginVertical="10dp"
+                        android:layout_marginLeft="15dp"
+                        android:text="Chỉ số hiện tại"
                         android:textAlignment="center"
-                        android:textColor="#BCE0FD"
-                        android:textSize="15sp"></TextView>
+                        android:textColor="@color/primary"
+                        android:textSize="@dimen/text_lg"
+                        android:textStyle="bold"></TextView>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dp"
+                        android:layout_marginVertical="10dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_gravity="center"
+                        android:gravity="center|right"
+                        android:text="Chỉnh sửa"
+                        android:layout_marginRight="20dp"
+                        android:textColor="@color/primary"
+                        android:textSize="@dimen/text_md"></TextView>
                 </LinearLayout>
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:backgroundTint="#2196F3"
-                    android:text="150dp"
-                    android:textAlignment="center"
-                    android:textColor="#2196F3"></androidx.appcompat.widget.AppCompatEditText>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center">
+                    android:layout_marginVertical="10dp"
+                    android:orientation="horizontal">
 
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_marginHorizontal="10dp"
-                        android:src="@drawable/logo"></ImageView>
-
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Cân nặng (kg)"
-                        android:textColor="#BCE0FD"
-                        android:textSize="15sp"></TextView>
-                </LinearLayout>
+                        android:layout_weight="1"
+                        android:orientation="vertical">
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:backgroundTint="#2196F3"
-                    android:text="170"
-                    android:textAlignment="center"
-                    android:textColor="#2196F3"></androidx.appcompat.widget.AppCompatEditText>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginHorizontal="10dp"
+                                android:src="@drawable/height_logo"></ImageView>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Chiều cao (cm)"
+                                android:textAlignment="center"
+                                android:textColor="@color/primary"
+                                android:textSize="15sp"></TextView>
+                        </LinearLayout>
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:backgroundTint="@color/primary"
+                            android:text="150dp"
+                            android:textAlignment="center"
+                            android:textColor="@color/primary"></androidx.appcompat.widget.AppCompatEditText>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginHorizontal="10dp"
+                                android:src="@drawable/weight_logo"></ImageView>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Cân nặng (kg)"
+                                android:textColor="@color/primary"
+                                android:textSize="15sp"></TextView>
+                        </LinearLayout>
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:backgroundTint="@color/primary"
+                            android:text="170"
+                            android:textAlignment="center"
+                            android:textColor="@color/primary"></androidx.appcompat.widget.AppCompatEditText>
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
-</LinearLayout>
 
-
-    //Chart
 
         <LinearLayout
+            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
                 android:layout_marginTop="30dp"
+                android:background="@drawable/frame_label"
+                android:paddingHorizontal="15dp"
+                android:paddingVertical="10dp"
                 android:text="Biểu đồ"
-                android:textAlignment="center"
-                android:textColor="#2699FB"
-                android:textSize="22sp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_lg"
                 android:textStyle="bold"></TextView>
 
             <LinearLayout
@@ -204,6 +248,7 @@
 
                 <lecho.lib.hellocharts.view.LineChartView
                     android:id="@+id/history_chart"
+                    android:layout_marginHorizontal="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
             </LinearLayout>
@@ -212,7 +257,8 @@
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="#2699FB"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/header_gradient"
                 android:padding="20sp"
                 android:text="Cập nhập"
                 android:textColor="#ffff">
@@ -220,3 +266,5 @@
             </Button>
         </LinearLayout>
     </LinearLayout>
+</ScrollView>
+

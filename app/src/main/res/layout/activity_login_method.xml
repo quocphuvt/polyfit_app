@@ -1,64 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/backgroundlogin"
     tools:context=".Activity.Login.LoginMethod">
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_weight="5"
+
+    <FrameLayout
+        android:id="@+id/iv_header_login"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="250dp">
+        <ImageView
+            android:src="@drawable/background_head_login"
+            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"/>
+    </FrameLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="150dp"/>
-    <LinearLayout
+        android:background="#191E1E"
+        android:layout_below="@id/iv_header_login"
         android:layout_weight="3"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
         <LinearLayout
             android:layout_gravity="center"
             android:layout_margin="30dp"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-          <LinearLayout
-              android:layout_marginBottom="50dp"
-              android:layout_width="match_parent"
-              android:orientation="vertical"
-              android:layout_height="wrap_content">
-              <ImageView
-                  android:src="@drawable/polyfit"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"/>
-              <ImageView
-                  android:layout_width="match_parent"
-                  android:src="@drawable/healthy_body_balance_life"
-                  android:layout_height="wrap_content"/>
-          </LinearLayout>
 
             <LinearLayout
                 android:backgroundTint="#31A4F7"
                 android:layout_margin="10dp"
+                android:gravity="center"
                 android:background="@drawable/backround_button_login_users"
                 android:layout_width="match_parent"
                 android:layout_height="50dp">
+                <LinearLayout
+                    android:layout_weight="0.8"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:src="@drawable/facebook_logo"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp" />
+                </LinearLayout>
                 <TextView
+                    android:layout_weight="0.2"
                     android:fontFamily="@font/roboto"
-                    android:layout_marginHorizontal="30sp"
-                    android:drawableLeft="@drawable/ic_facebook"
                     android:textColor="#FFFFFF"
                     android:gravity="center"
                     android:textAlignment="center"
-                    android:textSize="20sp"
-                    android:text="Continue with Facebook"
+                    android:textSize="@dimen/text_lg"
+                    android:text="Đăng ký với Facebook"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
             </LinearLayout>
@@ -69,15 +66,24 @@
                 android:background="@drawable/backround_button_login_users"
                 android:layout_width="match_parent"
                 android:layout_height="50dp">
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_weight="0.8"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:src="@drawable/google_plus"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"/>
+                </LinearLayout>
                 <TextView
+                    android:layout_weight="0.2"
                     android:fontFamily="@font/roboto"
-                    android:layout_marginHorizontal="30dp"
-                    android:drawableLeft="@drawable/ic_google"
                     android:textColor="#FFFFFF"
                     android:gravity="center"
                     android:textAlignment="center"
-                    android:textSize="20sp"
-                    android:text="Continue with Google"
+                    android:textSize="@dimen/text_lg"
+                    android:text="Đăng ký với Google"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
             </LinearLayout>
@@ -93,8 +99,8 @@
                     android:textColor="#47484E"
                     android:gravity="center"
                     android:textAlignment="center"
-                    android:textSize="20sp"
-                    android:text="Sign in with email"
+                    android:textSize="@dimen/text_lg"
+                    android:text="Đăng nhập với email"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
             </LinearLayout>
@@ -114,7 +120,7 @@
                     android:layout_weight="4"
                     android:textAlignment="textEnd"
                     android:textColor="#484B4B"
-                    android:text="Don't have an account? "
+                    android:text="Bạn đã có tài khoản chưa? "
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:gravity="end" />
@@ -123,15 +129,21 @@
                     android:fontFamily="@font/roboto"
                     android:textColor="#FFFFFF"
                     android:layout_weight="2"
-                    android:text="Sign up"
+                    android:text="Đăng ký"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-    </LinearLayout>
 
-
-
-
-</LinearLayout>
+    <FrameLayout
+        android:layout_alignBottom="@id/iv_header_login"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="-45dp"
+        android:layout_height="90dp">
+        <ImageView
+            android:src="@drawable/polyfit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </FrameLayout>
+</RelativeLayout>
