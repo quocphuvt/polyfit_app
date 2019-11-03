@@ -1,18 +1,11 @@
 package com.example.polyfit_app.Model;
 
-import com.example.polyfit_app.Model.Responses.DietsResponse;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class Diet {
     private int id;
     private String title;
-    private String desciption;
+    private String description;
     private String image_url;
     private ArrayList<Meal> meals;
 
@@ -32,12 +25,12 @@ public class Diet {
         this.title = title;
     }
 
-    public String getDesciption() {
-        return desciption;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesciption(String desciption) {
-        this.desciption = desciption;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getImage_url() {
