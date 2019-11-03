@@ -5,9 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F1F9FF "
+    android:layout_weight="6"
     android:orientation="vertical"
     tools:context=".Fragments.ProfileFragment">
-
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
     <ImageView
         android:id="@+id/icLogout"
         android:layout_width="20dp"
@@ -171,6 +175,11 @@
                     android:textColor="#2196F3"></androidx.appcompat.widget.AppCompatEditText>
             </LinearLayout>
         </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
+
+
+    //Chart
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -211,4 +220,3 @@
             </Button>
         </LinearLayout>
     </LinearLayout>
-</LinearLayout>

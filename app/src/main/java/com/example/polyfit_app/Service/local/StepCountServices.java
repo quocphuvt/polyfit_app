@@ -24,7 +24,13 @@ import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
 import com.example.polyfit_app.Activity.MainActivity;
+import com.example.polyfit_app.Model.Routine;
+import com.example.polyfit_app.Model.StepCount;
 import com.example.polyfit_app.R;
+import com.example.polyfit_app.Utils.Constants;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import static com.example.polyfit_app.Service.ForegroundServices.CHANNEL_ID;
 
@@ -51,7 +57,7 @@ public class StepCountServices extends Service implements SensorEventListener {
                 0, notificationIntent, 0);
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentTitle("PhayTran")
+                .setContentTitle("Step count service ")
                 .setContentText("Your step today " + step)
                 .setSmallIcon(R.drawable.logo)
                 .setContentIntent(pendingIntent);
@@ -90,10 +96,55 @@ public class StepCountServices extends Service implements SensorEventListener {
             if (MagnitudeDenta > 20) {
                 step++;
             }
-            SharedPreferences.Editor editor=getSharedPreferences("StepCount",MODE_PRIVATE).edit();
-            editor.putString("Step",step+"");
-            editor.apply();
-            Log.e("PhayTran", "Running " + step);
+            Date date = new Date();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+            SimpleDateFormat dateFormatSave = new SimpleDateFormat("yyyy-MM-dd");
+//            Log.e("currentTime", dateFormat.format(date));
+            String timeForUploadData = dateFormat.format(date);
+            //Save routine
+            if (timeForUploadData.equals("10:07:00")) {
+                Log.e("currentTime","It time");
+                SharedPreferences sharedPreferences=getSharedPreferences(Constants.LOGIN,MODE_PRIVATE);
+                Routine routine=new Routine(step,dateFormatSave.format(date)+" 00:00:00",null,"2","5",sharedPreferences.getInt("id",0));
+                PolyfitDatabase.getInstance(getApplicationContext()).routineDAO().insert(routine);
+            }
+
+            if(timeForUploadData.equals("05:00:00")){
+                updateStepCount(5,step);
+                Log.e("currentTime","It time");
+            }
+            if (timeForUploadData.equals("07:00:00")){
+                updateStepCount(7,step);
+                Log.e("currentTime","It time");
+            }
+            if (timeForUploadData.equals("09:00:00")){
+                updateStepCount(9,step);
+                Log.e("currentTime","It time");
+            }
+            if (timeForUploadData.equals("11:00:00")){
+                updateStepCount(11,step);
+                Log.e("currentTime","It time");
+            }
+            if (timeForUploadData.equals("13:00:00")){
+                updateStepCount(13,step);
+                Log.e("currentTime","It time");
+            }
+            if (timeForUploadData.equals("15:00:00")){
+                updateStepCount(15,step);
+                Log.e("currentTime","It time");
+            }
+            if (timeForUploadData.equals("17:00:00")){
+                updateStepCount(17,step);
+                Log.e("currentTime","It time");
+            }
+            if (timeForUploadData.equals("19:00:00")){
+                updateStepCount(19,step);
+                Log.e("currentTime","It time");
+            }
+            if (timeForUploadData.equals("21:00:00")){
+                updateStepCount(21,step);
+                Log.e("currentTime","It time");
+            }
                 notification.setContentText("Your step today " + step);
                 notification.setSmallIcon(R.drawable.logo);
                 notificationManager.notify(id,notification.build());
@@ -118,5 +169,11 @@ public class StepCountServices extends Service implements SensorEventListener {
             notification.setVibrate(new long[]{0L});
         }
     }
+    private void updateStepCount(int hour,int step){
+        StepCount stepCount=new StepCount(hour,step);
+        PolyfitDatabase.getInstance(getApplicationContext()).stepDAO().insert(stepCount);
+    }
+
+
 
 }

@@ -59,6 +59,8 @@ dependencies {
     //Firebase
     implementation 'com.google.firebase:firebase-storage:16.0.4'
     implementation 'com.google.firebase:firebase-auth:16.0.5'
+    implementation 'com.google.firebase:firebase-messaging:17.3.4'
+    testImplementation 'junit:junit:4.12'
 
     //cropimv
     implementation 'com.soundcloud.android:android-crop:1.0.1@aar'
@@ -70,7 +72,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
 
     implementation 'com.squareup.retrofit2:retrofit:2.6.1'
-    implementation 'com.google.code.gson:gson:2.6.1'
+    implementation 'com.google.code.gson:gson:2.8.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
 // Because RxAndroid releases are few and far between, it is recommended you also

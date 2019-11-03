@@ -25,6 +25,7 @@ import com.example.polyfit_app.Service.remote.PolyFitService;
 import com.example.polyfit_app.Service.remote.RetrofitClient;
 import com.example.polyfit_app.Utils.Constants;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import io.reactivex.disposables.CompositeDisposable;
 import retrofit2.Call;
@@ -81,45 +82,51 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
     private void loginUser(String userName, String password) {
-        showProgressDialog();
-        User user = new User(userName, password);
-        Call<UserResponse> calledLogin = polyFitService.loginUser(user);
-        calledLogin.enqueue(new Callback<UserResponse>() {
-            @Override
-            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
-                if (response.isSuccessful()) {
-                    UserResponse userResponse = response.body();
-                    if (userResponse.getStatus() == 0) {
-                        SharedPreferences sharedPreferences = getSharedPreferences(Constants.LOGIN, MODE_PRIVATE);
-                        SharedPreferences.Editor editor = getSharedPreferences(Constants.LOGIN, MODE_PRIVATE).edit();
-                        Intent i;
-                        if (sharedPreferences.getBoolean("isFirstTime", false)) {
-                            i = new Intent(LoginActivity.this, MainActivity.class);
-                        } else {
-                            editor.putBoolean("isFirstTime", true);
-                            i = new Intent(LoginActivity.this, TutorialActivity.class);
-                        }
-                        editor.putString("username", userName);
-                        editor.putString("password", password);
-                        editor.putInt("id", userResponse.getObject().getId());
+        if(edt_username.getText().toString().equals("admin@polyfit.com")){
+            Toast.makeText(this, "Admin can't login in this app", Toast.LENGTH_SHORT).show();
+        }else {
+            showProgressDialog();
+            String token = FirebaseInstanceId.getInstance().getToken();
+            Log.e("token ::: ", token);
+            User user = new User(userName, password,true,token);
+            Call<UserResponse> calledLogin = polyFitService.loginUser(user);
+            calledLogin.enqueue(new Callback<UserResponse>() {
+                @Override
+                public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                    if (response.isSuccessful()) {
+                        UserResponse userResponse = response.body();
+                        if (userResponse.getStatus() == 0) {
+                            SharedPreferences sharedPreferences = getSharedPreferences(Constants.LOGIN, MODE_PRIVATE);
+                            SharedPreferences.Editor editor = getSharedPreferences(Constants.LOGIN, MODE_PRIVATE).edit();
+                            Intent i;
+                            if (sharedPreferences.getBoolean("isFirstTime", false)) {
+                                i = new Intent(LoginActivity.this, MainActivity.class);
+                            } else {
+                                editor.putBoolean("isFirstTime", true);
+                                i = new Intent(LoginActivity.this, TutorialActivity.class);
+                            }
+                            editor.putString("username", userName);
+                            editor.putString("password", password);
+                            editor.putInt("id", userResponse.getObject().getId());
 //                    editor.putString("token", userResponse.getResponse());
-                        dismissProgressDialog();
-                        editor.apply();
-                        startActivity(i);
-                        Toast.makeText(LoginActivity.this, userResponse.getMessage(), Toast.LENGTH_SHORT).show();
-                        finish();
-                    } else {
-                        Toast.makeText(LoginActivity.this, userResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                            dismissProgressDialog();
+                            editor.apply();
+                            startActivity(i);
+                            Toast.makeText(LoginActivity.this, userResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                            finish();
+                        } else {
+                            Toast.makeText(LoginActivity.this, userResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
                     }
+
                 }
 
-            }
+                @Override
+                public void onFailure(Call<UserResponse> call, Throwable t) {
 
-            @Override
-            public void onFailure(Call<UserResponse> call, Throwable t) {
-
-            }
-        });
+                }
+            });
+        }
     }
 
     @Override
