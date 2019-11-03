@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 4,
-    "identityHash": "c62faebc3cb08732c4ea1275629ee620",
+    "identityHash": "494c0627c6119524c51835ec85e12bad",
     "entities": [
       {
         "tableName": "polyfit_users",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `username` TEXT, `password` TEXT, `display_name` TEXT, `weight` REAL, `height` REAL, `bmi` REAL, `created_at` TEXT, `gender` INTEGER NOT NULL, `is_verified` INTEGER, `phone_number` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `username` TEXT, `password` TEXT, `display_name` TEXT, `weight` REAL, `height` REAL, `bmi` REAL, `created_at` TEXT, `gender` INTEGER NOT NULL, `is_verified` INTEGER, `phone_number` TEXT, `firebase_token` TEXT, `isOnline` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -51,7 +51,7 @@
             "notNull": false
           },
           {
-            "fieldPath": "create_at",
+            "fieldPath": "createdAt",
             "columnName": "created_at",
             "affinity": "TEXT",
             "notNull": false
@@ -73,6 +73,18 @@
             "columnName": "phone_number",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "firebase_token",
+            "columnName": "firebase_token",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "isOnline",
+            "columnName": "isOnline",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -173,7 +185,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"c62faebc3cb08732c4ea1275629ee620\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"494c0627c6119524c51835ec85e12bad\")"
     ]
   }
 }

@@ -1,17 +1,26 @@
 package com.example.polyfit_app.Activity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.ColorUtils;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.polyfit_app.Activity.Login.LoginActivity;
 import com.example.polyfit_app.Adapter.PagerAdapter;
 import com.example.polyfit_app.Fragments.DishesFragment;
 import com.example.polyfit_app.Fragments.HistoriesFragment;
@@ -20,15 +29,27 @@ import com.example.polyfit_app.Fragments.ProfileFragment;
 import com.example.polyfit_app.Fragments.DietsFragment;
 import com.example.polyfit_app.Model.Reminder;
 import com.example.polyfit_app.Model.Responses.BodypartResponse;
+import com.example.polyfit_app.Model.Responses.RoutineResponse;
+import com.example.polyfit_app.Model.Responses.UserResponse;
+import com.example.polyfit_app.Model.Routine;
+import com.example.polyfit_app.Model.RoutineRequest;
+import com.example.polyfit_app.Model.User;
 import com.example.polyfit_app.R;
 
+import com.example.polyfit_app.Service.Reminder.ReminderServices;
 import com.example.polyfit_app.Service.local.PolyfitDatabase;
 import com.example.polyfit_app.Service.local.StepCountServices;
 import com.example.polyfit_app.Service.remote.BodypartsAPI;
+import com.example.polyfit_app.Service.remote.PolyFitService;
 import com.example.polyfit_app.Service.remote.RetrofitClient;
+import com.example.polyfit_app.Service.remote.RoutineAPI;
+import com.example.polyfit_app.Utils.Constants;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
@@ -42,6 +63,9 @@ import retrofit2.Retrofit;
 public class MainActivity extends AppCompatActivity implements HomeFragment.OnFragmentInteractionListener, DishesFragment.OnFragmentInteractionListener,
         HistoriesFragment.OnFragmentInteractionListener, ProfileFragment.OnFragmentInteractionListener {
     private NavigationTabBar tabBar;
+    List<Routine> routines;
+    private RoutineAPI routineAPI;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +73,8 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Objects.requireNonNull(getSupportActionBar()).hide();
 //        getReminder();
+        Retrofit retrofit = RetrofitClient.getInstance();
+        routineAPI = retrofit.create(RoutineAPI.class);
         runServices();
         tabBar = findViewById(R.id.tabs_main);
         addModelTab();
@@ -57,6 +83,12 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         final PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), 4);
         viewPager.setAdapter(adapter);
         tabBar.setViewPager(viewPager);
+        if(isNetworkConnected()){
+            Log.e("PhayTran","Connected to internet!!!!");
+            getAndSaveRoutine();
+        }else {
+            Toast.makeText(this, "Please check your connection!!!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -101,46 +133,55 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         tabBar.setModels(models);
     }
 
-    //getAlarm
-    private void getReminder(){
-        List<Reminder> reminders= PolyfitDatabase.getInstance(MainActivity.this).reminderDAO().getReminder();
-        for(int i=0;i<reminders.size();i++){
-            Log.e("PHAYTV",reminders.get(i).getHour()+"");
-        }
-    }
-
     private void runServices() {
         Intent serviceIntent = new Intent(this, StepCountServices.class);
         ContextCompat.startForegroundService(this, serviceIntent);
     }
 
 
-//    //Register alarm
-//    if (chk_monday.isChecked()) {
-//        forday(2);
-//    } else if (chk_tuesday.isChecked()) {
-//        forday(3);
-//    } else if (chk_wednesday.isChecked()) {
-//        forday(4);
-//    } else if (chk_thursday.isChecked()) {
-//        forday(5);
-//    } else if (chk_friday.isChecked()) {
-//        forday(6);
-//    } else if (chk_sat.isChecked()) {
-//        forday(7);
-//    } else if (chk_sunday.isChecked()) {
-//        forday(1);
-//    }
-//
-//    public void forday(int week) {
-//
-//        calSet.set(Calendar.DAY_OF_WEEK, week);
-//        calSet.set(Calendar.HOUR_OF_DAY, hour);
-//        calSet.set(Calendar.MINUTE, minuts);
-//        calSet.set(Calendar.SECOND, 0);
-//        calSet.set(Calendar.MILLISECOND, 0);
-//
-//        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
-//                calSet.getTimeInMillis(), 1 * 60 * 60 * 1000, pendingIntent);
-//    }
+    //get routine
+    private void getAndSaveRoutine() {
+        routines = PolyfitDatabase.getInstance(getApplicationContext()).routineDAO().getRoutine();
+        if (!routines.isEmpty()) {
+            postRoutine(routines);
+        }
+        if(routines.isEmpty()){
+           Log.e("PhayTran","List empty!!!");
+        }
+    }
+
+    private void postRoutine(List<Routine> routineList) {
+        SharedPreferences sharedPreferences = getSharedPreferences(Constants.LOGIN, MODE_PRIVATE);
+        for (int i = 0; i < routineList.size(); i++) {
+            Log.e("getRoutine", routineList.get(i).getStepCount() + "");
+            RoutineRequest routine = new RoutineRequest(routineList.get(i).getStepCount(), routineList.get(i).getTimePractice(), (routineList.get(i).getStepCount() * 4) + "", sharedPreferences.getInt("id", 0));
+            Call<RoutineResponse> callRoutine = routineAPI.createRoutine(routine);
+            callRoutine.enqueue(new Callback<RoutineResponse>() {
+                @Override
+                public void onResponse(Call<RoutineResponse> call, Response<RoutineResponse> response) {
+                    if (response.isSuccessful()) {
+                        Log.e("routine", "save success");
+                        PolyfitDatabase.getInstance(MainActivity.this).routineDAO().deleteAll();
+                    }
+                    if (!response.isSuccessful()) {
+                        Log.e("routine", response.code() + " : " + response.body());
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<RoutineResponse> call, Throwable t) {
+                    Log.e("routine", "save failed" + "\n" + call.request() + " :: " + call.toString());
+                }
+            });
+        }
+
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
+    }
+
+
 }
