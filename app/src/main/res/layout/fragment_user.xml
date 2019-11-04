@@ -258,6 +258,26 @@
 
             </Button>
         </LinearLayout>
+        <TextView
+            android:layout_gravity="right"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/frame_lable_right"
+            android:paddingHorizontal="15dp"
+            android:paddingVertical="10dp"
+            android:text="Lịch sử"
+            android:textAlignment="textEnd"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_lg"
+            android:textStyle="bold"
+            tools:ignore="RtlCompat"></TextView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/viewHistory"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginVertical="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 </ScrollView>
 

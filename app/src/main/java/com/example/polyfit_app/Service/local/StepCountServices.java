@@ -74,7 +74,7 @@ public class StepCountServices extends Service implements SensorEventListener {
             Log.e("PhayTran", "not found sensor!!!");
         }
         startForeground(id, notification.build());
-        return START_NOT_STICKY;
+        return START_STICKY;
     }
 
 
@@ -102,7 +102,7 @@ public class StepCountServices extends Service implements SensorEventListener {
 //            Log.e("currentTime", dateFormat.format(date));
             String timeForUploadData = dateFormat.format(date);
             //Save routine
-            if (timeForUploadData.equals("12:17:00")) {
+            if (timeForUploadData.equals("23:59:00")) {
                 Log.e("currentTime","It time");
                 SharedPreferences sharedPreferences=getSharedPreferences(Constants.LOGIN,MODE_PRIVATE);
                 Routine routine=new Routine(step,dateFormatSave.format(date)+" 00:00:00",null,"2","5",sharedPreferences.getInt("id",0));

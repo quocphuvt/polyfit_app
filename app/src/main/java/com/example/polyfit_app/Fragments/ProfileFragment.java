@@ -196,6 +196,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         stepCount.setStep(0);
         listStep.add(stepCount);
         Collections.reverse(listStep);
+        if(listStep.isEmpty()){
+            Log.e("listStep","Empty");
+        }
         for (int i = 0; i < listStep.size(); ++i) {
 //            axisValues.add(new AxisValue(i).setLabel(hours[i]));
             axisValues.add(new AxisValue(i).setLabel(listStep.get(i).getHour() + ""));
