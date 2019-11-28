@@ -17,7 +17,7 @@
 
 
     <application
-        android:name=".Service.ForegroundServices"
+        android:name=".service.ForegroundServices"
         android:allowBackup="true"
         android:icon="@drawable/logo"
         android:label="@string/app_name"
@@ -27,43 +27,43 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:icon">
         <activity
-            android:name=".Activity.DishesTodayActivity"
+            android:name=".activity.DishesTodayActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".Activity.MealsActivity" />
-        <activity android:name=".Activity.SplashScreen">
+        <activity android:name=".activity.MealsActivity" />
+        <activity android:name=".activity.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.ReminderActivity" />
-        <activity android:name=".Activity.MainActivity" />
-        <activity android:name=".Activity.TutorialActivity" />
-        <activity android:name=".Activity.ExerciseDetailsActivity" />
+        <activity android:name=".activity.ReminderActivity" />
+        <activity android:name=".activity.MainActivity" />
+        <activity android:name=".activity.TutorialActivity" />
+        <activity android:name=".activity.ExerciseDetailsActivity" />
         <activity
-            android:name=".Activity.ExercisesActivity"
+            android:name=".activity.ExercisesActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activity.Login.StepTwoSignUpActivity" />
-        <activity android:name=".Activity.Login.StepOneSignUpActivity" />
-        <activity android:name=".Activity.Login.LoginActivity" />
-        <activity android:name=".Activity.Login.LoginMethod" />
+        <activity android:name=".activity.Login.StepTwoSignUpActivity" />
+        <activity android:name=".activity.Login.StepOneSignUpActivity" />
+        <activity android:name=".activity.Login.LoginActivity" />
+        <activity android:name=".activity.Login.LoginMethod" />
         <activity android:name="com.soundcloud.android.crop.CropImageActivity" />
-        <activity android:name=".Activity.ReminderScreenActivity" />
+        <activity android:name=".activity.ReminderScreenActivity" />
 
-        <receiver android:name=".Service.Reminder.ReminderServices">
+        <receiver android:name=".service.Reminder.ReminderServices">
             <intent-filter>
                 <action android:name="reminderServices" />
             </intent-filter>
         </receiver>
         <service
-            android:name=".Service.remote.MyFirebaseMessagingService"
+            android:name=".service.remote.MyFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".Service.local.StepCountServices" />
+        <service android:name=".service.local.StepCountServices" />
     </application>
 
 </manifest>
