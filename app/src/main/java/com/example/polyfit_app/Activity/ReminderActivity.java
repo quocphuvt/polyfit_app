@@ -246,49 +246,6 @@ public class ReminderActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void ifEveryDayChecked() {
-       /* if (monday.getDrawable().getConstantState() ==
-                ContextCompat.getDrawable(ReminderActivity.this, R.drawable.monday_white).getConstantState()) {
-            monday.setImageResource(R.drawable.monday_blue);
-        } else {
-            monday.setImageResource(R.drawable.monday_white);
-        }
-        if (tuesday.getDrawable().getConstantState() ==
-                ContextCompat.getDrawable(ReminderActivity.this, R.drawable.tuesday_white).getConstantState()) {
-            tuesday.setImageResource(R.drawable.tuesday_blue);
-        } else {
-            tuesday.setImageResource(R.drawable.tuesday_white);
-        }
-
-        if (wednesday.getDrawable().getConstantState() ==
-                ContextCompat.getDrawable(ReminderActivity.this, R.drawable.wednesday_white).getConstantState()) {
-            wednesday.setImageResource(R.drawable.wednesday_blue);
-        } else {
-            wednesday.setImageResource(R.drawable.wednesday_white);
-        }
-        if (thursday.getDrawable().getConstantState() ==
-                ContextCompat.getDrawable(ReminderActivity.this, R.drawable.thurday_white).getConstantState()) {
-            thursday.setImageResource(R.drawable.thurday_blue);
-        } else {
-            thursday.setImageResource(R.drawable.thurday_white);
-        }
-        if (friday.getDrawable().getConstantState() ==
-                ContextCompat.getDrawable(ReminderActivity.this, R.drawable.friday_white).getConstantState()) {
-            friday.setImageResource(R.drawable.friday_blue);
-        } else {
-            friday.setImageResource(R.drawable.friday_white);
-        }
-        if (saturday.getDrawable().getConstantState() ==
-                ContextCompat.getDrawable(ReminderActivity.this, R.drawable.saturday_white).getConstantState()) {
-            saturday.setImageResource(R.drawable.saturday_blue);
-        } else {
-            saturday.setImageResource(R.drawable.saturday_white);
-        }
-        if (sunday.getDrawable().getConstantState() ==
-                ContextCompat.getDrawable(ReminderActivity.this, R.drawable.sunday_white).getConstantState()) {
-            sunday.setImageResource(R.drawable.sunday_blue);
-        } else {
-            sunday.setImageResource(R.drawable.sunday_white);
-        }*/
        if(everyday.isChecked()){
            monday.setImageResource(R.drawable.monday_blue);
            tuesday.setImageResource(R.drawable.tuesday_blue);

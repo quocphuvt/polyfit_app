@@ -17,7 +17,7 @@ import com.example.polyfit_app.Service.local.DAO.RoutineDAO;
 import com.example.polyfit_app.Service.local.DAO.StepDAO;
 import com.example.polyfit_app.Service.local.DAO.UserDAO;
 
-@Database(entities = {User.class, Reminder.class, StepCount.class, Routine.class}, version = 6)
+@Database(entities = {User.class, Reminder.class, StepCount.class, Routine.class}, version = 8)
 
 public abstract class PolyfitDatabase extends RoomDatabase {
     private static final String DB_NAME = "polyfit_db";

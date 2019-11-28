@@ -172,7 +172,7 @@ public class ExerciseDetailsActivity extends AppCompatActivity implements ItemCl
                                 public void onReady(@NotNull YouTubePlayer youTubePlayer) {
                                     super.onReady(youTubePlayer);
                                     String videoUrl = exercise.getVideo_url();
-                                    String videoId = videoUrl.substring(videoUrl.lastIndexOf("/") + 1, videoUrl.length());
+                                    String videoId = videoUrl.substring(videoUrl.lastIndexOf("=") + 1, videoUrl.length());
                                     youTubePlayer.loadVideo(videoId, 0);
                                 }
                             });
@@ -186,7 +186,7 @@ public class ExerciseDetailsActivity extends AppCompatActivity implements ItemCl
                                 public void onReady(@NotNull YouTubePlayer youTubePlayer) {
                                     super.onReady(youTubePlayer);
                                     String videoUrl = exercise.getVideo_url();
-                                    String videoId = videoUrl.substring(videoUrl.lastIndexOf("/") + 1, videoUrl.length());
+                                    String videoId = videoUrl.substring(videoUrl.lastIndexOf("=") + 1, videoUrl.length());
                                     youTubePlayer.loadVideo(videoId, 0);
                                 }
                             });

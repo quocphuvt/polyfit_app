@@ -36,7 +36,8 @@ public class User {
     private String firebase_token;
     @ColumnInfo(name = "isOnline")
     private boolean isOnline;
-
+    @SerializedName("avatar")
+    private String avatar;
     public User() {
     }
 
@@ -60,6 +61,12 @@ public class User {
         this.height = height;
     }
 
+    @Ignore
+    public User(int id, String avatar) {
+        this.id = id;
+        this.avatar = avatar;
+    }
+
     @Ignore()
     public User(String username, String password,boolean isOnline,String firebase_token) { //This use for logining
         this.username = username;
@@ -76,6 +83,14 @@ public class User {
         this.weight = weight;
         this.height = height;
         this.gender = gender;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public String getUsername() {

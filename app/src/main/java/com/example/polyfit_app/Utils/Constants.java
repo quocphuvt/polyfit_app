@@ -8,4 +8,6 @@ public class Constants {
     public static final String EMAIL = "email";
     public static final String LOGIN ="login";
     public static final String USER_INF ="userInf";
+    public static String STORAGE_IMAGE="gs://polyfitapp.appspot.com/";
+
 }
