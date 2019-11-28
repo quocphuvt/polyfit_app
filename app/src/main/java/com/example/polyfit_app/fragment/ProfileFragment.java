@@ -18,9 +18,11 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatEditText;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import com.example.polyfit_app.activity.Login.LoginMethod;
+import com.example.polyfit_app.databinding.FragmentProfileBinding;
 import com.example.polyfit_app.models.History;
 import com.example.polyfit_app.models.Responses.HistoryResponse;
 import com.example.polyfit_app.models.Responses.UserResponse;
@@ -31,6 +33,7 @@ import com.example.polyfit_app.service.local.PolyfitDatabase;
 import com.example.polyfit_app.service.remote.PolyFitService;
 import com.example.polyfit_app.service.remote.RetrofitClient;
 import com.example.polyfit_app.utils.Constants;
+import com.example.polyfit_app.utils.Helpers;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -86,7 +89,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_user, container, false);
+        FragmentProfileBinding fragmentProfileBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false);
+        View view = fragmentProfileBinding.getRoot();
+
+        User user = Helpers.getUserFromPreferences(getContext());
+        fragmentProfileBinding.setUser(user);
+
         Retrofit retrofit = RetrofitClient.getInstance();
         polyFitService = retrofit.create(PolyFitService.class);
         connectView(view);
