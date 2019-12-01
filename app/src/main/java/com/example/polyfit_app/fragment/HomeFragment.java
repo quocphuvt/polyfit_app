@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,6 +31,7 @@ import com.example.polyfit_app.activity.DishesTodayActivity;
 import com.example.polyfit_app.activity.Login.LoginActivity;
 import com.example.polyfit_app.adapter.DietsHomeAdapter;
 import com.example.polyfit_app.adapter.Home.HomeBodypartsAdapter;
+import com.example.polyfit_app.databinding.FragmentHomeBinding;
 import com.example.polyfit_app.models.BodyParts;
 import com.example.polyfit_app.activity.ReminderActivity;
 import com.example.polyfit_app.models.Diet;
@@ -43,6 +45,8 @@ import com.example.polyfit_app.service.remote.DietsAPI;
 import com.example.polyfit_app.service.remote.PolyFitService;
 import com.example.polyfit_app.service.remote.RetrofitClient;
 import com.example.polyfit_app.utils.Constants;
+import com.example.polyfit_app.utils.Helpers;
+import com.example.polyfit_app.utils.Util;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -76,10 +80,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private String mParam1;
     private String mParam2;
     private OnFragmentInteractionListener mListener;
-    private RecyclerView rv_diets;
     private PolyFitService polyFitService;
-    private TextView tv_UserName, tv_startDate, tv_height, tv_weight, tv_bmi;
-    private ImageView iv_avatar, ic_reminder, iv_bg_morning, iv_bg_noon, iv_bg_night;
     private PhotoView viewAvatar;
     private LinearLayout changeAvatar;
     private TextView tv_ChangeAvatar;
@@ -88,42 +89,28 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private AlertDialog.Builder mBuilder;
     private BodypartsAPI bodypartsAPI;
     private DietsAPI dietsAPI;
-    private RecyclerView rv_bodyparts;
     private RippleBackground ripple_reminder;
     ProgressDialog processDialog;
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     private StorageReference storageRef = storage.getReferenceFromUrl(Constants.STORAGE_IMAGE);
-    private RelativeLayout layout_reminder, layout_morning, layout_noon, layout_night;
     private String linkAvatar;
+    private User user;
+    private FragmentHomeBinding homeBinding;
 
     public HomeFragment() {
     }
 
-    private void connectView(View view) {
-        tv_UserName = view.findViewById(R.id.tv_UserName);
-        tv_startDate = view.findViewById(R.id.tv_startDate);
-        tv_height = view.findViewById(R.id.tv_height);
-        tv_weight = view.findViewById(R.id.tv_weight);
-        tv_bmi = view.findViewById(R.id.tv_BMI);
-        iv_avatar = view.findViewById(R.id.iv_avatar);
-        rv_diets = view.findViewById(R.id.rv_challenges);
-        iv_avatar.setOnClickListener(this);
-        ic_reminder = view.findViewById(R.id.ic_reminder);
-        ic_reminder.setOnClickListener(this);
-        rv_bodyparts = view.findViewById(R.id.rv_bodyparts_home);
-        //Meal's image background
-        iv_bg_morning = view.findViewById(R.id.image_bg_morning);
-        iv_bg_noon = view.findViewById(R.id.image_bg_noon);
-        iv_bg_night = view.findViewById(R.id.image_bg_night);
-        ripple_reminder = view.findViewById(R.id.ripple_reminder);
-        layout_reminder = view.findViewById(R.id.layout_reminder);
-        layout_morning = view.findViewById(R.id.layout_morning);
-        layout_noon = view.findViewById(R.id.layout_noon);
-        layout_night = view.findViewById(R.id.layout_night);
-        layout_reminder.setOnClickListener(this);
-        layout_morning.setOnClickListener(this);
-        layout_noon.setOnClickListener(this);
-        layout_night.setOnClickListener(this);
+    public HomeFragment(User user) {
+        this.user = user;
+    }
+
+    private void connectView() {
+        homeBinding.icReminder.setOnClickListener(this);
+        homeBinding.ivAvatar.setOnClickListener(this);
+        homeBinding.layoutReminder.setOnClickListener(this);
+        homeBinding.layoutMorning.setOnClickListener(this);
+        homeBinding.layoutNoon.setOnClickListener(this);
+        homeBinding.layoutNight.setOnClickListener(this);
     }
 
     public static HomeFragment newInstance(String param1, String param2) {
@@ -144,23 +131,25 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
-        connectView(view);
-        ripple_reminder.startRippleAnimation();
+    private void setUpRetrofit() {
         Retrofit retrofit = RetrofitClient.getInstance();
         polyFitService = retrofit.create(PolyFitService.class);
         bodypartsAPI = retrofit.create(BodypartsAPI.class);
         dietsAPI = retrofit.create(DietsAPI.class);
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Constants.LOGIN, MODE_PRIVATE);
-        int userId = sharedPreferences.getInt("id", 0);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        homeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
+        View view = homeBinding.getRoot();
+        homeBinding.setUser(this.user);
+        connectView();
+        setUpRetrofit();
+        homeBinding.rippleReminder.startRippleAnimation();
         this.getDietData();
-        this.getUserById(userId);
         this.getAllBodyParts();
         this.setBackgroundImageForMeals();
-
         return view;
     }
 
@@ -186,9 +175,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private void renderDiets(ArrayList<Diet> diets) {
         DietsHomeAdapter dietsHomeAdapter = new DietsHomeAdapter(diets, getContext());
-        rv_diets.setHasFixedSize(true);
-        rv_diets.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-        rv_diets.setAdapter(dietsHomeAdapter);
+        homeBinding.rvDiets.setHasFixedSize(true);
+        homeBinding.rvDiets.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+        homeBinding.rvDiets.setAdapter(dietsHomeAdapter);
     }
 
     @Override
@@ -312,16 +301,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void handleUpdateUser() {
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Constants.LOGIN, MODE_PRIVATE);
-
-        User user = new User(sharedPreferences.getInt("id", 0), linkAvatar);
+        User user = new User(this.user.getId(), linkAvatar);
         Call<UserResponse> callUpdate = polyFitService.updateUser(user);
         callUpdate.enqueue(new Callback<UserResponse>() {
             @Override
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 UserResponse userResponse = response.body();
-                Log.e("PhayTran", response.body() + " :: " + response.code() + "::" + userResponse.getMessage());
-
                 if (userResponse.getStatus() == 0) {
                     Toast.makeText(getActivity(), "Updated", Toast.LENGTH_SHORT).show();
                     processDialog.dismiss();
@@ -348,15 +333,37 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         Glide.with(getActivity())
                 .load("https://cdn.loveandlemons.com/wp-content/uploads/2019/09/breakfast-ideas.jpg")
                 .centerCrop()
-                .into(iv_bg_morning);
+                .into(homeBinding.imageBgMorning);
         Glide.with(getActivity())
                 .load("https://cheddars.com/wp-content/uploads/images/menu-item-images/menu-599-potato-soup-house-salad.jpg")
                 .centerCrop()
-                .into(iv_bg_noon);
+                .into(homeBinding.imageBgNoon);
         Glide.with(getActivity())
                 .load("https://www.budgetbytes.com/wp-content/uploads/2018/01/Sheet-Pan-BBQ-Meatloaf-Dinner-plate.jpg")
                 .centerCrop()
-                .into(iv_bg_night);
+                .into(homeBinding.imageBgNight);
+    }
+
+    private void setData(String userName, String startDate, Float height, Float weight, Float bmi, String image_url ) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+        try {
+            Date date = format.parse(user.getCreatedAt());
+            String formattedDate = format.format(date);
+        } catch (Exception e) {
+
+        }
+//        homeBinding.setText(userName);
+//        tv_startDate.setText(startDate);
+//        tv_height.setText(String.valueOf(height));
+//        tv_weight.setText(String.valueOf(weight));
+//        tv_bmi.setText(String.valueOf(bmi));
+
+//        Glide.with(this)
+//                .load(image_url)
+//                .centerCrop()
+//                .placeholder(R.drawable.ic_avatar)
+//                .into(iv_avatar);
     }
 
     private void getAllBodyParts() {
@@ -368,9 +375,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 if (bodypartResponse.getStatus() == 0) {
                     bodypartResponse.getResponse().add(0, new BodyParts(0));
                     HomeBodypartsAdapter homeBodypartsAdapter = new HomeBodypartsAdapter(bodypartResponse.getResponse(), getActivity());
-                    rv_bodyparts.setHasFixedSize(true);
-                    rv_bodyparts.setLayoutManager(new GridLayoutManager(getActivity(), 2, RecyclerView.VERTICAL, false));
-                    rv_bodyparts.setAdapter(homeBodypartsAdapter);
+                    homeBinding.rvBodypartsHome.setHasFixedSize(true);
+                    homeBinding.rvBodypartsHome.setLayoutManager(new GridLayoutManager(getActivity(), 2, RecyclerView.VERTICAL, false));
+                    homeBinding.rvBodypartsHome.setAdapter(homeBodypartsAdapter);
                 }
             }
 
@@ -379,53 +386,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
             }
         });
-    }
-
-    private void getUserById(int id) {
-        Call<UserResponse> userResponseCall = polyFitService.getCurrentUser(id);
-        userResponseCall.enqueue(new Callback<UserResponse>() {
-            @Override
-            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
-                if (response.isSuccessful()) {
-                    UserResponse userResponse = response.body();
-                    if (userResponse.getStatus() == 0) {
-                        User user = userResponse.getObject();
-                        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-
-                        try {
-                            Date date = format.parse(user.getCreatedAt());
-                            String formattedDate = format.format(date);
-                            setData(user.getUsername(), formattedDate, user.getHeight(), user.getWeight(), user.getBmi(), user.getAvatar());
-                            SharedPreferences.Editor editor = getActivity().getSharedPreferences(Constants.USER_INF, MODE_PRIVATE).edit();
-                            editor.putString("height", String.valueOf(user.getHeight()));
-                            editor.putString("weight", String.valueOf(user.getWeight()));
-                            editor.putString("imageLink", user.getAvatar());
-                            editor.apply();
-                        } catch (Exception e) {
-                            Log.e("err:", e + "");
-                        }
-                    }
-                } else {
-                    Toast.makeText(getContext(), "Có lỗi xảy ra. Vui lòng đăng nhập lại", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getContext(), LoginActivity.class));
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<UserResponse> call, Throwable t) {
-
-            }
-        });
-    }
-
-    private void setData(String userName, String startDate, Float height, Float weight, Float bmi, String imageLink) {
-        tv_UserName.setText(userName);
-        tv_startDate.setText(startDate);
-        tv_height.setText(String.valueOf(height));
-        tv_weight.setText(String.valueOf(weight));
-        tv_bmi.setText(String.valueOf(bmi));
-        setAvatar(imageLink);
     }
 
     @Override
@@ -459,18 +419,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void setAvatar(String imageLink) {
-        Glide.with(this)
-                .load(imageLink)
-                .centerCrop()
-                .placeholder(R.drawable.ic_avatar)
-                .into(iv_avatar);
-    }
-
     private void setAvatarToPhotoView(PhotoView avatarToPhotoView) {
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Constants.USER_INF, MODE_PRIVATE);
         Glide.with(this)
-                .load(sharedPreferences.getString("imageLink", ""))
+                .load(this.user.getId())
                 .centerCrop()
                 .placeholder(R.drawable.ic_avatar)
                 .into(avatarToPhotoView);

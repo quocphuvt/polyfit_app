@@ -15,6 +15,7 @@ import com.example.polyfit_app.adapter.DietFragmentPagerAdapter;
 import com.example.polyfit_app.interfaces.ItemClickListener;
 import com.example.polyfit_app.models.Responses.DietsResponse;
 import com.example.polyfit_app.R;
+import com.example.polyfit_app.models.User;
 import com.example.polyfit_app.service.remote.DietsAPI;
 import com.example.polyfit_app.service.remote.RetrofitClient;
 import com.flipboard.bottomsheet.BottomSheetLayout;
@@ -32,14 +33,13 @@ public class DietsFragment extends Fragment implements ItemClickListener {
     private static final String ARG_PARAM2 = "param2";
     private String mParam1;
     private String mParam2;
-
     private View bottomSheetIngredientView;
     private BottomSheetLayout sheet_dish;
     private DietsAPI dietsAPI;
     private DiscreteScrollView rv_diets;
     private PageIndicatorView pageIndicatorView;
-
     private OnFragmentInteractionListener mListener;
+    private User user;
 
     private void initView(View view) {
         sheet_dish = view.findViewById(R.id.bottom_sheet_dish_details);
@@ -52,6 +52,9 @@ public class DietsFragment extends Fragment implements ItemClickListener {
     public DietsFragment() {
     }
 
+    public DietsFragment(User user) {
+        this.user = user;
+    }
 
     public static DietsFragment newInstance(String param1, String param2) {
         DietsFragment fragment = new DietsFragment();

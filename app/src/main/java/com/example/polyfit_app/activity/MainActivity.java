@@ -24,11 +24,13 @@ import com.example.polyfit_app.models.Routine;
 import com.example.polyfit_app.models.RoutineRequest;
 import com.example.polyfit_app.R;
 
+import com.example.polyfit_app.models.User;
 import com.example.polyfit_app.service.local.PolyfitDatabase;
 import com.example.polyfit_app.service.local.StepCountServices;
 import com.example.polyfit_app.service.remote.RetrofitClient;
 import com.example.polyfit_app.service.remote.RoutineAPI;
 import com.example.polyfit_app.utils.Constants;
+import com.example.polyfit_app.utils.Helpers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
     private NavigationTabBar tabBar;
     List<Routine> routines;
     private RoutineAPI routineAPI;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,15 +56,17 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         setContentView(R.layout.activity_main2);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Objects.requireNonNull(getSupportActionBar()).hide();
+        tabBar = findViewById(R.id.tabs_main);
 //        getReminder();
         Retrofit retrofit = RetrofitClient.getInstance();
         routineAPI = retrofit.create(RoutineAPI.class);
         runServices();
-        tabBar = findViewById(R.id.tabs_main);
+        user = Helpers.getUserFromPreferences(this);
+
         addModelTab();
         final ViewPager viewPager = findViewById(R.id.pager);
         viewPager.setOffscreenPageLimit(4);
-        final PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), 4);
+        final PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), 4, user);
         viewPager.setAdapter(adapter);
         tabBar.setViewPager(viewPager);
         if(isNetworkConnected()){
@@ -132,10 +137,9 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
     }
 
     private void postRoutine(List<Routine> routineList) {
-        SharedPreferences sharedPreferences = getSharedPreferences(Constants.LOGIN, MODE_PRIVATE);
         for (int i = 0; i < routineList.size(); i++) {
             Log.e("getRoutine", routineList.get(i).getStepCount() + "");
-            RoutineRequest routine = new RoutineRequest(routineList.get(i).getStepCount(), routineList.get(i).getCreatedAt(),routineList.get(i).getTimePractice(), (routineList.get(i).getStepCount() * 4) + "", sharedPreferences.getInt("id", 0));
+            RoutineRequest routine = new RoutineRequest(routineList.get(i).getStepCount(), routineList.get(i).getCreatedAt(),routineList.get(i).getTimePractice(), (routineList.get(i).getStepCount() * 4) + "", user.getId());
             Call<RoutineResponse> callRoutine = routineAPI.createRoutine(routine);
             callRoutine.enqueue(new Callback<RoutineResponse>() {
                 @Override

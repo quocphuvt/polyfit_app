@@ -93,7 +93,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         if (userResponse.getStatus() == 0) {
                             SharedPreferences sharedPreferences = getSharedPreferences(Constants.LOGIN, MODE_PRIVATE);
                             SharedPreferences.Editor editor = getSharedPreferences(Constants.LOGIN, MODE_PRIVATE).edit();
-
                             Helpers.putUserIntoPreferences(LoginActivity.this, userResponse.getObject());
                             Intent i;
                             if (sharedPreferences.getBoolean("isFirstTime", false)) {
@@ -102,14 +101,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 editor.putBoolean("isFirstTime", true);
                                 i = new Intent(LoginActivity.this, TutorialActivity.class);
                             }
-                            editor.putString("username", userName);
-                            editor.putString("password", password);
-                            editor.putInt("id", userResponse.getObject().getId());
+
 //                    editor.putString("token", userResponse.getResponse());
                             dismissProgressDialog();
                             editor.apply();
                             startActivity(i);
-                            Toast.makeText(LoginActivity.this, userResponse.getMessage(), Toast.LENGTH_SHORT).show();
                             finish();
                         } else {
                             progressDialog.dismiss();

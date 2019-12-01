@@ -1,11 +1,19 @@
 package com.example.polyfit_app.models;
 
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.databinding.BindingAdapter;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import com.example.polyfit_app.utils.Util;
 import com.google.gson.annotations.SerializedName;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Entity(tableName = "polyfit_users")
 public class User {
@@ -195,5 +203,28 @@ public class User {
 
     public void setOnline(boolean online) {
         isOnline = online;
+    }
+
+    @BindingAdapter("formatDate")
+    public static void formatDate(TextView tv_date ,String createdAt) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date date = format.parse(createdAt);
+            String formattedDate = format.format(date);
+            tv_date.setText(formattedDate);
+        } catch (Exception e) {
+
+        }
+    }
+
+    @BindingAdapter("getUserStatus")
+    public static void getUserStatus(TextView tv_status, Float bmi) {
+        if(Util.getLevelId(bmi) == 171) {
+            tv_status.setText("Thiếu cân");
+        } else if(Util.getLevelId(bmi) == 41) {
+            tv_status.setText("Bình thường");
+        } else {
+            tv_status.setText("Thừa cân");
+        }
     }
 }

@@ -2,7 +2,6 @@ package com.example.polyfit_app.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
 import com.example.polyfit_app.models.User;
 import com.google.gson.Gson;
@@ -22,5 +21,18 @@ public class Helpers {
         String json  = sharedPreferences.getString("user", "");
         User user = gson.fromJson(json, User.class);
         return user;
+    }
+
+//    public static User updateUserInPreferences(Context context, User user) {
+//        Gson gson = new Gson();
+//        SharedPreferences sharedPreferences = context.getSharedPreferences("user", Context.MODE_PRIVATE);
+//        String json  = sharedPreferences.getString("user", "");
+//        User user = gson.fromJson(json, User.class);
+//    }
+
+    public static void removeUserFromPreferences(Context context) {
+        SharedPreferences.Editor editor = context.getSharedPreferences("user", Context.MODE_PRIVATE).edit();
+        editor.remove("user");
+        editor.commit();
     }
 }

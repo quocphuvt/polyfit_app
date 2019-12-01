@@ -175,7 +175,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:backgroundTint="@color/primary"
-                                android:text="150"
+                                android:text="@{String.valueOf(user.height)}"
                                 android:textAlignment="center"
                                 android:textColor="@color/primary"></androidx.appcompat.widget.AppCompatEditText>
 
@@ -213,7 +213,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:backgroundTint="@color/primary"
-                                android:text="170"
+                                android:text="@{String.valueOf(user.weight)}"
                                 android:textAlignment="center"
                                 android:textColor="@color/primary"></androidx.appcompat.widget.AppCompatEditText>
                         </LinearLayout>

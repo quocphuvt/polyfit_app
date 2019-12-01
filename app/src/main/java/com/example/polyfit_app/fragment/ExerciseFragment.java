@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import com.example.polyfit_app.adapter.BodyPartsExercisesAdapter;
 import com.example.polyfit_app.models.Responses.BodypartResponse;
 import com.example.polyfit_app.R;
+import com.example.polyfit_app.models.User;
 import com.example.polyfit_app.service.remote.BodypartsAPI;
 import com.example.polyfit_app.service.remote.RetrofitClient;
 import com.google.android.material.appbar.AppBarLayout;
@@ -32,9 +33,14 @@ public class ExerciseFragment extends Fragment {
     private BodypartsAPI bodypartsAPI;
     private AppBarLayout appBarLayout;
     private ImageView iv_bg_ex_fragment;
+    private User user;
 
     public ExerciseFragment() {
         // Required empty public constructor
+    }
+
+    public ExerciseFragment(User user) {
+        this.user = user;
     }
 
     private void initView(View view) {

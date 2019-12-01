@@ -26,7 +26,10 @@ import com.example.polyfit_app.activity.MainActivity;
 import com.example.polyfit_app.models.Routine;
 import com.example.polyfit_app.models.StepCount;
 import com.example.polyfit_app.R;
+import com.example.polyfit_app.models.User;
 import com.example.polyfit_app.utils.Constants;
+import com.example.polyfit_app.utils.Helpers;
+import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -43,6 +46,7 @@ public class StepCountServices extends Service implements SensorEventListener {
     PendingIntent pendingIntent;
     NotificationManager notificationManager;
     Vibrator vibrator;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -102,9 +106,11 @@ public class StepCountServices extends Service implements SensorEventListener {
             String timeForUploadData = dateFormat.format(date);
             //Save routine
             if (timeForUploadData.equals("12:17:00")) {
+                Gson gson = new Gson();
+                String json = getSharedPreferences("user", MODE_PRIVATE).getString("user", "");
+                User user = gson.fromJson(json, User.class);
                 Log.e("currentTime","It time");
-                SharedPreferences sharedPreferences=getSharedPreferences(Constants.LOGIN,MODE_PRIVATE);
-                Routine routine=new Routine(step,dateFormatSave.format(date)+" 00:00:00",null,"2","5",sharedPreferences.getInt("id",0));
+                Routine routine=new Routine(step,dateFormatSave.format(date)+" 00:00:00",null,"2","5",user.getId());
                 PolyfitDatabase.getInstance(getApplicationContext()).routineDAO().insert(routine);
             }
 
