@@ -17,8 +17,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextClock
-            android:text="10:20"
-            android:textSize="200sp"
+            android:text="22:22"
+            android:textSize="150sp"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:fontFamily="@font/digital"

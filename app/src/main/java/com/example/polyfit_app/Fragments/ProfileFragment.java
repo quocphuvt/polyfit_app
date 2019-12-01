@@ -19,24 +19,38 @@ import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.polyfit_app.Activity.Login.LoginActivity;
 import com.example.polyfit_app.Activity.Login.LoginMethod;
 import com.example.polyfit_app.Activity.Login.StepTwoSignUpActivity;
+import com.example.polyfit_app.Adapter.ExercisesAdapter;
+import com.example.polyfit_app.Adapter.Home.HomeBodypartsAdapter;
+import com.example.polyfit_app.Adapter.RoutineAdapter;
+import com.example.polyfit_app.Model.BodyParts;
 import com.example.polyfit_app.Model.History;
+import com.example.polyfit_app.Model.Responses.BodypartResponse;
 import com.example.polyfit_app.Model.Responses.HistoryResponse;
+import com.example.polyfit_app.Model.Responses.RoutineResponse;
 import com.example.polyfit_app.Model.Responses.UserResponse;
+import com.example.polyfit_app.Model.Routine;
 import com.example.polyfit_app.Model.StepCount;
 import com.example.polyfit_app.Model.User;
 import com.example.polyfit_app.R;
 import com.example.polyfit_app.Service.local.PolyfitDatabase;
 import com.example.polyfit_app.Service.remote.PolyFitService;
 import com.example.polyfit_app.Service.remote.RetrofitClient;
+import com.example.polyfit_app.Service.remote.RoutineAPI;
 import com.example.polyfit_app.Utils.Constants;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.AxisValue;
@@ -67,7 +81,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private OnFragmentInteractionListener mListener;
     AppCompatEditText edtHeight, edtWeight;
     Button btnUpdateBMI;
-
+    RecyclerView viewHistory;
+    RoutineAPI routineAPI;
+    List<Routine> routineList;
+    List<RoutineResponse> routineResponses=new ArrayList<>();
     public ProfileFragment() {
     }
 
@@ -96,8 +113,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_user, container, false);
         Retrofit retrofit = RetrofitClient.getInstance();
         polyFitService = retrofit.create(PolyFitService.class);
+        routineAPI=retrofit.create(RoutineAPI.class);
         connectView(view);
         sharedPreferences = getActivity().getSharedPreferences(Constants.LOGIN, Context.MODE_PRIVATE);
+        getAllHistory(sharedPreferences.getInt("id",0));
         return view;
     }
 
@@ -182,6 +201,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         history_chart = view.findViewById(R.id.history_chart);
         edtHeight = view.findViewById(R.id.edtHeight);
         edtWeight = view.findViewById(R.id.edtWeight);
+        viewHistory=view.findViewById(R.id.viewHistory);
         disableFocus();
         btnUpdateBMI = view.findViewById(R.id.btnUpdateBMI);
         btnUpdateBMI.setOnClickListener(this);
@@ -196,6 +216,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         stepCount.setStep(0);
         listStep.add(stepCount);
         Collections.reverse(listStep);
+        if(listStep.isEmpty()){
+            Log.e("listStep","Empty");
+        }
         for (int i = 0; i < listStep.size(); ++i) {
 //            axisValues.add(new AxisValue(i).setLabel(hours[i]));
             axisValues.add(new AxisValue(i).setLabel(listStep.get(i).getHour() + ""));
@@ -317,5 +340,35 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 Log.e("PhayTran", "failed" + call.request() + ":::" + t.getMessage());
             }
         });
+    }
+    private void getAllHistory(Integer id) {
+
+        Call<RoutineResponse> getRoutine = routineAPI.getRoutinesByUserId(id);
+        getRoutine.enqueue(new Callback<RoutineResponse>() {
+            @Override
+            public void onResponse(Call<RoutineResponse> call, Response<RoutineResponse> response) {
+                RoutineResponse routineResponse = response.body();
+                if (routineResponse.getStatus() == 0) {
+//                    routineResponse.getResponse().add(0, new Routine());
+                    viewHistory.setHasFixedSize(true);
+                    viewHistory.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
+//                    removeDuplicate(routineResponse.getResponse());
+                    RoutineAdapter routineAdapter = new RoutineAdapter(removeDuplicate(routineResponse.getResponse()), getActivity());
+                    viewHistory.setAdapter(routineAdapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RoutineResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private List<Routine> removeDuplicate(List<Routine> list) {
+        Set<String> namesAlreadySeen = new HashSet<>();
+        list.removeIf(routine -> !namesAlreadySeen.add(routine.getCreate_date()));
+        Collections.reverse(list);
+        return list;
     }
 }

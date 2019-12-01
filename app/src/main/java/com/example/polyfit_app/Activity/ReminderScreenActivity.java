@@ -83,7 +83,9 @@ public class ReminderScreenActivity extends AppCompatActivity {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(ReminderScreenActivity.this, 1, intent, 0);
         assert alarmManager != null;
         alarmManager.cancel(pendingIntent);
-        System.exit(0);
+//        mediaPlayer.stop();
+            mediaPlayer.release();
+        finish();
 
     }
 
@@ -92,6 +94,7 @@ public class ReminderScreenActivity extends AppCompatActivity {
                 R.anim.zoom_and_fade);
         layoutClock.setAnimation(animation);
     }
+
     @Override
     protected void onStop() {
         super.onStop();

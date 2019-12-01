@@ -6,25 +6,36 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by Hades on 30,October,2019
  **/
 @Entity(tableName = "polyfit_routine")
 public class Routine {
     @ColumnInfo(name = "step_count")
+    @SerializedName("step_count")
     private int stepCount;
     @NonNull
     @PrimaryKey(autoGenerate = false)
+    @SerializedName("createdAt")
     @ColumnInfo(name = "createdAt")
     private String createdAt;
     @ColumnInfo(name = "updatedAt")
+    @SerializedName("updatedAt")
     private String updatedAt;
     @ColumnInfo(name = "time_practice")
+    @SerializedName("time_practice")
     private String timePractice;
     @ColumnInfo(name = "calories_consumed")
+    @SerializedName("calories_consumed")
     private String caloriesConsumed;
     @ColumnInfo(name = "id_user")
+    @SerializedName("id_user")
     private int polyfitUserId;
+    @ColumnInfo(name = "create_date")
+    @SerializedName("create_date")
+    private String create_date;
 
 
     public Routine() {
@@ -97,6 +108,14 @@ public class Routine {
 
     public void setPolyfitUserId(int polyfitUserId) {
         this.polyfitUserId = polyfitUserId;
+    }
+
+    public String getCreate_date() {
+        return create_date;
+    }
+
+    public void setCreate_date(String create_date) {
+        this.create_date = create_date;
     }
 }
 
