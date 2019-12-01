@@ -28,4 +28,7 @@
     <color name="gain">#f6ad7b</color>
     <color name="balance">#c2e8ce</color>
     <color name="burn">#be7575</color>
+
+<!--    histories-->
+    <color name="textColor">#39375C</color>
 </resources>

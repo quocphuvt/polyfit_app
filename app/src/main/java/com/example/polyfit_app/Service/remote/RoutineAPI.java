@@ -17,7 +17,7 @@ import retrofit2.http.Path;
  **/
 public interface RoutineAPI {
     @GET("routine/getRoutinesByUserId/{id}")
-    Call<Routine> getRoutinesByUserId(@Path("id") int userId);
+    Call<RoutineResponse> getRoutinesByUserId(@Path("id") int userId);
 
     @POST("routine/create")
     Call<RoutineResponse> createRoutine (@Body() RoutineRequest routine);
