@@ -13,7 +13,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.polyfit_app.activity.login.LoginMethod;
 import com.example.polyfit_app.R;
+import com.example.polyfit_app.model.User;
 import com.example.polyfit_app.utils.Constants;
+import com.example.polyfit_app.utils.Helpers;
 
 import java.util.Objects;
 
@@ -32,22 +34,21 @@ public class SplashScreen extends AppCompatActivity {
         animation = AnimationUtils.loadAnimation(getApplicationContext(),
                 R.anim.fade_out);
         logo.startAnimation(animation);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                SharedPreferences sharedPreferences = getSharedPreferences(Constants.LOGIN, MODE_PRIVATE);
-                String username = sharedPreferences.getString("username", "");
-                if (!username.isEmpty()) {
-                    Intent intentToMain = new Intent(SplashScreen.this, MainActivity.class);
-                    startActivity(intentToMain);
-                    finish();
-                } else {
+        User user = Helpers.getUserFromPreferences(this);
+        if(user == null) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
                     Intent mainIntent = new Intent(SplashScreen.this, LoginMethod.class);
                     startActivity(mainIntent);
                     finish();
                 }
-            }
-        }, SPLASH_DISPLAY_LENGTH);
+            }, SPLASH_DISPLAY_LENGTH);
+        } else {
+            Intent intentToMain = new Intent(SplashScreen.this, MainActivity.class);
+            startActivity(intentToMain);
+            finish();
+        }
     }
 }
 
