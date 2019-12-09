@@ -41,6 +41,7 @@ import com.example.polyfit_app.service.remote.RetrofitClient;
 import com.example.polyfit_app.service.remote.RoutineAPI;
 import com.example.polyfit_app.user.UserViewModel;
 import com.example.polyfit_app.utils.Helpers;
+import com.example.polyfit_app.utils.Util;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -62,19 +63,12 @@ import retrofit2.Retrofit;
 public class ProfileFragment extends Fragment implements View.OnClickListener {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private LineChartView history_chart;
-    public final static String[] hours = new String[]{"6", "12", "18", "24"};
     private ProgressDialog progressDialog;
     private PolyFitService polyFitService;
     private String mParam1;
     private String mParam2;
     private OnFragmentInteractionListener mListener;
-    private AppCompatEditText edtHeight, edtWeight;
-    private Button btnUpdateBMI;
-    private RecyclerView viewHistory;
     private RoutineAPI routineAPI;
-    private List<Routine> routineList;
-    private List<RoutineResponse> routineResponses = new ArrayList<>();
     private Retrofit retrofit = RetrofitClient.getInstance();
     private User user;
     private UserViewModel userViewModel;
@@ -111,12 +105,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        userViewModel = ViewModelProviders.of(getActivity()).get(UserViewModel.class);
+        userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
         dietViewModel = ViewModelProviders.of(getActivity()).get(DietViewModel.class);
         profileBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false);
         user = userViewModel.getUser().getValue();
         userViewModel.getUser().observe(this, newUser -> {
-            profileBinding.setUserViewModel(userViewModel);
+            profileBinding.setUser(newUser);
         });
         setRetrofitServices();
         initView();
@@ -174,7 +168,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         } else if (TextUtils.isEmpty(height)) {
             Toast.makeText(getContext(), "Vui lòng nhập cân nặng", Toast.LENGTH_SHORT).show();
         } else {
-            float bmi = (Float.valueOf(weight) / (Float.valueOf(height) * 2)) * 100;
+            float bmi = Util.calculateBMI(Float.parseFloat(weight), Float.parseFloat(height));
             History history = new History(bmi, user.getId());
             Call<HistoryResponse> calledRegister = polyFitService.addHistory(history);
             calledRegister.enqueue(new Callback<HistoryResponse>() {
@@ -189,7 +183,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 @Override
                 public void onFailure(Call<HistoryResponse> call, Throwable t) {
                     progressDialog.dismiss();
-
                     Log.e("PhayTran", "failed" + call.request() + ":::" + t.getMessage());
                 }
             });
