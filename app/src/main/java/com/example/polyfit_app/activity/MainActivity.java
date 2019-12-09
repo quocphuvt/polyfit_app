@@ -19,6 +19,7 @@ import com.example.polyfit_app.fragment.DietsFragment;
 import com.example.polyfit_app.fragment.HistoriesFragment;
 import com.example.polyfit_app.fragment.HomeFragment;
 import com.example.polyfit_app.fragment.ProfileFragment;
+import com.example.polyfit_app.model.User;
 import com.example.polyfit_app.model.response.RoutineResponse;
 import com.example.polyfit_app.model.Routine;
 import com.example.polyfit_app.model.RoutineRequest;
@@ -29,12 +30,14 @@ import com.example.polyfit_app.service.local.StepCountServices;
 import com.example.polyfit_app.service.remote.RetrofitClient;
 import com.example.polyfit_app.service.remote.RoutineAPI;
 import com.example.polyfit_app.utils.Constants;
+import com.example.polyfit_app.utils.Helpers;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import devlight.io.library.ntb.NavigationTabBar;
+import kotlin.jvm.internal.PropertyReference0Impl;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -44,28 +47,38 @@ import retrofit2.Retrofit;
 public class MainActivity extends AppCompatActivity implements HomeFragment.OnFragmentInteractionListener, DietsFragment.OnFragmentInteractionListener,
         HistoriesFragment.OnFragmentInteractionListener, ProfileFragment.OnFragmentInteractionListener {
     private NavigationTabBar tabBar;
-    List<Routine> routines;
+    private List<Routine> routines;
     private RoutineAPI routineAPI;
+    private User user;
+    private Retrofit retrofit = RetrofitClient.getInstance();
+    private ViewPager viewPager;
+    private PagerAdapter pagerAdapter;
+    
+    private void setFullScreen() {
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        Objects.requireNonNull(getSupportActionBar()).hide();
+    }
+    
+    private void initView() {
+        viewPager = findViewById(R.id.pager);
+        tabBar = findViewById(R.id.tabs_main);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        Objects.requireNonNull(getSupportActionBar()).hide();
-//        getReminder();
-        Retrofit retrofit = RetrofitClient.getInstance();
+        setFullScreen();
+        initView();
+        runStepCountService();
         routineAPI = retrofit.create(RoutineAPI.class);
-        runServices();
-        tabBar = findViewById(R.id.tabs_main);
-        addModelTab();
-        final ViewPager viewPager = findViewById(R.id.pager);
+        user = Helpers.getUserFromPreferences(this);
+        setBottomNavigationTabs();
         viewPager.setOffscreenPageLimit(4);
-        final PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), 4);
-        viewPager.setAdapter(adapter);
+        pagerAdapter = new PagerAdapter(getSupportFragmentManager(), 4);
+        viewPager.setAdapter(pagerAdapter);
         tabBar.setViewPager(viewPager);
         if (isNetworkConnected()) {
-            Log.e("PhayTran", "Connected to internet!!!!");
             getAndSaveRoutine();
         } else {
             Toast.makeText(this, "Please check your connection!!!", Toast.LENGTH_SHORT).show();
@@ -77,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
 
     }
 
-    private void addModelTab() {
+    private void setBottomNavigationTabs() {
         final ArrayList<NavigationTabBar.Model> models = new ArrayList<>();
         models.add(
                 new NavigationTabBar.Model.Builder(
@@ -114,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         tabBar.setModels(models);
     }
 
-    private void runServices() {
+    private void runStepCountService() {
         Intent serviceIntent = new Intent(this, StepCountServices.class);
         ContextCompat.startForegroundService(this, serviceIntent);
     }
@@ -132,10 +145,9 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
     }
 
     private void postRoutine(List<Routine> routineList) {
-        SharedPreferences sharedPreferences = getSharedPreferences(Constants.LOGIN, MODE_PRIVATE);
         for (int i = 0; i < routineList.size(); i++) {
             Log.e("getRoutine", routineList.get(i).getStepCount() + "");
-            RoutineRequest routine = new RoutineRequest(routineList.get(i).getStepCount(), routineList.get(i).getCreatedAt(), routineList.get(i).getTimePractice(), ((routineList.get(i).getStepCount() + Integer.parseInt(routineList.get(i).getTimePractice())) * 4) + "", sharedPreferences.getInt("id", 0));
+            RoutineRequest routine = new RoutineRequest(routineList.get(i).getStepCount(), routineList.get(i).getCreatedAt(), routineList.get(i).getTimePractice(), ((routineList.get(i).getStepCount() + Integer.parseInt(routineList.get(i).getTimePractice())) * 4) + "", user.getId());
             Call<RoutineResponse> callRoutine = routineAPI.createRoutine(routine);
             callRoutine.enqueue(new Callback<RoutineResponse>() {
                 @Override
@@ -163,6 +175,5 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
-
 
 }

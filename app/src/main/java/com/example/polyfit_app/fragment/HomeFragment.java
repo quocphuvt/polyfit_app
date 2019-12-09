@@ -43,6 +43,7 @@ import com.example.polyfit_app.service.remote.DietsAPI;
 import com.example.polyfit_app.service.remote.PolyFitService;
 import com.example.polyfit_app.service.remote.RetrofitClient;
 import com.example.polyfit_app.utils.Constants;
+import com.example.polyfit_app.utils.Helpers;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -57,6 +58,7 @@ import com.soundcloud.android.crop.Crop;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.net.UnknownServiceException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -90,16 +92,18 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private DietsAPI dietsAPI;
     private RecyclerView rv_bodyparts;
     private RippleBackground ripple_reminder;
-    ProgressDialog processDialog;
+    private ProgressDialog processDialog;
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     private StorageReference storageRef = storage.getReferenceFromUrl(Constants.STORAGE_IMAGE);
     private RelativeLayout layout_reminder, layout_morning, layout_noon, layout_night;
-    private String linkAvatar;
+    private String avatarUrl;
+    private User user;
+    private Retrofit retrofit = RetrofitClient.getInstance();
 
     public HomeFragment() {
     }
 
-    private void connectView(View view) {
+    private void initView(View view) {
         tv_UserName = view.findViewById(R.id.tv_UserName);
         tv_startDate = view.findViewById(R.id.tv_startDate);
         tv_height = view.findViewById(R.id.tv_height);
@@ -143,24 +147,26 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+    
+    private void setUpRetrofit() {
+        polyFitService = retrofit.create(PolyFitService.class);
+        bodypartsAPI = retrofit.create(BodypartsAPI.class);
+        dietsAPI = retrofit.create(DietsAPI.class);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        connectView(view);
+        initView(view);
+        setUpRetrofit();
         ripple_reminder.startRippleAnimation();
-        Retrofit retrofit = RetrofitClient.getInstance();
-        polyFitService = retrofit.create(PolyFitService.class);
-        bodypartsAPI = retrofit.create(BodypartsAPI.class);
-        dietsAPI = retrofit.create(DietsAPI.class);
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Constants.LOGIN, MODE_PRIVATE);
-        int userId = sharedPreferences.getInt("id", 0);
+        
+        user = Helpers.getUserFromPreferences(getContext());
         this.getDietData();
-        this.getUserById(userId);
+        this.getUserData();
         this.getAllBodyParts();
         this.setBackgroundImageForMeals();
-
         return view;
     }
 
@@ -297,10 +303,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                         if (task.isSuccessful()) {
                             Uri downloadUri = task.getResult();
                             assert downloadUri != null;
-                            linkAvatar = downloadUri.toString();
+                            avatarUrl = downloadUri.toString();
 
 //                            viewAvatar.setImageResource(R.drawable.ic_launcher_foreground);
-                            Log.d("Link", linkAvatar);
+                            Log.d("Link", avatarUrl);
                             handleUpdateUser();
                         } else {
                             processDialog.dismiss();
@@ -312,21 +318,20 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void handleUpdateUser() {
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Constants.LOGIN, MODE_PRIVATE);
-
-        User user = new User(sharedPreferences.getInt("id", 0), linkAvatar);
-        Call<UserResponse> callUpdate = polyFitService.updateUser(user);
+        User updatedUser = new User(user.getId(), avatarUrl);
+        Call<UserResponse> callUpdate = polyFitService.updateUser(updatedUser);
         callUpdate.enqueue(new Callback<UserResponse>() {
             @Override
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
-                UserResponse userResponse = response.body();
-                Log.e("PhayTran", response.body() + " :: " + response.code() + "::" + userResponse.getMessage());
-
-                if (userResponse.getStatus() == 0) {
-                    Toast.makeText(getActivity(), "Updated", Toast.LENGTH_SHORT).show();
-                    processDialog.dismiss();
-                } else {
-                    Log.e("PhayTran", "Create failed");
+                if(response.isSuccessful()) {
+                    UserResponse userResponse = response.body();
+                    if (userResponse.getStatus() == 0) {
+                        Toast.makeText(getActivity(), "Updated", Toast.LENGTH_SHORT).show();
+                        Helpers.putUserIntoPreferences(getContext(), userResponse.getObject());
+                        processDialog.dismiss();
+                    } else {
+                        Log.e("PhayTran", "Create failed");
+                    }
                 }
             }
 
@@ -381,42 +386,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         });
     }
 
-    private void getUserById(int id) {
-        Call<UserResponse> userResponseCall = polyFitService.getCurrentUser(id);
-        userResponseCall.enqueue(new Callback<UserResponse>() {
-            @Override
-            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
-                if (response.isSuccessful()) {
-                    UserResponse userResponse = response.body();
-                    if (userResponse.getStatus() == 0) {
-                        User user = userResponse.getObject();
-                        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-
-                        try {
-                            Date date = format.parse(user.getCreatedAt());
-                            String formattedDate = format.format(date);
-                            setData(user.getUsername(), formattedDate, user.getHeight(), user.getWeight(), user.getBmi(), user.getAvatar());
-                            SharedPreferences.Editor editor = getActivity().getSharedPreferences(Constants.USER_INF, MODE_PRIVATE).edit();
-                            editor.putString("height", String.valueOf(user.getHeight()));
-                            editor.putString("weight", String.valueOf(user.getWeight()));
-                            editor.putString("imageLink", user.getAvatar());
-                            editor.apply();
-                        } catch (Exception e) {
-                            Log.e("err:", e + "");
-                        }
-                    }
-                } else {
-                    Toast.makeText(getContext(), "Có lỗi xảy ra. Vui lòng đăng nhập lại", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getContext(), LoginActivity.class));
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<UserResponse> call, Throwable t) {
-
-            }
-        });
+    private void getUserData() {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date date = format.parse(user.getCreatedAt());
+            String formattedDate = format.format(date);
+            setData(user.getUsername(), formattedDate, user.getHeight(), user.getWeight(), user.getBmi(), user.getAvatar());
+        } catch (Exception e) {
+            Log.e("err:", e + "");
+        }
     }
 
     private void setData(String userName, String startDate, Float height, Float weight, Float bmi, String imageLink) {
@@ -425,7 +403,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         tv_height.setText(String.valueOf(height));
         tv_weight.setText(String.valueOf(weight));
         tv_bmi.setText(String.valueOf(bmi));
-        setAvatar(imageLink);
+        Glide.with(getActivity().getApplicationContext())
+                .load(imageLink)
+                .centerCrop()
+                .placeholder(R.drawable.ic_avatar)
+                .into(iv_avatar);
     }
 
     @Override
@@ -459,18 +441,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void setAvatar(String imageLink) {
-        Glide.with(getActivity().getApplicationContext())
-                .load(imageLink)
-                .centerCrop()
-                .placeholder(R.drawable.ic_avatar)
-                .into(iv_avatar);
-    }
-
     private void setAvatarToPhotoView(PhotoView avatarToPhotoView) {
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Constants.USER_INF, MODE_PRIVATE);
         Glide.with(getActivity().getApplicationContext())
-                .load(sharedPreferences.getString("imageLink", ""))
+                .load(user.getAvatar())
                 .centerCrop()
                 .placeholder(R.drawable.ic_avatar)
                 .into(avatarToPhotoView);

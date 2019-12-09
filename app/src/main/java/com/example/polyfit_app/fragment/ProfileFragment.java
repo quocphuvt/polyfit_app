@@ -37,6 +37,7 @@ import com.example.polyfit_app.service.remote.PolyFitService;
 import com.example.polyfit_app.service.remote.RetrofitClient;
 import com.example.polyfit_app.service.remote.RoutineAPI;
 import com.example.polyfit_app.utils.Constants;
+import com.example.polyfit_app.utils.Helpers;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -60,18 +61,20 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private static final String ARG_PARAM2 = "param2";
     private LineChartView history_chart;
     public final static String[] hours = new String[]{"6", "12", "18", "24"};
-    ProgressDialog progressDialog;
+    private ProgressDialog progressDialog;
     private PolyFitService polyFitService;
     private String mParam1;
     private String mParam2;
-    SharedPreferences sharedPreferences;
     private OnFragmentInteractionListener mListener;
-    AppCompatEditText edtHeight, edtWeight;
-    Button btnUpdateBMI;
-    RecyclerView viewHistory;
-    RoutineAPI routineAPI;
-    List<Routine> routineList;
-    List<RoutineResponse> routineResponses=new ArrayList<>();
+    private AppCompatEditText edtHeight, edtWeight;
+    private Button btnUpdateBMI;
+    private RecyclerView viewHistory;
+    private RoutineAPI routineAPI;
+    private List<Routine> routineList;
+    private List<RoutineResponse> routineResponses = new ArrayList<>();
+    private Retrofit retrofit = RetrofitClient.getInstance();
+    private User user;
+
     public ProfileFragment() {
     }
 
@@ -94,16 +97,22 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    private void setRetrofitServices() {
+        polyFitService = retrofit.create(PolyFitService.class);
+        routineAPI = retrofit.create(RoutineAPI.class);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user, container, false);
-        Retrofit retrofit = RetrofitClient.getInstance();
-        polyFitService = retrofit.create(PolyFitService.class);
-        routineAPI=retrofit.create(RoutineAPI.class);
-        connectView(view);
-        sharedPreferences = getActivity().getSharedPreferences(Constants.LOGIN, Context.MODE_PRIVATE);
-        getAllHistory(sharedPreferences.getInt("id",0));
+        setRetrofitServices();
+        initView(view);
+        user = Helpers.getUserFromPreferences(getContext());
+        disableFocus();
+        setUserInfo();
+        setStepCount();
+        getAllHistory(user.getId());
         return view;
     }
 
@@ -134,8 +143,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.icLogout:
-                Log.e("Logout", "Logout" + sharedPreferences.getInt("id", 0));
-                logoutUser(sharedPreferences.getInt("id", 0));
+                logoutUser(user.getId());
                 break;
             case R.id.btnUpdateBMI:
                 if (btnUpdateBMI.getText().toString().equals("Tôi muốn cập nhật BMI")) {
@@ -149,23 +157,22 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     }
 
     private void addHistory() {
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Constants.LOGIN, Context.MODE_PRIVATE);
-        if (TextUtils.isEmpty(edtWeight.getText().toString())) {
+        String weight = edtWeight.getText().toString().trim();
+        String height = edtHeight.getText().toString().trim();
+        if (TextUtils.isEmpty(weight)) {
             Toast.makeText(getContext(), "Vui lòng nhập cân nặng", Toast.LENGTH_SHORT).show();
-        } else if (TextUtils.isEmpty(edtHeight.getText().toString())) {
+        } else if (TextUtils.isEmpty(height)) {
             Toast.makeText(getContext(), "Vui lòng nhập cân nặng", Toast.LENGTH_SHORT).show();
         } else {
-            float bmi = Float.valueOf(edtWeight.getText().toString()) / (Float.valueOf(edtHeight.getText().toString()) * 2);
-            History history = new History(bmi * 100, sharedPreferences.getInt("id", 0));
+            float bmi = (Float.valueOf(weight) / (Float.valueOf(height) * 2)) * 100;
+            History history = new History(bmi, user.getId());
             Call<HistoryResponse> calledRegister = polyFitService.addHistory(history);
             calledRegister.enqueue(new Callback<HistoryResponse>() {
                 @Override
                 public void onResponse(Call<HistoryResponse> call, Response<HistoryResponse> response) {
                     HistoryResponse historyResponse = response.body();
                     if (historyResponse.getStatus() == 0) {
-                        Log.e("PhayTran", "success");
-                        updateUser(sharedPreferences.getInt("id", 0));
-
+                        updateUser(user.getId());
                     }
                 }
 
@@ -183,16 +190,18 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         void onFragmentInteraction(Uri uri);
     }
 
-    private void connectView(View view) {
+    private void initView(View view) {
         ImageView icSetting = view.findViewById(R.id.icLogout);
         history_chart = view.findViewById(R.id.history_chart);
         edtHeight = view.findViewById(R.id.edtHeight);
         edtWeight = view.findViewById(R.id.edtWeight);
-        viewHistory=view.findViewById(R.id.viewHistory);
-        disableFocus();
+        viewHistory = view.findViewById(R.id.viewHistory);
         btnUpdateBMI = view.findViewById(R.id.btnUpdateBMI);
         btnUpdateBMI.setOnClickListener(this);
-        setUserInf();
+        icSetting.setOnClickListener(this);
+    }
+    
+    private void setStepCount() {
         List<AxisValue> axisValues = new ArrayList<AxisValue>();
         List<StepCount> listStep = new ArrayList<>();
         listStep = PolyfitDatabase.getInstance(getActivity()).stepDAO().getStepCount();
@@ -203,37 +212,26 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         stepCount.setStep(0);
         listStep.add(stepCount);
         Collections.reverse(listStep);
-        if(listStep.isEmpty()){
-            Log.e("listStep","Empty");
+        if (listStep.isEmpty()) {
+            Log.e("listStep", "Empty");
         }
         for (int i = 0; i < listStep.size(); ++i) {
 //            axisValues.add(new AxisValue(i).setLabel(hours[i]));
             axisValues.add(new AxisValue(i).setLabel(listStep.get(i).getHour() + ""));
             values.add(new PointValue(i, listStep.get(i).getStep() * 4));
             Log.e("listStep", listStep.get(i).getStep() + " : " + listStep.get(i).getHour());
-
         }
-
-
-        //In most cased you can call data model methods in builder-pattern-like manner.
         Line line = new Line(values).setColor(Color.parseColor("#be7575")).setCubic(true);
-
         line.setHasPoints(true);
-
         List<Line> lines = new ArrayList<Line>();
         lines.add(line);
-
         LineChartData data = new LineChartData();
         data.setLines(lines);
-//        Axis axisX = new Axis();
         Axis axisY = new Axis().setHasLines(true);
-//        axisX.setName("Axis X");
         axisY.setName("Calories");
         data.setAxisXBottom(new Axis(axisValues).setHasLines(true));
         data.setAxisYLeft(axisY);
         history_chart.setLineChartData(data);
-
-        icSetting.setOnClickListener(this);
     }
 
     //User logout
@@ -244,10 +242,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 if (response.isSuccessful()) {
-                    SharedPreferences.Editor sharedPreferences = getActivity().getSharedPreferences(Constants.LOGIN, Context.MODE_PRIVATE).edit();
-                    sharedPreferences.putString("username", "");
-                    sharedPreferences.putString("password", "");
-                    sharedPreferences.apply();
+                    Helpers.removeUserFromPreferences(getContext());
                     startActivity(new Intent(getActivity(), LoginMethod.class));
                     getActivity().finish();
                 }
@@ -287,32 +282,22 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         edtWeight.setFocusableInTouchMode(false);
     }
 
-    private void setUserInf() {
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Constants.USER_INF, Context.MODE_PRIVATE);
-        edtHeight.setText(sharedPreferences.getString("height", ""));
-        edtWeight.setText(sharedPreferences.getString("weight", ""));
-    }
-
-    private void updateSharePref(float height, float weight) {
-        SharedPreferences.Editor editor = getActivity().getSharedPreferences(Constants.USER_INF, Context.MODE_PRIVATE).edit();
-        editor.putString("height", String.valueOf(height));
-        editor.putString("weight", String.valueOf(weight));
-        editor.apply();
-
+    private void setUserInfo() {
+        edtHeight.setText(String.valueOf(user.getHeight()));
+        edtWeight.setText(String.valueOf(user.getWeight()));
     }
 
     private void updateUser(int user_id) {
-        User user = new User(user_id, Float.valueOf(edtWeight.getText().toString()), Float.valueOf(edtHeight.getText().toString()));
-        Call<UserResponse> callUpdate = polyFitService.updateUser(user);
+        String weight = edtWeight.getText().toString().trim();
+        String height = edtHeight.getText().toString().trim();
+        User newUser = new User(user_id, Float.valueOf(weight), Float.valueOf(height));
+        Call<UserResponse> callUpdate = polyFitService.updateUser(newUser);
         callUpdate.enqueue(new Callback<UserResponse>() {
             @Override
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 UserResponse userResponse = response.body();
-                Log.e("PhayTran", response.body() + " :: " + response.code() + "::" + userResponse.getMessage());
-
                 if (userResponse.getStatus() == 0) {
-                    Log.e("PhayTran", "Create success");
-                    updateSharePref(Float.valueOf(edtHeight.getText().toString()), Float.valueOf(edtWeight.getText().toString()));
+                    Helpers.putUserIntoPreferences(getContext(), userResponse.getObject());
                     btnUpdateBMI.setText("Tôi muốn cập nhật BMI");
                     disableFocus();
                 } else {
@@ -328,8 +313,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             }
         });
     }
-    private void getAllHistory(Integer id) {
 
+    private void getAllHistory(Integer id) {
         Call<RoutineResponse> getRoutine = routineAPI.getRoutinesByUserId(id);
         getRoutine.enqueue(new Callback<RoutineResponse>() {
             @Override
