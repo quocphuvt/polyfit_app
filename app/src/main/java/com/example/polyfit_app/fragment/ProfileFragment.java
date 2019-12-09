@@ -4,7 +4,6 @@ package com.example.polyfit_app.fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,12 +17,16 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatEditText;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.polyfit_app.activity.login.LoginMethod;
 import com.example.polyfit_app.adapter.RoutineAdapter;
+import com.example.polyfit_app.databinding.FragmentProfileBinding;
+import com.example.polyfit_app.diet.DietViewModel;
 import com.example.polyfit_app.model.History;
 import com.example.polyfit_app.model.response.HistoryResponse;
 import com.example.polyfit_app.model.response.RoutineResponse;
@@ -36,7 +39,7 @@ import com.example.polyfit_app.service.local.PolyfitDatabase;
 import com.example.polyfit_app.service.remote.PolyFitService;
 import com.example.polyfit_app.service.remote.RetrofitClient;
 import com.example.polyfit_app.service.remote.RoutineAPI;
-import com.example.polyfit_app.utils.Constants;
+import com.example.polyfit_app.user.UserViewModel;
 import com.example.polyfit_app.utils.Helpers;
 
 import java.util.ArrayList;
@@ -74,6 +77,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private List<RoutineResponse> routineResponses = new ArrayList<>();
     private Retrofit retrofit = RetrofitClient.getInstance();
     private User user;
+    private UserViewModel userViewModel;
+    private DietViewModel dietViewModel;
+    private FragmentProfileBinding profileBinding;
 
     public ProfileFragment() {
     }
@@ -105,15 +111,19 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_user, container, false);
+        userViewModel = ViewModelProviders.of(getActivity()).get(UserViewModel.class);
+        dietViewModel = ViewModelProviders.of(getActivity()).get(DietViewModel.class);
+        profileBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false);
+        user = userViewModel.getUser().getValue();
+        userViewModel.getUser().observe(this, newUser -> {
+            profileBinding.setUserViewModel(userViewModel);
+        });
         setRetrofitServices();
-        initView(view);
-        user = Helpers.getUserFromPreferences(getContext());
+        initView();
         disableFocus();
-        setUserInfo();
         setStepCount();
         getAllHistory(user.getId());
-        return view;
+        return profileBinding.getRoot();
     }
 
     public void onButtonPressed(Uri uri) {
@@ -146,8 +156,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 logoutUser(user.getId());
                 break;
             case R.id.btnUpdateBMI:
-                if (btnUpdateBMI.getText().toString().equals("Tôi muốn cập nhật BMI")) {
-                    btnUpdateBMI.setText("Cập nhật ngay");
+                if (profileBinding.btnUpdateBMI.getText().toString().equals("Tôi muốn cập nhật BMI")) {
+                    profileBinding.btnUpdateBMI.setText("Cập nhật ngay");
                     enableFocus();
                 } else {
                     addHistory();
@@ -157,8 +167,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     }
 
     private void addHistory() {
-        String weight = edtWeight.getText().toString().trim();
-        String height = edtHeight.getText().toString().trim();
+        String weight = profileBinding.edtWeight.getText().toString().trim();
+        String height = profileBinding.edtHeight.getText().toString().trim();
         if (TextUtils.isEmpty(weight)) {
             Toast.makeText(getContext(), "Vui lòng nhập cân nặng", Toast.LENGTH_SHORT).show();
         } else if (TextUtils.isEmpty(height)) {
@@ -190,15 +200,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         void onFragmentInteraction(Uri uri);
     }
 
-    private void initView(View view) {
-        ImageView icSetting = view.findViewById(R.id.icLogout);
-        history_chart = view.findViewById(R.id.history_chart);
-        edtHeight = view.findViewById(R.id.edtHeight);
-        edtWeight = view.findViewById(R.id.edtWeight);
-        viewHistory = view.findViewById(R.id.viewHistory);
-        btnUpdateBMI = view.findViewById(R.id.btnUpdateBMI);
-        btnUpdateBMI.setOnClickListener(this);
-        icSetting.setOnClickListener(this);
+    private void initView() {
+        profileBinding.btnUpdateBMI.setOnClickListener(this);
+        profileBinding.icLogout.setOnClickListener(this);
     }
     
     private void setStepCount() {
@@ -231,7 +235,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         axisY.setName("Calories");
         data.setAxisXBottom(new Axis(axisValues).setHasLines(true));
         data.setAxisYLeft(axisY);
-        history_chart.setLineChartData(data);
+        profileBinding.historyChart.setLineChartData(data);
     }
 
     //User logout
@@ -268,28 +272,23 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     }
 
     private void enableFocus() {
-        edtHeight.setFocusable(true);
-        edtHeight.setFocusableInTouchMode(true);
-        edtWeight.setFocusable(true);
-        edtWeight.setFocusableInTouchMode(true);
+        profileBinding.edtHeight.setFocusable(true);
+        profileBinding.edtHeight.setFocusableInTouchMode(true);
+        profileBinding.edtWeight.setFocusable(true);
+        profileBinding.edtWeight.setFocusableInTouchMode(true);
     }
 
     private void disableFocus() {
-        edtHeight.setFocusable(false);
-        edtHeight.requestFocus(1);
-        edtHeight.setFocusableInTouchMode(false);
-        edtWeight.setFocusable(false);
-        edtWeight.setFocusableInTouchMode(false);
-    }
-
-    private void setUserInfo() {
-        edtHeight.setText(String.valueOf(user.getHeight()));
-        edtWeight.setText(String.valueOf(user.getWeight()));
+        profileBinding.edtHeight.setFocusable(false);
+        profileBinding.edtHeight.requestFocus(1);
+        profileBinding.edtHeight.setFocusableInTouchMode(false);
+        profileBinding.edtWeight.setFocusable(false);
+        profileBinding.edtWeight.setFocusableInTouchMode(false);
     }
 
     private void updateUser(int user_id) {
-        String weight = edtWeight.getText().toString().trim();
-        String height = edtHeight.getText().toString().trim();
+        String weight = profileBinding.edtWeight.getText().toString().trim();
+        String height = profileBinding.edtHeight.getText().toString().trim();
         User newUser = new User(user_id, Float.valueOf(weight), Float.valueOf(height));
         Call<UserResponse> callUpdate = polyFitService.updateUser(newUser);
         callUpdate.enqueue(new Callback<UserResponse>() {
@@ -298,7 +297,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 UserResponse userResponse = response.body();
                 if (userResponse.getStatus() == 0) {
                     Helpers.putUserIntoPreferences(getContext(), userResponse.getObject());
-                    btnUpdateBMI.setText("Tôi muốn cập nhật BMI");
+                    profileBinding.btnUpdateBMI.setText("Tôi muốn cập nhật BMI");
+                    userViewModel.setUser();
+                    dietViewModel.setDietData();
                     disableFocus();
                 } else {
                     Log.e("PhayTran", "Create failed");
@@ -308,7 +309,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onFailure(Call<UserResponse> call, Throwable t) {
                 progressDialog.dismiss();
-
                 Log.e("PhayTran", "failed" + call.request() + ":::" + t.getMessage());
             }
         });
@@ -322,11 +322,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 RoutineResponse routineResponse = response.body();
                 if (routineResponse.getStatus() == 0) {
 //                    routineResponse.getResponse().add(0, new Routine());
-                    viewHistory.setHasFixedSize(true);
-                    viewHistory.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
+                    profileBinding.viewHistory.setHasFixedSize(true);
+                    profileBinding.viewHistory.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
 //                    removeDuplicate(routineResponse.getResponse());
                     RoutineAdapter routineAdapter = new RoutineAdapter(removeDuplicate(routineResponse.getResponse()), getActivity());
-                    viewHistory.setAdapter(routineAdapter);
+                    profileBinding.viewHistory.setAdapter(routineAdapter);
                 }
             }
 

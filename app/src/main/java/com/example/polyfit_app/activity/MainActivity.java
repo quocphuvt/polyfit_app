@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.polyfit_app.adapter.PagerAdapter;
+import com.example.polyfit_app.diet.DietViewModel;
 import com.example.polyfit_app.fragment.DietsFragment;
 import com.example.polyfit_app.fragment.HistoriesFragment;
 import com.example.polyfit_app.fragment.HomeFragment;
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
     private ViewPager viewPager;
     private PagerAdapter pagerAdapter;
     private UserViewModel userViewModel;
+    private DietViewModel dietViewModel;
     
     private void setFullScreen() {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -78,13 +80,14 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         routineAPI = retrofit.create(RoutineAPI.class);
 
         userViewModel = ViewModelProviders.of(MainActivity.this).get(UserViewModel.class);
-        Observer<User> userObserver = new Observer<User>() {
-            @Override
-            public void onChanged(User updatedUser) {
-                user = updatedUser;
-            }
-        };
-        userViewModel.getUser().observe(MainActivity.this, userObserver);
+        dietViewModel = ViewModelProviders.of(MainActivity.this).get(DietViewModel.class);
+        userViewModel.getUser().observe(MainActivity.this, newUser ->  {
+            user = newUser;
+        }); //Listen user data has changed
+        dietViewModel.getDietData().observe(MainActivity.this, dietsResponse -> {
+            Log.d("diet_update", "cap nhat");
+        }); //Listen diet data has changed
+
         setBottomNavigationTabs();
         viewPager.setOffscreenPageLimit(4);
         pagerAdapter = new PagerAdapter(getSupportFragmentManager(), 4);

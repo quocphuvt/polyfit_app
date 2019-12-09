@@ -1,7 +1,10 @@
 package com.example.polyfit_app.fragment;
 
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
@@ -12,11 +15,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.polyfit_app.adapter.DietFragmentPagerAdapter;
+import com.example.polyfit_app.diet.DietViewModel;
 import com.example.polyfit_app.interfaces.ItemClickListener;
+import com.example.polyfit_app.model.User;
 import com.example.polyfit_app.model.response.DietsResponse;
 import com.example.polyfit_app.R;
 import com.example.polyfit_app.service.remote.DietsAPI;
 import com.example.polyfit_app.service.remote.RetrofitClient;
+import com.example.polyfit_app.user.UserViewModel;
+import com.example.polyfit_app.utils.Util;
 import com.flipboard.bottomsheet.BottomSheetLayout;
 import com.rd.PageIndicatorView;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
@@ -38,6 +45,7 @@ public class DietsFragment extends Fragment implements ItemClickListener {
     private DietsAPI dietsAPI;
     private DiscreteScrollView rv_diets;
     private PageIndicatorView pageIndicatorView;
+    private DietViewModel dietViewModel;
 
     private OnFragmentInteractionListener mListener;
 
@@ -76,43 +84,28 @@ public class DietsFragment extends Fragment implements ItemClickListener {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_diets, container, false);
         initView(view);
-        Retrofit retrofit = RetrofitClient.getInstance();
-        dietsAPI = retrofit.create(DietsAPI.class);
-        getDietData();
-        rv_diets.addScrollListener(new DiscreteScrollView.ScrollListener<RecyclerView.ViewHolder>() {
-            @Override
-            public void onScroll(float v, int i, int i1, @Nullable RecyclerView.ViewHolder viewHolder, @Nullable RecyclerView.ViewHolder t1) {
-                pageIndicatorView.setSelection(i1);
-            }
+        dietViewModel = ViewModelProviders.of(getActivity()).get(DietViewModel.class);
+        dietViewModel.getDietData().observe(this, dietsResponse -> {
+            setDietData(dietsResponse);
         });
         return view;
     }
 
-    private void getDietData() {
-        Call<DietsResponse> dietsResponseCall = dietsAPI.getAllDiets();
-        dietsResponseCall.enqueue(new Callback<DietsResponse>() {
+    private void setDietData(DietsResponse dietsResponse) {
+        pageIndicatorView.setCount(dietsResponse.getResponse().size());
+        DietFragmentPagerAdapter dietFragmentPagerAdapter = new DietFragmentPagerAdapter(dietsResponse.getResponse(), getContext());
+        rv_diets.setOffscreenItems(20);
+        rv_diets.setSlideOnFlingThreshold(1000);
+        rv_diets.setOverScrollEnabled(true);
+        rv_diets.setItemTransformer(new ScaleTransformer.Builder()
+                .setMaxScale(1.05f)
+                .setMinScale(0.8f)
+                .build());
+        rv_diets.setAdapter(dietFragmentPagerAdapter);
+        rv_diets.addScrollListener(new DiscreteScrollView.ScrollListener<RecyclerView.ViewHolder>() {
             @Override
-            public void onResponse(Call<DietsResponse> call, Response<DietsResponse> response) {
-                if (response.isSuccessful()) {
-                    DietsResponse dietsResponse = response.body();
-                    if (dietsResponse.getStatus() == 0) {
-                        pageIndicatorView.setCount(dietsResponse.getResponse().size());
-                        DietFragmentPagerAdapter dietFragmentPagerAdapter = new DietFragmentPagerAdapter(dietsResponse.getResponse(), getContext());
-                        rv_diets.setOffscreenItems(20);
-                        rv_diets.setSlideOnFlingThreshold(1000);
-                        rv_diets.setOverScrollEnabled(true);
-                        rv_diets.setItemTransformer(new ScaleTransformer.Builder()
-                                .setMaxScale(1.05f)
-                                .setMinScale(0.8f)
-                                .build());
-                        rv_diets.setAdapter(dietFragmentPagerAdapter);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<DietsResponse> call, Throwable t) {
-
+            public void onScroll(float v, int i, int i1, @Nullable RecyclerView.ViewHolder viewHolder, @Nullable RecyclerView.ViewHolder t1) {
+                pageIndicatorView.setSelection(i1);
             }
         });
     }

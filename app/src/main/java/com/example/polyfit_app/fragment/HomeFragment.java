@@ -22,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -146,9 +147,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         userViewModel = ViewModelProviders.of(getActivity()).get(UserViewModel.class);
         homeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
         View view = homeBinding.getRoot();
-        homeBinding.setUserViewModel(userViewModel);
-        user = userViewModel.getUser().getValue();
-        
+        userViewModel.getUser().observe(this, new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                homeBinding.setUserViewModel(userViewModel);
+            }
+        });
         configSetOnClick();
         setUpRetrofit();
         homeBinding.rippleReminder.startRippleAnimation();
