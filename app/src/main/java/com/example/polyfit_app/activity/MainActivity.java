@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.polyfit_app.adapter.PagerAdapter;
@@ -29,6 +31,7 @@ import com.example.polyfit_app.service.local.PolyfitDatabase;
 import com.example.polyfit_app.service.local.StepCountServices;
 import com.example.polyfit_app.service.remote.RetrofitClient;
 import com.example.polyfit_app.service.remote.RoutineAPI;
+import com.example.polyfit_app.user.UserViewModel;
 import com.example.polyfit_app.utils.Constants;
 import com.example.polyfit_app.utils.Helpers;
 
@@ -53,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
     private Retrofit retrofit = RetrofitClient.getInstance();
     private ViewPager viewPager;
     private PagerAdapter pagerAdapter;
+    private UserViewModel userViewModel;
     
     private void setFullScreen() {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -72,7 +76,15 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         initView();
         runStepCountService();
         routineAPI = retrofit.create(RoutineAPI.class);
-        user = Helpers.getUserFromPreferences(this);
+
+        userViewModel = ViewModelProviders.of(MainActivity.this).get(UserViewModel.class);
+        Observer<User> userObserver = new Observer<User>() {
+            @Override
+            public void onChanged(User updatedUser) {
+                user = updatedUser;
+            }
+        };
+        userViewModel.getUser().observe(MainActivity.this, userObserver);
         setBottomNavigationTabs();
         viewPager.setOffscreenPageLimit(4);
         pagerAdapter = new PagerAdapter(getSupportFragmentManager(), 4);
