@@ -7,7 +7,7 @@
     android:id="@+id/viewReminder"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context=".Activity.ReminderScreenActivity"
+    tools:context=".activity.ReminderScreenActivity"
     android:orientation="vertical">
 
     <LinearLayout

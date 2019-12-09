@@ -4,7 +4,7 @@
     android:id="@+id/bottom_sheet_noon_dishes_details"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.Meals.NoonFragment">
+    tools:context=".fragment.meals.NoonFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <androidx.recyclerview.widget.RecyclerView

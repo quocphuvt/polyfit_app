@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".Fragments.ExerciseFragment">
+    tools:context=".fragment.ExerciseFragment">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/app_bar_ex"
@@ -74,7 +74,7 @@
         android:layout_height="match_parent"
         android:background="@drawable/header_gradient"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context=".Activity.ExercisesActivity">
+        tools:context=".activity.ExercisesActivity">
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"

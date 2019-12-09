@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Activity.MealsActivity">
+    tools:context=".activity.MealsActivity">
     <include layout="@layout/toolbar" />
     <RelativeLayout
         android:background="@drawable/header_gradient"

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:paddingHorizontal="40dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Fragments.CardDietFragment">
+    tools:context=".fragment.CardDietFragment">
     <androidx.cardview.widget.CardView
         android:layout_gravity="center"
         app:cardCornerRadius="20dp"
