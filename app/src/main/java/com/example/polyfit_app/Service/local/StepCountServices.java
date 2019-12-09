@@ -105,7 +105,8 @@ public class StepCountServices extends Service implements SensorEventListener {
             if (timeForUploadData.equals("23:59:00")) {
                 Log.e("currentTime","It time");
                 SharedPreferences sharedPreferences=getSharedPreferences(Constants.LOGIN,MODE_PRIVATE);
-                Routine routine=new Routine(step,dateFormatSave.format(date)+" 00:00:00",null,"2","5",sharedPreferences.getInt("id",0));
+                SharedPreferences getTimePractice = getSharedPreferences(Constants.TIME_PRACTICE,MODE_PRIVATE);
+                Routine routine=new Routine(step,dateFormatSave.format(date)+" 00:00:00",null,getTimePractice.getInt(Constants.TIME_PRACTICE,0)+"","5",sharedPreferences.getInt("id",0));
                 PolyfitDatabase.getInstance(getApplicationContext()).routineDAO().insert(routine);
             }
 
