@@ -22,6 +22,7 @@ import com.example.polyfit_app.R;
 import com.example.polyfit_app.service.remote.PolyFitService;
 import com.example.polyfit_app.service.remote.RetrofitClient;
 import com.example.polyfit_app.utils.Constants;
+import com.example.polyfit_app.utils.Helpers;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.iid.FirebaseInstanceId;
 
@@ -91,7 +92,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         UserResponse userResponse = response.body();
                         if (userResponse.getStatus() == 0) {
                             SharedPreferences sharedPreferences = getSharedPreferences(Constants.LOGIN, MODE_PRIVATE);
-                            SharedPreferences.Editor editor = getSharedPreferences(Constants.LOGIN, MODE_PRIVATE).edit();
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            Helpers.putUserIntoPreferences(LoginActivity.this, userResponse.getObject());
                             Intent i;
                             if (sharedPreferences.getBoolean("isFirstTime", false)) {
                                 i = new Intent(LoginActivity.this, MainActivity.class);
@@ -99,14 +101,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 editor.putBoolean("isFirstTime", true);
                                 i = new Intent(LoginActivity.this, TutorialActivity.class);
                             }
-                            editor.putString("username", userName);
-                            editor.putString("password", password);
-                            editor.putInt("id", userResponse.getObject().getId());
-//                    editor.putString("token", userResponse.getResponse());
                             dismissProgressDialog();
                             editor.apply();
                             startActivity(i);
-                            Toast.makeText(LoginActivity.this, userResponse.getMessage(), Toast.LENGTH_SHORT).show();
                             finish();
                         } else {
                             progressDialog.dismiss();
