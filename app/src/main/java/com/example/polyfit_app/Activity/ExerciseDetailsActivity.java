@@ -278,7 +278,7 @@ public class ExerciseDetailsActivity extends AppCompatActivity implements ItemCl
             string += "" + String.format("%02d", minutes);
             string += ":" + String.format("%02d", seconds);
             string += ":" + String.format("%03d", milliseconds);
-            Log.e("PhayDev", string);
+//            Log.e("PhayDev", string);
             updatedTime = timeSwapBuff + timeInMilliseconds;
             customHandler.postDelayed(this, 0);
         }
@@ -287,7 +287,7 @@ public class ExerciseDetailsActivity extends AppCompatActivity implements ItemCl
     private void startStopwatch() {
         startTime = SystemClock.uptimeMillis();
         customHandler.postDelayed(updateTimerThread, 0);
-        Log.e("PhayDev", startTime + "");
+//        Log.e("PhayDev", startTime + "");
     }
 
     @Override
