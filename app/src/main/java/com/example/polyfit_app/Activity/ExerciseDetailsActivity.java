@@ -209,7 +209,7 @@ public class ExerciseDetailsActivity extends AppCompatActivity implements ItemCl
 
                         } else if (exercise.getVideo_url().equals("null")) {
                             iv_ex.setVisibility(View.VISIBLE);
-                            Glide.with(ExerciseDetailsActivity.this).load(exercise.getImage_url()).centerCrop().into(iv_ex);
+                            Glide.with(getApplicationContext()).load(exercise.getImage_url()).centerCrop().into(iv_ex);
                         } else {
                             video_ex.setVisibility(View.VISIBLE);
                             video_ex.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
@@ -226,7 +226,7 @@ public class ExerciseDetailsActivity extends AppCompatActivity implements ItemCl
                                     youTubePlayer.loadVideo(videoId, 0);
                                 }
                             });
-                            Glide.with(ExerciseDetailsActivity.this).load(exercise.getImage_url()).centerCrop().into(iv_second_exercise_details);
+                            Glide.with(getApplicationContext()).load(exercise.getImage_url()).centerCrop().into(iv_second_exercise_details);
                         }
 
                         tv_reps.setText(exercise.getReps() + "");

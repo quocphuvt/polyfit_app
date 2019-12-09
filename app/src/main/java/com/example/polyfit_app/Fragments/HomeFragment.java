@@ -466,7 +466,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void setAvatar(String imageLink) {
-        Glide.with(this)
+        Glide.with(getActivity().getApplicationContext())
                 .load(imageLink)
                 .centerCrop()
                 .placeholder(R.drawable.ic_avatar)
@@ -475,7 +475,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private void setAvatarToPhotoView(PhotoView avatarToPhotoView) {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Constants.USER_INF, MODE_PRIVATE);
-        Glide.with(this)
+        Glide.with(getActivity().getApplicationContext())
                 .load(sharedPreferences.getString("imageLink", ""))
                 .centerCrop()
                 .placeholder(R.drawable.ic_avatar)
