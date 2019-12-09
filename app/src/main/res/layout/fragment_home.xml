@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
-            name="user"
-            type="com.example.polyfit_app.models.User" />
+            name="userViewModel"
+            type="com.example.polyfit_app.view_model.UserViewModel" />
     </data>
     <ScrollView
         android:layout_gravity="center"
@@ -114,7 +114,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:fontFamily="@font/montserrat_medium"
-                            android:text="@{user.display_name}"
+                            android:text="@{userViewModel.user.display_name}"
                             android:textColor="@color/white"
                             android:textSize="@dimen/text_md" />
 
@@ -126,7 +126,7 @@
                             android:fontFamily="@font/montserrat_semi_bold"
                             android:textColor="@color/primary"
                             android:textSize="@dimen/text_sm"
-                            app:formatDate="@{user.createdAt}"
+                            app:formatDate="@{userViewModel.user.createdAt}"
                             />
                     </LinearLayout>
                 </LinearLayout>
@@ -181,7 +181,7 @@
                                 android:fontFamily="@font/montserrat_bold"
                                 android:textColor="@color/content"
                                 android:textStyle="bold"
-                                app:getUserStatus="@{user.bmi}"
+                                app:getUserStatus="@{userViewModel.user.bmi}"
                                 ></TextView>
 
                         </LinearLayout>
@@ -216,7 +216,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
-                                android:text="@{String.valueOf(user.height)}"
+                                android:text="@{String.valueOf(userViewModel.user.height)}"
                                 android:textAlignment="center"
                                 android:textColor="@color/morning"
                                 android:textFontWeight="1"
@@ -253,7 +253,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
-                                android:text="@{String.valueOf(user.weight)}"
+                                android:text="@{String.valueOf(userViewModel.user.weight)}"
                                 android:textAlignment="center"
                                 android:textColor="@color/content"
                                 android:textFontWeight="1"
@@ -289,7 +289,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
-                                android:text="@{String.valueOf(user.bmi)}"
+                                android:text="@{String.valueOf(userViewModel.user.bmi)}"
                                 android:textAlignment="center"
                                 android:textColor="@color/content"
                                 android:textFontWeight="1"

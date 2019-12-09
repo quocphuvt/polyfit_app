@@ -18,6 +18,7 @@ import com.example.polyfit_app.R;
 import com.example.polyfit_app.models.User;
 import com.example.polyfit_app.service.remote.BodypartsAPI;
 import com.example.polyfit_app.service.remote.RetrofitClient;
+import com.example.polyfit_app.view_model.UserViewModel;
 import com.google.android.material.appbar.AppBarLayout;
 
 import retrofit2.Call;
@@ -34,13 +35,15 @@ public class ExerciseFragment extends Fragment {
     private AppBarLayout appBarLayout;
     private ImageView iv_bg_ex_fragment;
     private User user;
+    private UserViewModel userViewModel;
 
     public ExerciseFragment() {
         // Required empty public constructor
     }
 
-    public ExerciseFragment(User user) {
-        this.user = user;
+    public ExerciseFragment(UserViewModel userViewModel) {
+        this.user = userViewModel.getUser().getValue();
+        this.userViewModel = userViewModel;
     }
 
     private void initView(View view) {

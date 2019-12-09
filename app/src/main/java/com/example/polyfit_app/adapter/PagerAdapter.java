@@ -25,16 +25,16 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int i) {
         switch (i) {
             case 0:
-                HomeFragment homeFragment = new HomeFragment(user);
+                HomeFragment homeFragment = new HomeFragment();
                 return homeFragment;
             case 1:
-                DietsFragment dietsFragment = new DietsFragment(user);
+                DietsFragment dietsFragment = new DietsFragment();
                 return dietsFragment;
             case 2:
-                ExerciseFragment exerciseFragment = new ExerciseFragment(user);
+                ExerciseFragment exerciseFragment = new ExerciseFragment();
                 return exerciseFragment;
             case 3:
-                ProfileFragment profileFragment = new ProfileFragment(user);
+                ProfileFragment profileFragment = new ProfileFragment();
                 return profileFragment;
             default:
                 return null;

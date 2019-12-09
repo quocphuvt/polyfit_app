@@ -36,6 +36,11 @@ public class DietFragmentPagerAdapter extends RecyclerView.Adapter<DietFragmentV
         return new DietFragmentViewHolder(view);
     }
 
+    public void updateDietData(ArrayList<Diet> dietData) {
+        this.diets = dietData;
+        this.notifyDataSetChanged();
+    }
+
     @Override
     public void onBindViewHolder(@NonNull DietFragmentViewHolder holder, int position) {
         Diet diet = diets.get(position);

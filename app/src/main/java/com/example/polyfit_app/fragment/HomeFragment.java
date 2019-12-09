@@ -3,7 +3,6 @@ package com.example.polyfit_app.fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
@@ -12,9 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,13 +19,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.polyfit_app.activity.DishesTodayActivity;
-import com.example.polyfit_app.activity.Login.LoginActivity;
 import com.example.polyfit_app.adapter.DietsHomeAdapter;
 import com.example.polyfit_app.adapter.Home.HomeBodypartsAdapter;
 import com.example.polyfit_app.databinding.FragmentHomeBinding;
@@ -45,8 +43,7 @@ import com.example.polyfit_app.service.remote.DietsAPI;
 import com.example.polyfit_app.service.remote.PolyFitService;
 import com.example.polyfit_app.service.remote.RetrofitClient;
 import com.example.polyfit_app.utils.Constants;
-import com.example.polyfit_app.utils.Helpers;
-import com.example.polyfit_app.utils.Util;
+import com.example.polyfit_app.view_model.UserViewModel;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -72,7 +69,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 import static android.app.Activity.RESULT_OK;
-import static android.content.Context.MODE_PRIVATE;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
     private static final String ARG_PARAM1 = "param1";
@@ -94,14 +90,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     private StorageReference storageRef = storage.getReferenceFromUrl(Constants.STORAGE_IMAGE);
     private String linkAvatar;
-    private User user;
     private FragmentHomeBinding homeBinding;
+    private User user;
 
     public HomeFragment() {
-    }
-
-    public HomeFragment(User user) {
-        this.user = user;
     }
 
     private void connectView() {
@@ -143,7 +135,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         homeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
         View view = homeBinding.getRoot();
-        homeBinding.setUser(this.user);
+        UserViewModel userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+        Observer<User> userObserver = new Observer<User>() {
+            @Override
+            public void onChanged(User userModel) {
+                user = userModel;
+                homeBinding.setUserViewModel(userViewModel);
+            }
+        };
+        userViewModel.getUser().observe(this, userObserver);
+
         connectView();
         setUpRetrofit();
         homeBinding.rippleReminder.startRippleAnimation();

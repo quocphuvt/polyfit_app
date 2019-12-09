@@ -2,7 +2,6 @@ package com.example.polyfit_app.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -29,7 +28,6 @@ import com.example.polyfit_app.service.local.PolyfitDatabase;
 import com.example.polyfit_app.service.local.StepCountServices;
 import com.example.polyfit_app.service.remote.RetrofitClient;
 import com.example.polyfit_app.service.remote.RoutineAPI;
-import com.example.polyfit_app.utils.Constants;
 import com.example.polyfit_app.utils.Helpers;
 
 import java.util.ArrayList;
@@ -49,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
     List<Routine> routines;
     private RoutineAPI routineAPI;
     private User user;
+    private PagerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,14 +60,16 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         Retrofit retrofit = RetrofitClient.getInstance();
         routineAPI = retrofit.create(RoutineAPI.class);
         runServices();
-        user = Helpers.getUserFromPreferences(this);
-
         addModelTab();
         final ViewPager viewPager = findViewById(R.id.pager);
         viewPager.setOffscreenPageLimit(4);
-        final PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), 4, user);
+
+        user = Helpers.getUserFromPreferences(this);
+
+        adapter = new PagerAdapter(getSupportFragmentManager(), 4, user);
         viewPager.setAdapter(adapter);
         tabBar.setViewPager(viewPager);
+
         if(isNetworkConnected()){
             Log.e("PhayTran","Connected to internet!!!!");
             getAndSaveRoutine();

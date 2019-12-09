@@ -4,7 +4,6 @@ package com.example.polyfit_app.fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,12 +14,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.widget.AppCompatEditText;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.example.polyfit_app.activity.Login.LoginMethod;
 import com.example.polyfit_app.databinding.FragmentProfileBinding;
@@ -33,9 +32,9 @@ import com.example.polyfit_app.R;
 import com.example.polyfit_app.service.local.PolyfitDatabase;
 import com.example.polyfit_app.service.remote.PolyFitService;
 import com.example.polyfit_app.service.remote.RetrofitClient;
-import com.example.polyfit_app.utils.Constants;
 import com.example.polyfit_app.utils.Helpers;
 import com.example.polyfit_app.utils.Util;
+import com.example.polyfit_app.view_model.UserViewModel;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -56,7 +55,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private LineChartView history_chart;
-    public final static String[] hours = new String[]{"6", "12", "18", "24"};
     private ProgressDialog progressDialog;
     private PolyFitService polyFitService;
     private String mParam1;
@@ -66,12 +64,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private FragmentProfileBinding fragmentProfileBinding;
     private User user;
     private Boolean isFocus = false;
+    private UserViewModel userViewModel;
 
     public ProfileFragment() {
-    }
-
-    public ProfileFragment(User user) {
-        this.user = user;
     }
 
     public static ProfileFragment newInstance(String param1, String param2) {
@@ -97,7 +92,16 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         fragmentProfileBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false);
         View view = fragmentProfileBinding.getRoot();
-        fragmentProfileBinding.setUser(this.user);
+
+        userViewModel = ViewModelProviders.of(requireActivity()).get(UserViewModel.class);
+        Observer<User> userObserver = new Observer<User>() {
+            @Override
+            public void onChanged(User userModel) {
+                user = userModel;
+                fragmentProfileBinding.setUser(userModel);
+            }
+        };
+        userViewModel.getUser().observe(this, userObserver);
 
         Retrofit retrofit = RetrofitClient.getInstance();
         polyFitService = retrofit.create(PolyFitService.class);
@@ -278,7 +282,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 UserResponse userResponse = response.body();
                 if (userResponse.getStatus() == 0) {
                     btnUpdateBMI.setText("Tôi muốn cập nhật BMI");
-                    Helpers.putUserIntoPreferences( getContext(), userResponse.getObject());
+                    Helpers.putUserIntoPreferences(getContext(), userResponse.getObject());
+                    userViewModel.setUser();
                     toggleFocusForEditText();
                 } else {
                     Log.e("PhayTran", "Create failed");
