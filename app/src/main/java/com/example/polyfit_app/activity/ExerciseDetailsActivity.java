@@ -26,6 +26,7 @@ import com.bumptech.glide.Glide;
 import com.example.polyfit_app.adapter.SuggestedExercisesAdapter;
 import com.example.polyfit_app.interfaces.ItemClickListener;
 import com.example.polyfit_app.model.Exercise;
+import com.example.polyfit_app.model.User;
 import com.example.polyfit_app.model.response.BodypartResponse;
 import com.example.polyfit_app.model.response.ExerciseResponse;
 import com.example.polyfit_app.R;
@@ -33,6 +34,8 @@ import com.example.polyfit_app.service.remote.BodypartsAPI;
 import com.example.polyfit_app.service.remote.ExerciseAPI;
 import com.example.polyfit_app.service.remote.RetrofitClient;
 import com.example.polyfit_app.utils.Constants;
+import com.example.polyfit_app.utils.Helpers;
+import com.example.polyfit_app.utils.Util;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
@@ -44,6 +47,7 @@ import com.skydoves.powermenu.PowerMenuItem;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 import retrofit2.Call;
@@ -70,6 +74,7 @@ public class ExerciseDetailsActivity extends AppCompatActivity implements ItemCl
     long timeSwapBuff = 0L;
     long updatedTime = 0L;
     private int oldTimePractice;
+    private User user;
 
     private void initView() {
         tv_sets = findViewById(R.id.tv_sets_detail);
@@ -105,6 +110,7 @@ public class ExerciseDetailsActivity extends AppCompatActivity implements ItemCl
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Objects.requireNonNull(getSupportActionBar()).hide();
         initView();
+        user = Helpers.getUserFromPreferences(this);
         SharedPreferences sharedPreferences =getSharedPreferences(Constants.TIME_PRACTICE,MODE_PRIVATE);
         oldTimePractice=sharedPreferences.getInt(Constants.TIME_PRACTICE,0);
         Log.e("MINUTES",sharedPreferences.getInt(Constants.TIME_PRACTICE,0)+"");
@@ -147,26 +153,51 @@ public class ExerciseDetailsActivity extends AppCompatActivity implements ItemCl
     }
 
     private void getSuggestedExercises(int bodypartId) { //TODO: Set data for suggested exercises
-        Call<BodypartResponse> bodypartResponseCall = bodypartsAPI.getDataOfBodypart(bodypartId);
-        bodypartResponseCall.enqueue(new Callback<BodypartResponse>() {
-            @Override
-            public void onResponse(Call<BodypartResponse> call, Response<BodypartResponse> response) {
-                if (response.isSuccessful()) {
-                    BodypartResponse bodypartResponse = response.body();
-                    if (bodypartResponse.getStatus() == 0) {
-                        SuggestedExercisesAdapter suggestedExercisesAdapter = new SuggestedExercisesAdapter(bodypartResponse.getObject().getExercises(), ExerciseDetailsActivity.this, ExerciseDetailsActivity.this);
-                        rv_suggested_exercise.setHasFixedSize(true);
-                        rv_suggested_exercise.setLayoutManager(new LinearLayoutManager(ExerciseDetailsActivity.this, RecyclerView.HORIZONTAL, false));
-                        rv_suggested_exercise.setAdapter(suggestedExercisesAdapter);
+        Intent i = getIntent();
+        if(i.getBooleanExtra("isLoadingByLevel", false)) {
+            Call<ExerciseResponse> exerciseResponseCall = exerciseAPI.getAllExerciseOfBodyPartByLevel(Util.getLevelId(user.getBmi()), bodypartId);
+            exerciseResponseCall.enqueue(new Callback<ExerciseResponse>() {
+                @Override
+                public void onResponse(Call<ExerciseResponse> call, Response<ExerciseResponse> response) {
+                    if(response.isSuccessful()) {
+                        if(response.body().getStatus() == 0) {
+                            setSuggestedExercises(response.body().getResponse());
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<BodypartResponse> call, Throwable t) {
+                @Override
+                public void onFailure(Call<ExerciseResponse> call, Throwable t) {
 
-            }
-        });
+                }
+            });
+        } else {
+            Call<BodypartResponse> bodypartResponseCall = bodypartsAPI.getDataOfBodypart(bodypartId);
+
+            bodypartResponseCall.enqueue(new Callback<BodypartResponse>() {
+                @Override
+                public void onResponse(Call<BodypartResponse> call, Response<BodypartResponse> response) {
+                    if (response.isSuccessful()) {
+                        BodypartResponse bodypartResponse = response.body();
+                        if (bodypartResponse.getStatus() == 0) {
+                            setSuggestedExercises(bodypartResponse.getObject().getExercises());
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<BodypartResponse> call, Throwable t) {
+
+                }
+            });
+        }
+    }
+
+    private void setSuggestedExercises(ArrayList<Exercise> suggestedExercises) {
+        SuggestedExercisesAdapter suggestedExercisesAdapter = new SuggestedExercisesAdapter(suggestedExercises, ExerciseDetailsActivity.this, ExerciseDetailsActivity.this);
+        rv_suggested_exercise.setHasFixedSize(true);
+        rv_suggested_exercise.setLayoutManager(new LinearLayoutManager(ExerciseDetailsActivity.this, RecyclerView.HORIZONTAL, false));
+        rv_suggested_exercise.setAdapter(suggestedExercisesAdapter);
     }
 
     private void getExerciseData(int exerciseId) {

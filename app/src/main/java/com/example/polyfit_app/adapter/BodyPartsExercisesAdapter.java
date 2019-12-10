@@ -83,6 +83,7 @@ class ItemExerciseOfBodypartsExercisesAdapter extends RecyclerView.Adapter<ItemE
                     i.putExtra("id", exercise.getId());
                     i.putExtra("part", bodyParts.getTitle());
                     i.putExtra("bodyPartId", bodyParts.getId());
+                    i.putExtra("isLoadingByLevel", true);
                     context.startActivity(i);
                 }
             });

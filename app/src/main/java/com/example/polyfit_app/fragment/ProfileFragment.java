@@ -296,8 +296,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                     Helpers.putUserIntoPreferences(getContext(), userResponse.getObject());
                     profileBinding.btnUpdateBMI.setText("Tôi muốn cập nhật BMI");
                     int currentLevelId = Util.getLevelId(userResponse.getObject().getBmi());
+                    userViewModel.setUser();
                     if (currentLevelId != previousLevelId) { //UI will changed if having diff of old and current levelId
-                        userViewModel.setUser();
                         dietViewModel.setDietData();
                         bodyPartViewModel.setBodyPartLiveData();
                     }

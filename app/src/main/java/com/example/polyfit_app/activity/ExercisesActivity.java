@@ -114,6 +114,7 @@ public class ExercisesActivity extends AppCompatActivity implements ItemClickLis
         i.putExtra("id", id);
         i.putExtra("part", getSupportActionBar().getTitle());
         i.putExtra("bodyPartId", bodyPartId);
+        i.putExtra("isLoadingByLevel", false);
         startActivity(i);
     }
 
