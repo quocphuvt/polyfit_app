@@ -48,6 +48,7 @@ public class DietFragmentPagerAdapter extends RecyclerView.Adapter<DietFragmentV
                 public void onClick(View view) {
                     Intent i = new Intent(context, MealsActivity.class);
                     i.putExtra("title", diet.getTitle());
+                    i.putExtra("id", diet.getId());
                     context.startActivity(i);
                 }
             });

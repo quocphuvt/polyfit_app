@@ -12,4 +12,8 @@ public interface ExerciseAPI {
 
     @GET("exercises/exDetail/{id}")
     Call<ExerciseResponse> getExerciseDetails(@Path("id") int id);
+
+    @GET("exercises/getAllExercisesOfBodyPartByLevel/{idLevel}/{idBodyparts}")
+    Call<ExerciseResponse> getAllExerciseOfBodyPartByLevel(@Path("idLevel") int idLevel,
+                                                           @Path("idBodyparts") int idBodyPart);
 }

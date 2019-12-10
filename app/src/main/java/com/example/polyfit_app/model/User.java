@@ -1,11 +1,21 @@
 package com.example.polyfit_app.model;
 
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.databinding.BindingAdapter;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import com.bumptech.glide.Glide;
+import com.example.polyfit_app.R;
+import com.example.polyfit_app.utils.Util;
 import com.google.gson.annotations.SerializedName;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Entity(tableName = "polyfit_users")
 public class User {

@@ -17,16 +17,29 @@ import com.example.polyfit_app.fragment.meals.MorningFragment;
 import com.example.polyfit_app.fragment.meals.NightFragment;
 import com.example.polyfit_app.fragment.meals.NoonFragment;
 import com.example.polyfit_app.R;
+import com.example.polyfit_app.model.Diet;
+import com.example.polyfit_app.model.Dishes;
+import com.example.polyfit_app.model.Meal;
+import com.example.polyfit_app.model.response.DietsResponse;
+import com.example.polyfit_app.service.remote.DietsAPI;
+import com.example.polyfit_app.service.remote.RetrofitClient;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Objects;
 
 import devlight.io.library.ntb.NavigationTabBar;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class MealsActivity extends AppCompatActivity {
     private NavigationTabBar tab_meals;
     private ViewPager pager_meals;
     private Toolbar toolbar;
+    private Retrofit retrofit = RetrofitClient.getInstance();
+    private DietsAPI dietsAPI;
 
     private void initView() {
         tab_meals = findViewById(R.id.tab_meals);
@@ -40,11 +53,12 @@ public class MealsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_meals);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Objects.requireNonNull(getSupportActionBar()).hide();
+        dietsAPI = retrofit.create(DietsAPI.class);
         initView();
-        addModelTab();
 
         Intent i = getIntent();
         String dietTitle = i.getStringExtra("title");
+        int dietId = i.getIntExtra("id", 0);
         toolbar.setTitle("Chế độ ăn " + dietTitle.toLowerCase());
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,10 +67,36 @@ public class MealsActivity extends AppCompatActivity {
             }
         });
 
-        pager_meals.setOffscreenPageLimit(3);
-        MealsPagerAdapter mealsPagerAdapter = new MealsPagerAdapter(getSupportFragmentManager());
+        addModelTab();
+        setDietData(dietId);
+    }
+
+    private void setMealTabsData(Diet diet) {
+        MealsPagerAdapter mealsPagerAdapter = new MealsPagerAdapter(getSupportFragmentManager(), diet);
         pager_meals.setAdapter(mealsPagerAdapter);
+        pager_meals.setOffscreenPageLimit(3);
         tab_meals.setViewPager(pager_meals);
+        tab_meals.setModelIndex(0);
+    }
+
+    private void setDietData(int dietId) {
+        Call<DietsResponse> dietsResponseCall = dietsAPI.getDietData(dietId);
+        dietsResponseCall.enqueue(new Callback<DietsResponse>() {
+            @Override
+            public void onResponse(Call<DietsResponse> call, Response<DietsResponse> response) {
+                if(response.isSuccessful()) {
+                    DietsResponse dietsResponse = response.body();
+                    if(dietsResponse.getStatus() == 0) {
+                        setMealTabsData(dietsResponse.getObject());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DietsResponse> call, Throwable t) {
+
+            }
+        });
     }
 
     private void addModelTab() {
@@ -90,9 +130,21 @@ public class MealsActivity extends AppCompatActivity {
 }
 
 class MealsPagerAdapter extends FragmentStatePagerAdapter {
-
-    public MealsPagerAdapter(@NonNull FragmentManager fm) {
+    private Diet diet;
+    public MealsPagerAdapter(@NonNull FragmentManager fm, Diet diet) {
         super(fm);
+        this.diet = diet;
+    }
+
+    private Meal getMeal(String mealText) {
+        Meal meal = null;
+        for(Meal m: diet.getMeals()) {
+            if(m.getTitle().toLowerCase().contains(mealText) == true) {
+                meal = m;
+            }
+        }
+
+        return meal;
     }
 
     @NonNull
@@ -101,13 +153,13 @@ class MealsPagerAdapter extends FragmentStatePagerAdapter {
         Fragment fragment = null;
         switch (position) {
             case 0:
-                fragment = new MorningFragment();
+                fragment = new MorningFragment(getMeal("sáng").getDishes());
                 break;
             case 1:
-                fragment = new NoonFragment();
+                fragment = new NoonFragment(getMeal("trưa").getDishes());
                 break;
             case 2:
-                fragment = new NightFragment();
+                fragment = new NightFragment(getMeal("tối").getDishes());
                 break;
         }
         return fragment;

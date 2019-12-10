@@ -12,9 +12,13 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.polyfit_app.adapter.PagerAdapter;
+import com.example.polyfit_app.bodyparts.BodyPartViewModel;
+import com.example.polyfit_app.diet.DietViewModel;
 import com.example.polyfit_app.fragment.DietsFragment;
 import com.example.polyfit_app.fragment.HistoriesFragment;
 import com.example.polyfit_app.fragment.HomeFragment;
@@ -29,6 +33,7 @@ import com.example.polyfit_app.service.local.PolyfitDatabase;
 import com.example.polyfit_app.service.local.StepCountServices;
 import com.example.polyfit_app.service.remote.RetrofitClient;
 import com.example.polyfit_app.service.remote.RoutineAPI;
+import com.example.polyfit_app.user.UserViewModel;
 import com.example.polyfit_app.utils.Constants;
 import com.example.polyfit_app.utils.Helpers;
 
@@ -53,6 +58,9 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
     private Retrofit retrofit = RetrofitClient.getInstance();
     private ViewPager viewPager;
     private PagerAdapter pagerAdapter;
+    private UserViewModel userViewModel;
+    private DietViewModel dietViewModel;
+    private BodyPartViewModel bodyPartViewModel;
     
     private void setFullScreen() {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -72,7 +80,21 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         initView();
         runStepCountService();
         routineAPI = retrofit.create(RoutineAPI.class);
-        user = Helpers.getUserFromPreferences(this);
+
+        userViewModel = ViewModelProviders.of(MainActivity.this).get(UserViewModel.class);
+        dietViewModel = ViewModelProviders.of(MainActivity.this).get(DietViewModel.class);
+        bodyPartViewModel = ViewModelProviders.of(MainActivity.this).get(BodyPartViewModel.class);
+        user = userViewModel.getUser().getValue();
+        userViewModel.getUser().observe(MainActivity.this, newUser ->  {
+            Log.d("user_update", "cap nhat");
+        }); //Listen user data has changed
+        dietViewModel.getDietData().observe(MainActivity.this, dietsResponse -> {
+            Log.d("diet_update", "cap nhat");
+        }); //Listen diet data has changed
+        bodyPartViewModel.getBodyPartLiveData().observe(MainActivity.this, bodypartResponse -> {
+            Log.d("body_part", "cap nhat");
+        });
+
         setBottomNavigationTabs();
         viewPager.setOffscreenPageLimit(4);
         pagerAdapter = new PagerAdapter(getSupportFragmentManager(), 4);

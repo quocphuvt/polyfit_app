@@ -7,7 +7,7 @@ public class Diet {
     private String title;
     private String description;
     private String image_url;
-    private ArrayList<Meal> meals;
+    private ArrayList<Meal> Meals;
 
     public int getId() {
         return id;
@@ -42,10 +42,10 @@ public class Diet {
     }
 
     public ArrayList<Meal> getMeals() {
-        return meals;
+        return Meals;
     }
 
-    public void setMeals(ArrayList<Meal> meals) {
-        this.meals = meals;
+    public void setMeals(ArrayList<Meal> Meals) {
+        this.Meals = Meals;
     }
 }
