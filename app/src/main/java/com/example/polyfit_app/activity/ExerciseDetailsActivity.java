@@ -282,8 +282,12 @@ public class ExerciseDetailsActivity extends AppCompatActivity implements ItemCl
 
     @Override
     public void onClickItem(int id) {
-        getExerciseData(id);
-        getSuggestedExercises(bodyPartId);
+        Intent i = new Intent(this, ExerciseDetailsActivity.class);
+        i.putExtra("id", id);
+        i.putExtra("part", toolbar.getTitle());
+        i.putExtra("bodyPartId", bodyPartId);
+        startActivity(i);
+        finish();
     }
 
     @Override

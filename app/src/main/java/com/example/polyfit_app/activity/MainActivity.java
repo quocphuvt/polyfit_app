@@ -84,8 +84,9 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         userViewModel = ViewModelProviders.of(MainActivity.this).get(UserViewModel.class);
         dietViewModel = ViewModelProviders.of(MainActivity.this).get(DietViewModel.class);
         bodyPartViewModel = ViewModelProviders.of(MainActivity.this).get(BodyPartViewModel.class);
+        user = userViewModel.getUser().getValue();
         userViewModel.getUser().observe(MainActivity.this, newUser ->  {
-            user = newUser;
+            Log.d("user_update", "cap nhat");
         }); //Listen user data has changed
         dietViewModel.getDietData().observe(MainActivity.this, dietsResponse -> {
             Log.d("diet_update", "cap nhat");

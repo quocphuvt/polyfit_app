@@ -9,4 +9,7 @@ import retrofit2.http.Path;
 public interface DishesAPI {
     @GET("dishes/getAllDishesByMeal/{id}")
     Call<DishesResponse> getDishesByMeal(@Path("id") int id);
+
+    @GET("meals/getAllDishesOfAllMeals/{title}")
+    Call<DishesResponse> getAllDishesInMeal(@Path("title") String title);
 }

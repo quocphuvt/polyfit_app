@@ -240,20 +240,17 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.layout_morning:
                 i = new Intent(getContext(), DishesTodayActivity.class);
-                i.putExtra("title", "sáng");
-                i.putExtra("mealId", 161);
+                i.putExtra("title", "sang");
                 startActivity(i);
                 break;
             case R.id.layout_noon:
                 i = new Intent(getContext(), DishesTodayActivity.class);
-                i.putExtra("title", "trưa");
-                i.putExtra("mealId", 171);
+                i.putExtra("title", "trua");
                 startActivity(i);
                 break;
             case R.id.layout_night:
                 i = new Intent(getContext(), DishesTodayActivity.class);
-                i.putExtra("title", "chiều tối");
-                i.putExtra("mealId", 181);
+                i.putExtra("title", "toi");
                 startActivity(i);
                 break;
         }

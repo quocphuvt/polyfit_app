@@ -39,6 +39,7 @@ public class DishesTodayActivity extends AppCompatActivity implements ItemClickL
         rv_dishes_today = findViewById(R.id.rv_dishes_today);
         bottom_dishes_today = findViewById(R.id.bottom_dishes_today);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,28 +50,37 @@ public class DishesTodayActivity extends AppCompatActivity implements ItemClickL
         dishesAPI = retrofit.create(DishesAPI.class);
         Intent i = getIntent();
         int mealId = i.getIntExtra("mealId", 0);
-        String title = i.getStringExtra("title");
-        toolbar.setTitle("Thực đơn cho buổi "+title);
+        String titleId = i.getStringExtra("title");
+        String title = "";
+        switch (titleId) {
+            case "sang":
+                title = "sáng";
+                break;
+            case "trua":
+                title = "trưa";
+                break;
+            default:
+                title = "chiều tối";
+        }
+        toolbar.setTitle("Thực đơn cho buổi " + title);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
-        if(mealId > 0) {
-            setDishesData(mealId);
-        }
 
+        setDishesData(titleId);
     }
 
-    private void setDishesData(int mealId) {
-        Call<DishesResponse> dishesResponseCall = dishesAPI.getDishesByMeal(mealId); //TODO: LOAD DYNAMIC ID
+    private void setDishesData(String title) {
+        Call<DishesResponse> dishesResponseCall = dishesAPI.getAllDishesInMeal(title); //TODO: LOAD DYNAMIC ID
         dishesResponseCall.enqueue(new Callback<DishesResponse>() {
             @Override
             public void onResponse(Call<DishesResponse> call, Response<DishesResponse> response) {
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     DishesResponse dishesResponse = response.body();
-                    if(dishesResponse.getStatus() == 0) {
+                    if (dishesResponse.getStatus() == 0) {
                         dishes = dishesResponse.getResponse();
                         DishesTodayAdapter dishesAdapter = new DishesTodayAdapter(dishesResponse.getResponse(), DishesTodayActivity.this, DishesTodayActivity.this);
                         rv_dishes_today.setHasFixedSize(true);
