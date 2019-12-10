@@ -10,6 +10,9 @@ public interface DietsAPI {
     @GET("diets/getAll")
     Call<DietsResponse> getAllDiets();
 
+    @GET("diets/getAllDishesByDiets/{id}")
+    Call<DietsResponse> getDietData(@Path("id") int id);
+
     @GET("diets/getAll/{levelId}")
     Call<DietsResponse> getAllDietsByLevelId(@Path("levelId") Integer levelId);
 }

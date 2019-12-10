@@ -6,7 +6,7 @@ public class Meal {
     private int id;
     private String title;
     private String image_url;
-    private ArrayList<Dishes> dishes;
+    private ArrayList<Dishes> Dishes;
 
     public int getId() {
         return id;
@@ -33,10 +33,10 @@ public class Meal {
     }
 
     public ArrayList<Dishes> getDishes() {
-        return dishes;
+        return Dishes;
     }
 
-    public void setDishes(ArrayList<Dishes> dishes) {
-        this.dishes = dishes;
+    public void setDishes(ArrayList<Dishes> Dishes) {
+        this.Dishes = Dishes;
     }
 }

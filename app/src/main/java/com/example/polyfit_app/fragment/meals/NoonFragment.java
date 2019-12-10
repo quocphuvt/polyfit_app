@@ -34,12 +34,15 @@ import retrofit2.Retrofit;
  */
 public class NoonFragment extends Fragment implements ItemClickListener {
     private RecyclerView rv_dishes_noon;
-    private DishesAPI dishesAPI;
     private BottomSheetLayout bottomSheetLayout;
     private ArrayList<Dishes> dishes;
 
     public NoonFragment() {
         // Required empty public constructor
+    }
+
+    public NoonFragment(ArrayList<Dishes> dishes) {
+        this.dishes = dishes;
     }
 
     private void initView(View view) {
@@ -51,37 +54,18 @@ public class NoonFragment extends Fragment implements ItemClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Retrofit retrofit = RetrofitClient.getInstance();
-        dishesAPI = retrofit.create(DishesAPI.class);
         View view =inflater.inflate(R.layout.fragment_noon, container, false);
         initView(view);
         rv_dishes_noon.setHasFixedSize(true);
         rv_dishes_noon.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         // Inflate the layout for this fragment
-        setDishesData();
+        setDishesData(dishes);
         return view;
     }
 
-    private void setDishesData() {
-        Call<DishesResponse> dishesResponseCall = dishesAPI.getDishesByMeal(171); //TODO: LOAD DYNAMIC ID
-        dishesResponseCall.enqueue(new Callback<DishesResponse>() {
-            @Override
-            public void onResponse(Call<DishesResponse> call, Response<DishesResponse> response) {
-                if(response.isSuccessful()) {
-                    DishesResponse dishesResponse = response.body();
-                    if(dishesResponse.getStatus() == 0) {
-                        dishes = dishesResponse.getResponse();
-                        DishesAdapter dishesAdapter = new DishesAdapter(dishesResponse.getResponse(), getContext(), NoonFragment.this);
-                        rv_dishes_noon.setAdapter(dishesAdapter);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<DishesResponse> call, Throwable t) {
-
-            }
-        });
+    private void setDishesData(ArrayList<Dishes> dishes) {
+        DishesAdapter dishesAdapter = new DishesAdapter(dishes, getContext(), NoonFragment.this);
+        rv_dishes_noon.setAdapter(dishesAdapter);
     }
 
     @Override
