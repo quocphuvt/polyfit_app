@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.polyfit_app.adapter.PagerAdapter;
+import com.example.polyfit_app.bodyparts.BodyPartViewModel;
 import com.example.polyfit_app.diet.DietViewModel;
 import com.example.polyfit_app.fragment.DietsFragment;
 import com.example.polyfit_app.fragment.HistoriesFragment;
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
     private PagerAdapter pagerAdapter;
     private UserViewModel userViewModel;
     private DietViewModel dietViewModel;
+    private BodyPartViewModel bodyPartViewModel;
     
     private void setFullScreen() {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -81,12 +83,16 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
 
         userViewModel = ViewModelProviders.of(MainActivity.this).get(UserViewModel.class);
         dietViewModel = ViewModelProviders.of(MainActivity.this).get(DietViewModel.class);
+        bodyPartViewModel = ViewModelProviders.of(MainActivity.this).get(BodyPartViewModel.class);
         userViewModel.getUser().observe(MainActivity.this, newUser ->  {
             user = newUser;
         }); //Listen user data has changed
         dietViewModel.getDietData().observe(MainActivity.this, dietsResponse -> {
             Log.d("diet_update", "cap nhat");
         }); //Listen diet data has changed
+        bodyPartViewModel.getBodyPartLiveData().observe(MainActivity.this, bodypartResponse -> {
+            Log.d("body_part", "cap nhat");
+        });
 
         setBottomNavigationTabs();
         viewPager.setOffscreenPageLimit(4);

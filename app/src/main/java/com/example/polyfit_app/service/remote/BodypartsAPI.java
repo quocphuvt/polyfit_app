@@ -12,4 +12,7 @@ public interface BodypartsAPI {
 
     @GET("bodyparts/getDetailBodyparts/{id}")
     Call<BodypartResponse> getDataOfBodypart(@Path("id") int id);
+
+    @GET("bodyparts/getAll/{levelId}")
+    Call<BodypartResponse> getAllBodypartsByLevelId(@Path("levelId") int levelId);
 }

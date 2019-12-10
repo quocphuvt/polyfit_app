@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.polyfit_app.activity.login.LoginMethod;
 import com.example.polyfit_app.adapter.RoutineAdapter;
+import com.example.polyfit_app.bodyparts.BodyPartViewModel;
 import com.example.polyfit_app.databinding.FragmentProfileBinding;
 import com.example.polyfit_app.diet.DietViewModel;
 import com.example.polyfit_app.model.History;
@@ -73,6 +74,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private User user;
     private UserViewModel userViewModel;
     private DietViewModel dietViewModel;
+    private BodyPartViewModel bodyPartViewModel;
     private FragmentProfileBinding profileBinding;
 
     public ProfileFragment() {
@@ -107,6 +109,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
         dietViewModel = ViewModelProviders.of(getActivity()).get(DietViewModel.class);
+        bodyPartViewModel = ViewModelProviders.of(getActivity()).get(BodyPartViewModel.class);
         profileBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false);
         user = userViewModel.getUser().getValue();
         userViewModel.getUser().observe(this, newUser -> {
@@ -197,7 +200,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         profileBinding.btnUpdateBMI.setOnClickListener(this);
         profileBinding.icLogout.setOnClickListener(this);
     }
-    
+
     private void setStepCount() {
         List<AxisValue> axisValues = new ArrayList<AxisValue>();
         List<StepCount> listStep = new ArrayList<>();
@@ -283,6 +286,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         String weight = profileBinding.edtWeight.getText().toString().trim();
         String height = profileBinding.edtHeight.getText().toString().trim();
         User newUser = new User(user_id, Float.valueOf(weight), Float.valueOf(height));
+        int previousLevelId = Util.getLevelId(user.getBmi());
         Call<UserResponse> callUpdate = polyFitService.updateUser(newUser);
         callUpdate.enqueue(new Callback<UserResponse>() {
             @Override
@@ -291,8 +295,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 if (userResponse.getStatus() == 0) {
                     Helpers.putUserIntoPreferences(getContext(), userResponse.getObject());
                     profileBinding.btnUpdateBMI.setText("Tôi muốn cập nhật BMI");
-                    userViewModel.setUser();
-                    dietViewModel.setDietData();
+                    int currentLevelId = Util.getLevelId(userResponse.getObject().getBmi());
+                    if (currentLevelId != previousLevelId) { //UI will changed if having diff of old and current levelId
+                        userViewModel.setUser();
+                        dietViewModel.setDietData();
+                        bodyPartViewModel.setBodyPartLiveData();
+                    }
                     disableFocus();
                 } else {
                     Log.e("PhayTran", "Create failed");
