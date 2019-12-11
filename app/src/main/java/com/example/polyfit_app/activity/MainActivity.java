@@ -6,7 +6,9 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -58,10 +60,11 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
     private Retrofit retrofit = RetrofitClient.getInstance();
     private ViewPager viewPager;
     private PagerAdapter pagerAdapter;
+    private int totalKeyBackDown = 0;
     private UserViewModel userViewModel;
     private DietViewModel dietViewModel;
     private BodyPartViewModel bodyPartViewModel;
-    
+
     private void setFullScreen() {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Objects.requireNonNull(getSupportActionBar()).hide();
@@ -105,6 +108,26 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         } else {
             Toast.makeText(this, "Please check your connection!!!", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            totalKeyBackDown += 1;
+            switch (totalKeyBackDown) {
+                case 1:
+                    Toast.makeText(this, "Nhấn lần nữa để thoát", Toast.LENGTH_SHORT).show();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            totalKeyBackDown = 0;
+                        }
+                    }, 2000);
+                    return false;
+            }
+        }
+
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override
