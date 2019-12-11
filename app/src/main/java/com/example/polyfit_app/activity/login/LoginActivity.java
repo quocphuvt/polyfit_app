@@ -106,7 +106,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             startActivity(i);
                             finish();
                         } else {
-                            progressDialog.dismiss();
+                            dismissProgressDialog();
                             Toast.makeText(LoginActivity.this, userResponse.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
