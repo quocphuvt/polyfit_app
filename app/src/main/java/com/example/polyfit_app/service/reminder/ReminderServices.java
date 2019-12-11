@@ -13,7 +13,7 @@ public class ReminderServices extends BroadcastReceiver {
 //            mediaPlayer.start();
 //            mediaPlayer.setLooping(true);
             Intent intentToScreenReminder = new Intent("reminderServices");
-            intentToScreenReminder.setClassName("com.example.polyfit_app", "com.example.polyfit_app.Activity.ReminderScreenActivity");
+            intentToScreenReminder.setClassName("com.example.polyfit_app", "com.example.polyfit_app.activity.ReminderScreenActivity");
             intentToScreenReminder.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intentToScreenReminder);
             Intent intent1 = new Intent("registerReminder");
