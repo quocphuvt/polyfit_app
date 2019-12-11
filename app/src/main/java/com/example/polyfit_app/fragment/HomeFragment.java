@@ -116,6 +116,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         homeBinding.layoutNoon.setOnClickListener(this);
         homeBinding.layoutNight.setOnClickListener(this);
         homeBinding.icReminder.setOnClickListener(this);
+        homeBinding.ivAvatar.setOnClickListener(this);
     }
 
     public static HomeFragment newInstance(String param1, String param2) {
@@ -150,7 +151,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         View view = homeBinding.getRoot();
         userViewModel.getUser().observe(this, new Observer<User>() {
             @Override
-            public void onChanged(User user) {
+            public void onChanged(User userModel) {
+                user = userModel;
                 homeBinding.setUserViewModel(userViewModel);
             }
         });

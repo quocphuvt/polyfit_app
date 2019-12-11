@@ -23,6 +23,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.polyfit_app.activity.login.LoginActivity;
 import com.example.polyfit_app.activity.login.LoginMethod;
 import com.example.polyfit_app.adapter.RoutineAdapter;
 import com.example.polyfit_app.bodyparts.BodyPartViewModel;
