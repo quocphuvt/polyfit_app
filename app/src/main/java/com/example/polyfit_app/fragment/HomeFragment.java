@@ -115,6 +115,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         homeBinding.layoutMorning.setOnClickListener(this);
         homeBinding.layoutNoon.setOnClickListener(this);
         homeBinding.layoutNight.setOnClickListener(this);
+        homeBinding.icReminder.setOnClickListener(this);
     }
 
     public static HomeFragment newInstance(String param1, String param2) {
