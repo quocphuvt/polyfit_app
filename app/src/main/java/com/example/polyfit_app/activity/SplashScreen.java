@@ -20,9 +20,10 @@ import com.example.polyfit_app.utils.Helpers;
 import java.util.Objects;
 
 public class SplashScreen extends AppCompatActivity {
-    private final int SPLASH_DISPLAY_LENGTH = 3000;
+    private final int SPLASH_DISPLAY_LENGTH = 2000;
     private ImageView logo;
     private Animation animation;
+    private ImageView title_logo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +32,11 @@ public class SplashScreen extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Objects.requireNonNull(getSupportActionBar()).hide();
         logo = findViewById(R.id.logo);
+        title_logo = findViewById(R.id.title_logo);
         animation = AnimationUtils.loadAnimation(getApplicationContext(),
                 R.anim.fade_out);
         logo.startAnimation(animation);
+        title_logo.startAnimation(animation);
         User user = Helpers.getUserFromPreferences(this);
         if(user == null) {
             new Handler().postDelayed(new Runnable() {
